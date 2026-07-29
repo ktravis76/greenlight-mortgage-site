@@ -25,6 +25,35 @@ Needs a notice window and a link sweep first.
 Not a brochure. A funnel that walks a stranger from first click to submitted application,
 plus a set of tools that make Greenlight the useful one to partner with.
 
+### The capture philosophy — everywhere, never salesy
+
+Give people a reason to leave their information on **every page**, including blog posts —
+and make each one feel like a favor rather than a pitch. Maximum opportunity, minimum
+pressure. If a visitor feels sold to, we have already lost them.
+
+**What that means in practice:**
+
+- **Trade value for the information, every time.** Nobody fills in a form for "Contact Us."
+  They will for "Send me the East Texas first-time buyer guide," "Email me this number,"
+  or "Tell me when rates in my range move." The ask is always attached to something
+  they actually want.
+- **Ask for as little as possible.** One field beats four. Email alone is a win — get the
+  rest later once there is a reason to. Progressive, never a wall.
+- **Tools capture by being useful.** Someone finishes the affordability calculator; the
+  natural next step is "want this emailed to you?" They already got the answer for free.
+  The result is never held hostage behind a form.
+- **Blog posts each carry their own soft offer**, matched to the post. A VA refinance
+  article offers the VA savings worksheet, not a generic newsletter signup.
+- **Multiple exits per page, all low-commitment.** Read more · get it emailed · text a
+  question · book a call. Let people self-select their temperature instead of forcing
+  everyone into "Apply Now."
+- **Say what happens next.** "We'll email it in a minute. No calls unless you ask."
+  Then honor it. Trust is the conversion mechanism here.
+
+**Never:** exit-intent popups, countdown timers, fake scarcity, content locked behind a
+form, autoplay, or a chat bubble that opens itself. Those all read as desperate, and
+they read that way fastest to exactly the referral-quality people worth having.
+
 ### 1. Consumer funnel
 
 **Land → learn → self-qualify → talk to a human → apply.**
