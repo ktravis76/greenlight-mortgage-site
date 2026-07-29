@@ -25,6 +25,36 @@ Needs a notice window and a link sweep first.
 Not a brochure. A funnel that walks a stranger from first click to submitted application,
 plus a set of tools that make Greenlight the useful one to partner with.
 
+### The hook: the Soft Quote / Estimated Savings tool
+
+This is the centerpiece. Everything else on the site exists to get people here.
+
+A visitor answers a handful of easy questions and gets a real, personalized number back
+— what they could save, roughly what they could afford — without a hard credit pull,
+without a phone call, without talking to anyone. That is the trade: genuine value up
+front, and the contact information comes because they *want* the result, not because we
+gated it.
+
+It works because every competitor makes you call to find anything out. We just tell you.
+
+**Where it lives:** its own page, embedded on the homepage, on every loan-program page,
+and offered at the end of relevant blog posts. It is the default call to action across
+the entire site — softer than "Apply Now" and far more likely to be clicked.
+
+> **⚠️ Naming — get this right before launch.**
+> Internally the team says "Soft Quote." **Do not put the word *quote* in front of
+> consumers.** A quote implies an actual rate offer, and only a licensed loan officer can
+> give one after a real application. Using it loosely on a public page is precisely the
+> kind of thing that draws regulatory attention.
+>
+> Consumer-facing labels to use instead: **"Estimated Savings," "Savings Estimate,"
+> "See What You Could Save," "Ballpark Your Payment."** Keep "Soft Quote" for internal
+> and team-facing surfaces only. Same tool, safer label.
+>
+> Every result screen carries: *estimate only · not a quote or approval · subject to
+> credit approval and underwriting · not a commitment to lend*, plus EHO and NMLS. One
+> tight line under the number, not a wall. Compliance signs off before it ships.
+
 ### The capture philosophy — everywhere, never salesy
 
 Give people a reason to leave their information on **every page**, including blog posts —
