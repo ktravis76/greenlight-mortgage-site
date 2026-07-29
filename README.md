@@ -30,12 +30,40 @@ plus a set of tools that make Greenlight the useful one to partner with.
 This is the centerpiece. Everything else on the site exists to get people here.
 
 A visitor answers a handful of easy questions and gets a real, personalized number back
-— what they could save, roughly what they could afford — without a hard credit pull,
-without a phone call, without talking to anyone. That is the trade: genuine value up
-front, and the contact information comes because they *want* the result, not because we
-gated it.
+— what they could save, roughly what they could afford — with no hard credit pull and no
+phone call required.
 
-It works because every competitor makes you call to find anything out. We just tell you.
+**Results are gated.** Name, phone, and email are required to see the output. That is the
+trade, and it is stated plainly up front so nobody feels tricked at the end.
+
+It works because every competitor makes you call and wait days to find anything out.
+Here it takes two minutes and you keep the number.
+
+**How to gate it without losing people:**
+
+- **Say the ask before they start.** "Six questions, about two minutes. We'll need your
+  name, email, and phone to send the results." Surprise gates at the finish line are
+  where people rage-quit and never come back.
+- **Ask at the end, not the beginning.** Let them answer the loan questions first. Sunk
+  effort makes the form feel like the last step rather than a toll booth.
+- **Three fields. Nothing else.** No address, no employer, no SSN, no "how did you hear
+  about us." Every extra field costs completions.
+- **Show the result on screen and email it.** They earned it. Do not make them go dig
+  through their inbox for something they just filled out a form to get.
+- **Promise the follow-up honestly and keep it.** "A licensed loan officer will reach out
+  within one business day." Then do that — not six calls in an hour. The phone number is
+  the most valuable thing on the page and the fastest way to burn goodwill.
+
+> **⚠️ TCPA — this matters more than usual here.**
+> Collecting a phone number for marketing calls or texts requires **express written
+> consent**, and it needs its own clearly worded checkbox — not buried in a privacy link,
+> not pre-ticked. It must name Greenlight, cover autodialed and pre-recorded calls and
+> texts, state that consent is **not a condition of obtaining a loan**, and explain how to
+> opt out.
+>
+> This is directly load-bearing for the planned 50,000-lead SMS campaign. Consent captured
+> sloppily here is a per-message liability later. Get the wording from compliance before
+> the tool ships, and log consent text, timestamp, and IP with every submission.
 
 **Where it lives:** its own page, embedded on the homepage, on every loan-program page,
 and offered at the end of relevant blog posts. It is the default call to action across
@@ -69,9 +97,10 @@ pressure. If a visitor feels sold to, we have already lost them.
   they actually want.
 - **Ask for as little as possible.** One field beats four. Email alone is a win — get the
   rest later once there is a reason to. Progressive, never a wall.
-- **Tools capture by being useful.** Someone finishes the affordability calculator; the
-  natural next step is "want this emailed to you?" They already got the answer for free.
-  The result is never held hostage behind a form.
+- **Tools are the exception, and they earn it.** The Estimated Savings tool gates its
+  result behind name, phone, and email — because the output is genuinely worth it and the
+  ask is stated before they start. Everything *else* stays ungated. If every calculator
+  and guide on the site demands a phone number, the whole place reads as a lead trap.
 - **Blog posts each carry their own soft offer**, matched to the post. A VA refinance
   article offers the VA savings worksheet, not a generic newsletter signup.
 - **Multiple exits per page, all low-commitment.** Read more · get it emailed · text a
@@ -80,9 +109,10 @@ pressure. If a visitor feels sold to, we have already lost them.
 - **Say what happens next.** "We'll email it in a minute. No calls unless you ask."
   Then honor it. Trust is the conversion mechanism here.
 
-**Never:** exit-intent popups, countdown timers, fake scarcity, content locked behind a
-form, autoplay, or a chat bubble that opens itself. Those all read as desperate, and
-they read that way fastest to exactly the referral-quality people worth having.
+**Never:** exit-intent popups, countdown timers, fake scarcity, surprise gates sprung
+after someone has already done the work, autoplay, or a chat bubble that opens itself.
+Those all read as desperate, and they read that way fastest to exactly the
+referral-quality people worth having.
 
 ### 1. Consumer funnel
 
