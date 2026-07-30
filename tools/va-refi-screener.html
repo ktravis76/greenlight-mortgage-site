@@ -566,7 +566,13 @@ function rowOf(q){
     base_rate:+q.base.toFixed(3), new_rate:+q.newRate.toFixed(3), new_term:q.term,
     monthly_pi:+q.newPI.toFixed(2), monthly_savings:+q.save.toFixed(2),
     savings_pct:+q.savePct.toFixed(2), savings_30yr:Math.round(q.saveTerm),
-    verdict:VMAP[q.verdict.split(" — ")[0]]||"strong"
+    verdict:VMAP[q.verdict.split(" — ")[0]]||"strong",
+    /* cost + recoupment — columns confirmed present on soft_quotes */
+    loan_amount:Math.round(q.bal),
+    va_funding_fee:Math.round(q.ffAmt),
+    closing_costs:Math.round(q.closing),
+    recoup_months:isFinite(q.recoupMonths)?+q.recoupMonths.toFixed(1):null,
+    passes_36_month:q.save>0?q.recoupOK:null
   };
 }
 function qpush(r){let a=[];try{a=JSON.parse(localStorage.getItem(KEY_Q)||"[]");}catch(e){}a.push(r);localStorage.setItem(KEY_Q,JSON.stringify(a));return a.length;}
