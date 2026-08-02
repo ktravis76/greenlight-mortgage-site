@@ -123,8 +123,9 @@ TEAM = [
          note="Surname still to come."),
 ]
 
-LOAN_NAV = [("va", "VA"), ("conventional", "Conventional"), ("fha", "FHA"),
-            ("usda", "USDA"), ("jumbo", "Jumbo"), ("refinance", "Refinancing")]
+LOAN_NAV = [("va", "VA"), ("va-irrrl", "VA IRRRL"), ("conventional", "Conventional"),
+            ("fha", "FHA"), ("usda", "USDA"), ("jumbo", "Jumbo"),
+            ("refinance", "Refinancing")]
 
 TOOL_NAV = [("/tools/estimate", "Estimated Savings"),
             ("/tools/calculator", "Mortgage Calculator"),
@@ -133,7 +134,8 @@ TOOL_NAV = [("/tools/estimate", "Estimated Savings"),
             ("/tools/rent-vs-buy", "Rent vs Buy"),
             ("/tools/home-value", "Home Value Report")]
 
-LEARN_NAV = [("/learn", "Learning Center"), ("/resources", "Resources"),
+LEARN_NAV = [("/learn", "Learning Center"), ("/why-a-broker", "Why a Broker"),
+             ("/resources", "Resources"),
              ("/archive", "Longview Archive"), ("/blog", "Blog"),
              ("/survey", "Client Survey")]
 

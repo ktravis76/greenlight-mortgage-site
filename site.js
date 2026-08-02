@@ -110,3 +110,41 @@
 
   } // main
 })();
+
+/* Sticky mobile action bar.
+   Appears once the header CTA has scrolled out of reach, hides again at the top
+   of the page, and gets out of the way while somebody is typing into a form —
+   a fixed bar covering the field you are filling in is worse than no bar. */
+(function () {
+  'use strict';
+  if (window.matchMedia('(min-width:761px)').matches) return;
+
+  var phone = (window.GLM && window.GLM.PHONE) || '903-331-0892';
+  var bar = document.createElement('div');
+  bar.className = 'actionbar';
+  bar.innerHTML =
+    '<a class="ab-call" href="tel:' + phone.replace(/[^0-9]/g, '') + '">'
+    + '<svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true">'
+    + '<path d="M3 1.5h2.2l1.1 3-1.5 1.1a9 9 0 0 0 4.6 4.6l1.1-1.5 3 1.1V12a2.5 2.5 0 0 1-2.6 '
+    + '2.5A11.6 11.6 0 0 1 1.5 4.1 2.5 2.5 0 0 1 3 1.5z" fill="currentColor"/></svg>Call</a>'
+    + '<a class="ab-go" href="/tools/estimate">See what you could save</a>';
+  document.body.appendChild(bar);
+  document.body.classList.add('has-actionbar');
+
+  var typing = false;
+  document.addEventListener('focusin', function (e) {
+    if (e.target.closest && e.target.closest('input,textarea,select')) {
+      typing = true; bar.classList.remove('up');
+    }
+  });
+  document.addEventListener('focusout', function () {
+    typing = false; setTimeout(update, 120);
+  });
+
+  function update() {
+    if (typing) return;
+    bar.classList.toggle('up', window.scrollY > 520);
+  }
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+})();

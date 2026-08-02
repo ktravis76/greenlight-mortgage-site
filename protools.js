@@ -290,3 +290,146 @@
     }
   })();
 })();
+
+/* ========================================================= VA IRRRL SCREENER */
+/* The consumer-facing sibling of the internal VA refi screener.
+   ---------------------------------------------------------------------------
+   Two levers decide almost every one of these deals, and both came out of the
+   27 Jul build session rather than out of a textbook:
+
+   1. THE DISABILITY RATING. A service-connected rating of 10% or more waives
+      the VA funding fee entirely. On a $250k balance that is $1,250 of cost
+      that simply disappears, and it frequently flips a marginal file into a
+      clear one. It is the first question worth asking and it is routinely the
+      last one anybody asks.
+
+   2. THE ESCROW REFUND. Borrowers see the new loan amount go up — because the
+      new loan funds a new escrow account — and conclude they are borrowing
+      more. They are, briefly. Their current servicer refunds the old escrow
+      balance, usually within 30 days. It is close to a wash, and not explaining
+      it kills deals that were fine.
+
+   The 36-month recoupment test is a real VA requirement, not a rule of thumb:
+   costs have to be recovered by the monthly saving inside 36 months. This tool
+   applies it honestly and says so when a file fails, because a lender's
+   calculator that never says "don't do this" is a brochure. */
+(function irrrl() {
+  var form = document.getElementById('irrrl');
+  if (!form) return;
+
+  var $ = function (i) { return document.getElementById(i); };
+  var m0 = function (n) { return '$' + Math.round(n).toLocaleString('en-US'); };
+
+  function n(id) {
+    var el = $(id); if (!el) return 0;
+    var v = (el.value || '').replace(/[^0-9.]/g, '');
+    var x = parseFloat(v); return isNaN(x) ? 0 : x;
+  }
+  function pay(p, rate, months) {
+    var r = rate / 100 / 12;
+    if (months <= 0) return 0;
+    if (r <= 0) return p / months;
+    return p * r / (1 - Math.pow(1 + r, -months));
+  }
+
+  function render() {
+    var bal = n('ir-balance');
+    var cur = n('ir-rate');
+    var yrsLeft = parseFloat(($('ir-left') || {}).value || 27);
+    var nw = n('ir-new');
+    var costs = n('ir-costs');
+    var waived = ($('ir-disability') || {}).value === 'Yes, 10% or higher';
+    var out = $('ir-out');
+
+    if (!(bal > 0) || !(cur > 0) || !(nw > 0)) {
+      out.innerHTML = '<p class="cap">Fill in your balance, your current rate, and a rate '
+        + 'to model against.</p>';
+      $('ir-detail').innerHTML = '';
+      return;
+    }
+
+    // IRRRL funding fee is 0.5% of the loan amount, waived at a 10%+
+    // service-connected disability rating.
+    var fee = waived ? 0 : bal * 0.005;
+    var totalCosts = fee + costs;
+
+    var months = Math.round(yrsLeft * 12);
+    var curPI = pay(bal, cur, months);
+    // Costs are commonly financed into the new loan on an IRRRL.
+    var newPI = pay(bal + totalCosts, nw, months);
+    var saving = curPI - newPI;
+
+    if (saving <= 0) {
+      out.innerHTML =
+        '<p class="cap">On these numbers</p>'
+        + '<p class="big" style="font-size:clamp(30px,5vw,44px)">Not yet</p>'
+        + '<p class="cap">the rate you entered does not beat what you already have once '
+        + 'costs are included</p>'
+        + '<p class="rnote">That is worth knowing, and we would rather tell you than not. '
+        + 'Rates move — it may be worth checking again later. Estimate only, not a quote or '
+        + 'an approval, and not a commitment to lend.</p>';
+      $('ir-detail').innerHTML = '';
+      return;
+    }
+
+    var recoup = totalCosts / saving;                 // months to break even
+    var passes = recoup <= 36;
+
+    out.innerHTML =
+      '<p class="cap">Estimated monthly saving</p>'
+      + '<p class="big">' + m0(saving) + '</p>'
+      + '<p class="cap">and it takes about <strong>' + Math.ceil(recoup)
+      + ' months</strong> to recover the costs</p>'
+      + '<p class="rnote"><strong>' + (passes
+        ? 'That clears the VA 36-month recoupment test.'
+        : 'That does NOT clear the VA 36-month recoupment test.')
+      + '</strong> ' + (passes
+        ? 'VA requires the costs of an IRRRL to be recovered inside 36 months. On these '
+          + 'figures this one does, which is the threshold the loan has to meet.'
+        : 'VA requires the costs to be recovered inside 36 months, and on these figures they '
+          + 'are not. A lender cannot write it as it stands. Lower costs or a bigger rate '
+          + 'drop would change that.')
+      + ' Estimate only, from figures you entered — not a quote, an approval, or a '
+      + 'commitment to lend. Subject to credit approval and underwriting.</p>';
+
+    var rows =
+      row('Current principal &amp; interest', m0(curPI))
+      + row('New principal &amp; interest', m0(newPI))
+      + row('VA funding fee', waived
+          ? '<strong style="color:var(--g)">$0 &mdash; waived</strong>'
+          : m0(fee) + ' (0.5%)')
+      + row('Other closing costs', m0(costs))
+      + row('Total cost to do it', m0(totalCosts))
+      + row('Months to break even', Math.ceil(recoup) + ' of 36 allowed')
+      + row('Saved over the remaining ' + Math.round(yrsLeft) + ' years',
+            m0(saving * months - totalCosts));
+
+    var flag = waived
+      ? '<div class="callout"><h3>Your funding fee is waived</h3><p>A service-connected '
+        + 'disability rating of 10% or more removes the VA funding fee entirely. On this '
+        + 'balance that is ' + m0(bal * 0.005) + ' you are not paying, and it is the single '
+        + 'biggest reason these deals work for rated veterans.</p></div>'
+      : '<div class="callout"><h3>Do you have a disability rating?</h3><p>A '
+        + 'service-connected rating of <strong>10% or higher</strong> waives the VA funding '
+        + 'fee completely &mdash; ' + m0(bal * 0.005) + ' on this balance. If you are rated '
+        + 'and have not told us, change the answer above and watch the number move. A lot of '
+        + 'veterans do not realise this applies to them.</p></div>';
+
+    $('ir-detail').innerHTML =
+      '<div class="tablewrap"><table><tbody>' + rows + '</tbody></table></div>'
+      + flag
+      + '<div class="callout"><h3>About the escrow</h3><p>Your new loan amount will look '
+      + 'higher than your balance, because the new loan sets up a new escrow account for '
+      + 'taxes and insurance. Your current servicer then refunds the escrow you have already '
+      + 'built up, usually within about 30 days of closing. It is close to a wash. This trips '
+      + 'people up constantly, so it is worth saying plainly.</p></div>';
+  }
+
+  function row(k, v) {
+    return '<tr><th>' + k + '</th><td class="num">' + v + '</td></tr>';
+  }
+
+  form.addEventListener('input', render);
+  form.addEventListener('change', render);
+  render();
+})();

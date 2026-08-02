@@ -865,6 +865,9 @@ table.deets a{color:var(--g);font-weight:650}
 .cobrand strong{font-family:var(--serif);font-size:18px;color:var(--forest);
   letter-spacing:-.01em}
 .cobrand .cb-note{color:var(--mut);font-size:12.5px;flex-basis:100%;line-height:1.5}
+.cobrand .cb-x{margin-left:auto;width:30px;height:30px;border-radius:8px;font-size:20px;
+  line-height:1;color:var(--mut);border:1px solid transparent;flex:none}
+.cobrand .cb-x:hover{background:var(--card);border-color:var(--line-2);color:var(--ink)}
 
 /* Compact input rows for the pro calculators — a lot of fields in a small box. */
 .field.pf{margin-bottom:14px}
@@ -882,3 +885,31 @@ table.deets a{color:var(--g);font-weight:650}
 table tr.total th,table tr.total td{border-top:2px solid var(--line-2);
   font-weight:800;color:var(--ink);padding-top:14px}
 .cobrand+main .hero{padding-top:clamp(26px,3vw,44px)}
+
+/* --------------------------------------------------- sticky mobile actions */
+/* Persistent, honest, and never interruptive. The README rules out exit-intent
+   popups, countdown timers, fake scarcity and self-opening chat bubbles — all
+   of which read as desperate to exactly the referral-quality people worth
+   having. A bar that sits there offering the two things someone actually wants
+   is the opposite: always available, never in your face. Mobile only, where
+   the header CTA has scrolled away. */
+.actionbar{display:none}
+@media(max-width:760px){
+  .actionbar{
+    display:flex;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:70;
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+    background:rgba(12,60,42,.96);backdrop-filter:blur(10px);
+    border-top:1px solid rgba(255,255,255,.12);
+    transform:translateY(110%);transition:transform .28s var(--ease);
+  }
+  .actionbar.up{transform:none}
+  .actionbar a{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;
+    padding:13px 10px;border-radius:10px;font-size:15px;font-weight:700;
+    text-align:center;line-height:1.2}
+  .actionbar .ab-call{background:rgba(255,255,255,.1);color:#fff;
+    border:1px solid rgba(255,255,255,.24)}
+  .actionbar .ab-go{background:var(--go);color:#04241a}
+  body{padding-bottom:0}
+  body.has-actionbar{padding-bottom:76px}
+}
+@media(prefers-reduced-motion:reduce){.actionbar{transition:none}}

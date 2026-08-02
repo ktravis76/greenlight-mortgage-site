@@ -248,6 +248,49 @@ def check_compliance():
 
 # ------------------------------------------------------------------- todos
 
+# ------------------------------------------------------------------- chrome
+# Every consumer page must carry the identical header and footer. This exists
+# because KT found a page that did not and reasonably concluded the site was
+# broken. Only the internal screener is exempt, and it is exempt on purpose.
+
+CHROME_EXEMPT = {"/tools/va-refi-screener"}
+
+
+def check_chrome():
+    missing_header, missing_footer, odd_brand = [], [], []
+    for path in pages():
+        url = url_of(path)
+        if url in CHROME_EXEMPT:
+            continue
+        raw = open(path, encoding="utf-8").read()
+        if 'id="siteheader"' not in raw:
+            missing_header.append(url)
+        if "<footer>" not in raw:
+            missing_footer.append(url)
+        for href in re.findall(r'class="brand" href="([^"]*)"', raw):
+            if href != "/":
+                odd_brand.append((url, href))
+
+    total = len(list(pages())) - len(CHROME_EXEMPT)
+    print(f"chrome     {total} consumer pages")
+    ok = True
+    for label, items in (("missing the site header", missing_header),
+                         ("missing the footer", missing_footer)):
+        if items:
+            ok = False
+            print(f"{RED}  {len(items)} {label}:{OFF}")
+            for u in items[:10]:
+                print(f"{RED}    {u}{OFF}")
+    if odd_brand:
+        ok = False
+        print(f"{RED}  brand link does not point at /:{OFF}")
+        for u, h in odd_brand[:10]:
+            print(f"{RED}    {u} -> {h}{OFF}")
+    if ok:
+        print(f"{GRN}  identical header, footer and brand link on every one{OFF}")
+    return ok
+
+
 def report_todos():
     """Unconfirmed facts are deliberately visible in the markup. Count them so
     nobody ships thinking the site is finished."""
@@ -266,10 +309,12 @@ if __name__ == "__main__":
     print()
     ok_links = check_links()
     print()
+    ok_chrome = check_chrome()
+    print()
     ok_comp = check_compliance()
     report_todos()
     print()
-    if ok_links and ok_comp:
+    if ok_links and ok_comp and ok_chrome:
         print(f"{GRN}PASS{OFF}\n")
         sys.exit(0)
     print(f"{RED}FAIL{OFF}\n")

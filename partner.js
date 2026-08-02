@@ -65,11 +65,29 @@
     bar.innerHTML =
       '<div class="wrap"><span class="cb-label">Shared with you by</span>'
       + '<strong></strong>'
+      + '<button class="cb-x" type="button" aria-label="Dismiss">&times;</button>'
       + '<span class="cb-note">They sent you this tool. It is free to use, and '
       + 'nothing here obliges you to work with anyone.</span></div>';
     bar.querySelector('strong').textContent = who;   // never innerHTML for user input
     var main = document.getElementById('main');
     if (main && main.parentNode) main.parentNode.insertBefore(bar, main);
+
+    // Dismissible, and dismissing it actually forgets the partner rather than
+    // just hiding the bar. Without this the banner follows you across every
+    // page for the life of the tab with no way out — which is precisely how it
+    // behaved the first time somebody who was not testing it opened one of
+    // these links.
+    bar.querySelector('.cb-x').addEventListener('click', function () {
+      try { sessionStorage.removeItem(KEY); } catch (e) {}
+      window.GLM_PARTNER = null;
+      bar.remove();
+      // Strip the params so a refresh does not bring it straight back.
+      if (params.get('ref') || params.get('pro') || params.get('co')) {
+        ['ref', 'pro', 'co'].forEach(function (k) { params.delete(k); });
+        var q = params.toString();
+        history.replaceState({}, '', location.pathname + (q ? '?' + q : ''));
+      }
+    });
   }
 
   /* --- feed the code into every form -------------------------------------- */

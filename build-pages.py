@@ -757,30 +757,17 @@ TCPA_TEXT = S.TCPA_TEXT   # single source of truth lives in sitegen.py
 # ==========================================================================
 
 def learn():
-    topics = [
-        ("shield", "What underwriting actually looks at",
-         "Income, assets, credit, and the property itself. Knowing the four buckets makes the "
-         "document requests stop feeling random."),
-        ("save", "Down payments: the 20% myth",
-         "The number of people who wait years to save a down payment they never needed is the "
-         "single most expensive misunderstanding in this business."),
-        ("calc", "Rate versus payment versus cost",
-         "Three different things that people use interchangeably. The cheapest rate is not "
-         "always the cheapest loan."),
-        ("home", "What a VA loan is really worth",
-         "No down payment, no monthly mortgage insurance, reusable, and the funding fee waived "
-         "entirely at a 10% or higher service-connected disability rating."),
-        ("book", "Closing costs, itemised",
-         "What each line is, who sets it, and which ones you can actually shop for."),
-        ("chat", "Credit: what moves the needle",
-         "What helps, what does nothing, and what to avoid doing in the sixty days before you "
-         "apply."),
-    ]
+    import importlib.util as _il
+    _spec = _il.spec_from_file_location("bg", os.path.join(os.path.dirname(
+        os.path.abspath(__file__)), "build-guides.py"))
+    _bg = _il.module_from_spec(_spec); _spec.loader.exec_module(_bg)
+
     cards = "".join(
-        f'<div class="card reveal"><span class="ti" style="display:grid;place-items:center;'
-        f'width:40px;height:40px;border-radius:10px;background:var(--go-soft);color:var(--g);'
-        f'margin-bottom:14px">{ICONS[i]}</span><h3>{t}</h3><p>{d}</p></div>'
-        for i, t, d in topics)
+        f'<a class="lcard reveal" href="/learn/{a["slug"]}" style="--accent:#0f7a4d">'
+        f'<span class="lmark">{ICONS[a["icon"]]}</span>'
+        f'<h3>{S.esc(a["title"])}</h3><p>{S.esc(a["blurb"])}</p>'
+        f'<span class="go">Read it {ARROW}</span></a>'
+        for a in _bg.ARTICLES)
 
     body = f"""{S.hero(
         eyebrow="Learning Center",

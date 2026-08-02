@@ -40,6 +40,8 @@ PRIORITY = {
     "/tools/rent-vs-buy": "0.7",
     "/loans": "0.9",
     "/loans/va": "0.9",
+    "/loans/va-irrrl": "0.9",
+    "/why-a-broker": "0.8",
     "/contact": "0.8",
     "/about": "0.8",
 }
@@ -98,11 +100,46 @@ Sitemap: {S.ORIGIN}/sitemap.xml
         f.write(txt)
 
 
+def prune(expected):
+    """Delete generated pages nothing produces any more.
+
+    Renaming a page used to leave the old directory behind, still served and
+    still in the sitemap — /learn/closing-costs-itemised outlived its British
+    spelling by exactly one build. Anything under a generated path that this
+    run did not write gets removed.
+    """
+    keep = {os.path.normpath(os.path.join(HERE, "index.html"))}
+    for u in expected:
+        rel = "index.html" if u == "/" else u.strip("/") + "/index.html"
+        keep.add(os.path.normpath(os.path.join(HERE, rel)))
+
+    removed = []
+    for root, dirs, files in os.walk(HERE):
+        dirs[:] = [d for d in dirs
+                   if d not in {".git", "assets", "supabase", "db", "__pycache__", "data"}]
+        for fn in files:
+            if fn != "index.html":
+                continue
+            full = os.path.normpath(os.path.join(root, fn))
+            if full not in keep:
+                os.remove(full)
+                removed.append(os.path.relpath(full, HERE))
+                try:
+                    os.rmdir(root)
+                except OSError:
+                    pass
+    return removed
+
+
 def main():
-    for mod in ("build-loans", "build-pages", "build-tools", "build-archive", "build-pros"):
+    for mod in ("build-loans", "build-pages", "build-tools", "build-archive", "build-pros", "build-guides"):
         load(mod).build()
 
     urls = discover()
+    stale = prune(urls)
+    if stale:
+        print(f"\npruned {len(stale)} stale page(s): " + ", ".join(stale[:5]))
+        urls = discover()
     n = sitemap(urls)
     robots()
     print(f"\nsitemap.xml  ({n} urls)  ·  robots.txt")
