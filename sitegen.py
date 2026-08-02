@@ -33,15 +33,30 @@ PHONE_HREF = "9033310892"
 NMLS_CO   = "2426021"
 NMLS_KT   = "233918"
 
-# Six states, in the order the current site lists them.
+# Licensed states, corrected by KT on 2026-08-01.
+#
+# The old kennethtravis.com footer listed six: TX, AL, FL, LA, ND, SC. That is
+# wrong. The correct list is five — Texas, Louisiana, Michigan, North Dakota,
+# Alabama. Florida and South Carolina are OUT; Michigan is IN and was never on
+# the old site at all.
+#
+# ⚠️ The Michigan license number is NOT KNOWN and has not been invented. Until KT
+# supplies it, the page says so in plain sight rather than showing a plausible
+# number. Advertising a state license with a wrong number is worse than
+# advertising it with none.
+#
+# Ordered as KT listed them.
 LICENSES = [
     ("Texas", "2426021"),
-    ("Alabama", "23417"),
-    ("Florida", "MBR6235"),
     ("Louisiana", "2426021"),
+    ("Michigan", None),          # ← number pending, rendered as a visible gap
     ("North Dakota", "ML104832"),
-    ("South Carolina", "2426021"),
+    ("Alabama", "23417"),
 ]
+
+STATE_COUNT = len(LICENSES)      # five — never hard-code the word "six" again
+STATE_COUNT_WORD = "five"
+STATE_NAMES = ", ".join(n for n, _ in LICENSES[:-1]) + f" and {LICENSES[-1][0]}"
 
 # External licensed LOS. We do not rebuild the 1003 — it collects SSNs.
 APPLY = "https://greenlight.my1003app.com/233918/register"
@@ -139,7 +154,7 @@ def jstr(s):
 TCPA_TEXT = (
     "I agree that Greenlight Mortgage, LLC (NMLS #2426021) and its loan officers may contact "
     "me at the phone number I provided, including by autodialed or pre-recorded calls and by "
-    "text message, about my mortgage enquiry. Message and data rates may apply. "
+    "text message, about my mortgage inquiry. Message and data rates may apply. "
     "<strong>Consent is not a condition of obtaining a loan or any other service.</strong> "
     "I can opt out at any time by replying STOP to a text, asking the caller to remove me, or "
     'emailing us &mdash; see our <a href="/privacy">Privacy Policy</a>.'
@@ -179,23 +194,83 @@ TX_SML_NOTICE = (
     "before launch.]</em>"
 )
 
+def lic_num(num):
+    """Render a state license number, or a visible gap where we do not have one."""
+    if num:
+        return num
+    return '<em class="todo">number pending &mdash; KT to confirm</em>'
+
+
 LICENSE_SENTENCE = (
     f"{COMPANY} is a licensed Mortgage Broker in the state of Texas. "
     + "NMLS " + NMLS_CO + ". "
-    + " ".join(f"{name} &mdash; {num}." for name, num in LICENSES)
+    + " ".join(f"{name} &mdash; {lic_num(num)}." for name, num in LICENSES)
+)
+
+# Why there are two NMLS numbers on this site. Consumers notice, and an
+# unexplained mismatch reads like an error or worse. It is neither — a company
+# and each individual loan originator are licensed separately.
+NMLS_EXPLAINER = (
+    f"You will see two NMLS numbers on this site, and both are correct. "
+    f"<strong>#{NMLS_CO}</strong> licenses the company, {COMPANY}. "
+    f"<strong>#{NMLS_KT}</strong> licenses Kenneth Travis personally as a loan originator. "
+    f"Federal law licenses the business and the individual separately, so a broker will "
+    f"always have both. You can look either of them up at "
+    f'<a href="https://www.nmlsconsumeraccess.org">nmlsconsumeraccess.org</a>.'
 )
 
 
+# ------------------------------------------------------------------ trust marks
+# The EHO and NMLS artwork rescued off the old multisite is 44x45px of hairline
+# black line art. Scaled into a trust bar it renders as an empty smudge, which is
+# exactly how it looked — KT reported seeing no mark at all beside "Equal Housing
+# Opportunity". Drawn as vector here instead: crisp at any size, correct on dark.
+
+MARK_EHO = """<svg class="mark" viewBox="0 0 40 40" role="img" aria-label="Equal Housing Opportunity">
+<path d="M20 5 3.5 18.2h4.2V35h24.6V18.2h4.2z" fill="currentColor" opacity=".14"/>
+<path d="M20 5 3.5 18.2h4.2V35h24.6V18.2h4.2z" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linejoin="round"/>
+<rect x="14" y="21.5" width="12" height="2.7" rx="1.35" fill="currentColor"/>
+<rect x="14" y="27" width="12" height="2.7" rx="1.35" fill="currentColor"/>
+</svg>"""
+
+MARK_NMLS = """<svg class="mark" viewBox="0 0 40 40" role="img" aria-label="NMLS Consumer Access">
+<circle cx="20" cy="20" r="15.6" fill="none" stroke="currentColor" stroke-width="2.1"/>
+<path d="M20 11.4 27 15v5.2c0 4.4-2.9 7.6-7 8.8-4.1-1.2-7-4.4-7-8.8V15z"
+      fill="currentColor" opacity=".16"/>
+<path d="M20 11.4 27 15v5.2c0 4.4-2.9 7.6-7 8.8-4.1-1.2-7-4.4-7-8.8V15z"
+      fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+<path d="m16.9 20.2 2.3 2.3 4.1-4.3" fill="none" stroke="currentColor"
+      stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>"""
+
+# Echoes the gaslight in the real logo: finial, pitched cap, tapered glass cage
+# with a lit pane, and a base. Not a battery.
+MARK_LANTERN = """<svg class="mark" viewBox="0 0 40 40" role="img" aria-label="Greenlight">
+<path d="M20 2.5v2.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+<path d="M20 5.2 27.8 12H12.2z" fill="currentColor"/>
+<path d="M14 13.5h12l1.6 15.2H12.4z" fill="currentColor" opacity=".22"/>
+<path d="M14 13.5h12l1.6 15.2H12.4z" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linejoin="round"/>
+<path d="M20 13.5v15.2M13.2 21h13.6" stroke="currentColor" stroke-width="1.3" opacity=".55"/>
+<path d="M12 30.5h16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+<path d="M17 32.6h6v2.4h-6z" fill="currentColor"/>
+</svg>"""
+
+
 def trust_bar():
-    """EHO / NMLS / Co-LAB / six states, presented the way a bank shows FDIC.
+    """EHO / NMLS / Co-LAB, presented the way a bank shows FDIC.
     A design element that happens to satisfy a disclosure requirement."""
     return f"""<div class="trustbar"><div class="wrap"><div class="trustrow">
-<div class="trust"><img src="/assets/from-old-site/badge-ehl.png" alt="" width="28" height="28" loading="lazy">
-<span><strong>Equal Housing Opportunity</strong><small>We lend without regard to race, color, religion, sex, handicap, familial status or national origin.</small></span></div>
-<div class="trust"><img src="/assets/from-old-site/badge-nmls.png" alt="" width="28" height="28" loading="lazy">
-<span><strong>NMLS #{NMLS_CO}</strong><small>Kenneth Travis, individual NMLS #{NMLS_KT}. Verify us at nmlsconsumeraccess.org.</small></span></div>
-<div class="trust"><span class="dot" aria-hidden="true"></span>
-<span><strong>{POWERED}</strong><small>Licensed in six states: Texas, Alabama, Florida, Louisiana, North Dakota, South Carolina.</small></span></div>
+<div class="trust">{MARK_EHO}
+<span><strong>Equal Housing Opportunity</strong><small>We lend without regard to race, color,
+religion, sex, handicap, familial status or national origin.</small></span></div>
+<div class="trust">{MARK_NMLS}
+<span><strong>Company NMLS #{NMLS_CO}</strong><small>Kenneth Travis, loan originator, is
+separately licensed as NMLS #{NMLS_KT}. Both are real &mdash; look either up at
+nmlsconsumeraccess.org.</small></span></div>
+<div class="trust">{MARK_LANTERN}
+<span><strong>{POWERED}</strong><small>Licensed in {STATE_COUNT_WORD} states:
+{STATE_NAMES}.</small></span></div>
 </div></div></div>"""
 
 
@@ -230,8 +305,8 @@ def header():
     return f"""<a class="skip" href="#main">Skip to content</a>
 <header id="siteheader"><div class="wrap nav">
 <a class="brand" href="/" aria-label="{SHORT} home">
-  <span class="light" aria-hidden="true"><i></i></span>
-  <span class="bname">{SHORT}<small>{POWERED}</small></span>
+  <img src="/assets/from-old-site/logo-header.png" alt="{SHORT} — The Kenneth Travis Team"
+       width="217" height="76" fetchpriority="high">
 </a>
 <nav class="links" aria-label="Main">
   {_dropdown("Loan Options", loans)}
@@ -267,10 +342,10 @@ def header():
 
 # --------------------------------------------------------------------- the footer
 # The footer carries the compliance weight. Small and quiet, but legible —
-# 13px with real contrast, not 6pt grey-on-grey.
+# 13px with real contrast, not 6pt gray-on-gray.
 
 def footer():
-    lic = " &middot; ".join(f"{n} {num}" for n, num in LICENSES)
+    lic = " &middot; ".join(f"{n} {lic_num(num)}" for n, num in LICENSES)
     loans = "".join(f'<a href="/loans/{s}">{n}</a>' for s, n in LOAN_NAV)
     tools = "".join(f'<a href="{h}">{t}</a>' for h, t in TOOL_NAV)
     learn = "".join(f'<a href="{h}">{t}</a>' for h, t in LEARN_NAV)
@@ -278,16 +353,15 @@ def footer():
     return f"""<footer><div class="wrap">
 <div class="fg">
 <div class="fbrand">
-  <a class="brand" href="/"><span class="light" aria-hidden="true"><i></i></span>
-  <span class="bname">{SHORT}<small>{POWERED}</small></span></a>
+  <a class="brand" href="/">
+    <img src="/assets/from-old-site/logo-header.png" alt="{SHORT} — The Kenneth Travis Team"
+         width="217" height="76" loading="lazy">
+  </a>
   <p>A mortgage brokerage serving Longview and East Texas since {FOUNDED}. We shop a network
   of lenders instead of selling one bank's menu.</p>
   <p class="fnap"><strong>{COMPANY}</strong><br>{STREET}, {CITY}, {STATE} {ZIP}<br>
   <a href="tel:{PHONE_HREF}">{PHONE}</a></p>
-  <div class="fbadges">
-    <img src="/assets/from-old-site/badge-ehl.png" alt="Equal Housing Opportunity" width="34" height="34" loading="lazy">
-    <img src="/assets/from-old-site/badge-nmls.png" alt="NMLS Consumer Access" width="34" height="34" loading="lazy">
-  </div>
+  <div class="fbadges">{MARK_EHO}{MARK_NMLS}</div>
 </div>
 <div><h4>Loan options</h4>{loans}</div>
 <div><h4>Tools</h4>{tools}</div>
@@ -303,10 +377,10 @@ def footer():
 
 <div class="legal">
 <p><strong>{COMPANY}</strong> is a licensed Mortgage Broker in the state of Texas.
-Company NMLS #{NMLS_CO} &middot; Kenneth Travis, individual NMLS #{NMLS_KT}.
-State licenses: {lic}.
-{STREET}, {CITY}, {STATE} {ZIP} &middot; {PHONE}.
-Consumers may verify licensing at <a href="https://www.nmlsconsumeraccess.org">nmlsconsumeraccess.org</a>.</p>
+Licensed in {STATE_COUNT_WORD} states &mdash; {lic}.
+{STREET}, {CITY}, {STATE} {ZIP} &middot; {PHONE}.</p>
+
+<p>{NMLS_EXPLAINER}</p>
 
 <p data-compliance="tx-sml-notice">{TX_SML_NOTICE}</p>
 

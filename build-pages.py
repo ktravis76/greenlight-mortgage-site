@@ -29,20 +29,80 @@ def write(path, html_out):
     print(f"  {rel}  ({len(html_out):,} bytes)")
 
 
-def icon(d):
-    return (f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" '
-            f'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{d}</svg>')
+# ---------------------------------------------------------------------- icons
+# Drawn for this site rather than pulled from a set. Each one is specific to the
+# thing it labels — a signpost for choosing between loan programs, a lantern for
+# the brand, an actual amortization curve for the calculator. The previous set
+# was four variations on a rounded rectangle, which is the tell of a generated
+# site: technically an icon, semantically nothing.
+#
+# Two-layer construction throughout: a soft filled shape carrying the green, a
+# crisp stroke on top. That is what stops line icons looking like clip-art.
 
+def icon(body, fill=""):
+    return (f'<svg viewBox="0 0 32 32" fill="none" aria-hidden="true">'
+            f'{fill}{body}</svg>')
+
+
+_S = ('stroke="currentColor" stroke-width="1.9" stroke-linecap="round" '
+      'stroke-linejoin="round" fill="none"')
+_F = 'fill="currentColor" opacity=".15"'
 
 ICONS = {
-    "loans": icon('<path d="M3 7h18M3 12h18M3 17h12"/>'),
-    "calc": icon('<rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 11h2m3 0h3M8 15h2m3 0h3M8 19h8"/>'),
-    "home": icon('<path d="M3 10.5 12 3l9 7.5V21H3z"/><path d="M9 21v-7h6v7"/>'),
-    "star": icon('<path d="m12 2 3 6.5 7 1-5 4.8 1.2 7L12 18l-6.2 3.3L7 14.3 2 9.5l7-1z"/>'),
-    "save": icon('<path d="M12 1v22M17 5.5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>'),
-    "book": icon('<path d="M4 4v16a1 1 0 0 0 1 1h15"/><path d="M8 4h12v13H8a4 4 0 0 0-4 4V8a4 4 0 0 1 4-4z"/>'),
-    "chat": icon('<path d="M21 12a8 8 0 0 1-11.6 7.1L3 21l1.9-6.4A8 8 0 1 1 21 12z"/>'),
-    "shield": icon('<path d="M12 2 4 5.5v6c0 5 3.4 9.3 8 10.5 4.6-1.2 8-5.5 8-10.5v-6z"/><path d="m9 12 2 2 4-4"/>'),
+    # Signpost: several ways to go, which is the actual proposition of the page.
+    "loans": icon(
+        f'<path d="M16 4.5v23" {_S}/>'
+        f'<path d="M6.5 8.5h15l3.5 3.5-3.5 3.5h-15z" {_F}/>'
+        f'<path d="M6.5 8.5h15l3.5 3.5-3.5 3.5h-15z" {_S}/>'
+        f'<path d="M25.5 18h-15L7 21.5 10.5 25h15z" {_S}/>'
+        f'<path d="M12 27.5h8" {_S}/>'),
+
+    # A real amortization curve, not a calculator body with fake buttons.
+    "calc": icon(
+        f'<path d="M4.5 25.5V6.5" {_S}/><path d="M4.5 25.5h23" {_S}/>'
+        f'<path d="M8 25.5c6-1 9-3.5 11-8s3.5-7.5 7.5-9v17z" {_F}/>'
+        f'<path d="M8 22.5c6-1 9-3.5 11-8s3.5-7.5 7.5-9" {_S}/>'
+        f'<circle cx="26.5" cy="5.5" r="2" fill="currentColor"/>'),
+
+    # House with the roofline doubling as a rising value line.
+    "home": icon(
+        f'<path d="M5 15 16 6l11 9v12H5z" {_F}/>'
+        f'<path d="M3 16.5 16 5.5l13 11" {_S}/>'
+        f'<path d="M6 14.5V27h20V14.5" {_S}/>'
+        f'<path d="M12.5 27v-7.5h7V27" {_S}/>'
+        f'<path d="M20.5 11.5h4.5V16" {_S}/>'),
+
+    # Quote inside a speech bubble — testimonials, not a generic star.
+    "star": icon(
+        f'<path d="M4.5 8.5A2.5 2.5 0 0 1 7 6h18a2.5 2.5 0 0 1 2.5 2.5v11A2.5 2.5 0 0 1 25 22h-9.5L9 27v-5H7a2.5 2.5 0 0 1-2.5-2.5z" {_F}/>'
+        f'<path d="M4.5 8.5A2.5 2.5 0 0 1 7 6h18a2.5 2.5 0 0 1 2.5 2.5v11A2.5 2.5 0 0 1 25 22h-9.5L9 27v-5H7a2.5 2.5 0 0 1-2.5-2.5z" {_S}/>'
+        f'<path d="M12 10.5c-1.8 0-3 1.2-3 2.9 0 1.5 1 2.6 2.4 2.6.4 0 .8-.1 1-.2-.3 1.1-1.2 2-2.3 2.4M20.5 10.5c-1.8 0-3 1.2-3 2.9 0 1.5 1 2.6 2.4 2.6.4 0 .8-.1 1-.2-.3 1.1-1.2 2-2.3 2.4" {_S}/>'),
+
+    # Coins with an upward arrow — savings, specifically.
+    "save": icon(
+        f'<ellipse cx="13" cy="9" rx="8.5" ry="3.5" {_F}/>'
+        f'<path d="M21.5 9c0 1.9-3.8 3.5-8.5 3.5S4.5 10.9 4.5 9 8.3 5.5 13 5.5 21.5 7.1 21.5 9z" {_S}/>'
+        f'<path d="M4.5 9v6c0 1.9 3.8 3.5 8.5 3.5M4.5 15v6c0 1.9 3.8 3.5 8.5 3.5 1 0 2-.1 2.9-.2" {_S}/>'
+        f'<path d="M21.5 9v4" {_S}/>'
+        f'<path d="M23 27v-8m0 0-3.5 3.5M23 19l3.5 3.5" {_S}/>'),
+
+    # Open book with a bookmark.
+    "book": icon(
+        f'<path d="M4 6.5h9a3 3 0 0 1 3 3V26a3 3 0 0 0-3-3H4z" {_F}/>'
+        f'<path d="M4 6.5h9a3 3 0 0 1 3 3V26a3 3 0 0 0-3-3H4zM28 6.5h-9a3 3 0 0 0-3 3V26a3 3 0 0 1 3-3h9z" {_S}/>'
+        f'<path d="M21.5 6.5v7l2.5-1.8 2.5 1.8v-7" {_S}/>'),
+
+    # Two bubbles — a conversation, not a notification.
+    "chat": icon(
+        f'<path d="M3.5 8.5A2.5 2.5 0 0 1 6 6h11a2.5 2.5 0 0 1 2.5 2.5v6A2.5 2.5 0 0 1 17 17H9l-5.5 4z" {_F}/>'
+        f'<path d="M3.5 8.5A2.5 2.5 0 0 1 6 6h11a2.5 2.5 0 0 1 2.5 2.5v6A2.5 2.5 0 0 1 17 17H9l-5.5 4z" {_S}/>'
+        f'<path d="M23 12h3a2.5 2.5 0 0 1 2.5 2.5v6A2.5 2.5 0 0 1 26 23h-1v4l-5-4h-4a2.5 2.5 0 0 1-2.4-1.8" {_S}/>'),
+
+    # Shield with a check — underwriting, verification.
+    "shield": icon(
+        f'<path d="M16 3.5 5.5 8v8c0 6.7 4.4 12.3 10.5 13.9C22.1 28.3 26.5 22.7 26.5 16V8z" {_F}/>'
+        f'<path d="M16 3.5 5.5 8v8c0 6.7 4.4 12.3 10.5 13.9C22.1 28.3 26.5 22.7 26.5 16V8z" {_S}/>'
+        f'<path d="m11.5 16.5 3.2 3.2 6.3-6.6" {_S}/>'),
 }
 
 
@@ -70,7 +130,7 @@ def homepage():
     quotes = "".join(
         f'<figure class="quote"><div class="stars">{STAR * 5}</div>'
         f'<blockquote>{S.esc(body)}</blockquote>'
-        f'<figcaption><span class="dot"></span>{S.esc(name)} &middot; {S.esc(place)}</figcaption>'
+        f'<figcaption>{S.esc(name)} &middot; {S.esc(place)}</figcaption>'
         f'</figure>'
         for name, place, body in S.TESTIMONIALS[:6])
 
@@ -92,13 +152,13 @@ def homepage():
              "Lower the payment, shorten the term, or use equity. Including the VA IRRRL."),
         ])
 
-    towns = "".join(f'<span class="pill">{t}</span>' for t in S.TOWNS)
+    towns = "".join(f"<span>{t}</span>" for t in S.TOWNS)
 
     body = f"""
 <div class="hero home"><div class="wrap">
 <div class="herogrid">
 <div>
-  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>Longview, Texas &middot; Licensed in 6 states</p>
+  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>Longview, Texas &middot; Licensed in {S.STATE_COUNT_WORD} states</p>
   <h1>A mortgage broker, <span class="rule">not a bank.</span></h1>
   <p class="lede">A bank can only sell you what the bank has. We shop a network of lenders,
   bring back the real options, and tell you which one actually costs you less &mdash;
@@ -109,8 +169,8 @@ def homepage():
   </div>
   <div class="heroproof">
     <div><b>2008</b><span>Serving East Texas since</span></div>
-    <div><b>6</b><span>States licensed</span></div>
-    <div><b>7</b><span>Client reviews, verbatim</span></div>
+    <div><b>{S.STATE_COUNT}</b><span>States licensed</span></div>
+    <div><b>{len(S.TESTIMONIALS)}</b><span>Client reviews, verbatim</span></div>
   </div>
 </div>
 <div>
@@ -122,20 +182,20 @@ def homepage():
       <a href="/assets/from-old-site/kt-video.mp4">Download it instead</a>.
     </video>
   </div>
-  <p class="vidcap"><span class="dot"></span>Kenneth Travis &middot; President &amp; CEO
-  &middot; NMLS #{S.NMLS_KT}</p>
+  <p class="vidcap">Kenneth Travis &middot; President &amp; CEO &middot;
+  Loan Originator NMLS #{S.NMLS_KT}</p>
 </div>
 </div>
 </div></div>
 
 <div class="wrap"><div class="tiles">{tile_html}</div></div>
 
-<section><div class="wrap">
+<section class="dark letter"><div class="wrap">
 <div class="split">
 <div class="reveal">
   <p class="eyebrow"><span class="tick" aria-hidden="true"></span>From Kenneth</p>
   <h2>Longview, TX mortgage consultant</h2>
-  <p class="sub">Dear Future Homeowner,</p>
+  <p class="salut">Dear Future Homeowner,</p>
   <p class="sub">My name is <strong>Kenneth Travis</strong>, and thank you for taking the
   time to visit. You will find plenty here to help you buy a home or refinance the one you
   are in &mdash; and a few tools that give you a real number before you ever pick up the
@@ -147,9 +207,19 @@ def homepage():
   up front than sell you something that falls apart at closing.</p>
   <p class="sub">The question I built this company around was simple:
   <em>how can we be better, how can we be different?</em></p>
+
+  <div class="sign">
+    <img src="/assets/from-old-site/kenneth-travis-headshot.png" alt="" width="72" height="72">
+    <div>
+      <p class="signame">Kenneth Travis</p>
+      <p class="sigrole">President &amp; CEO &middot; Loan Originator NMLS #{S.NMLS_KT}<br>
+      United States Marine Corps, eight years, Sergeant</p>
+    </div>
+  </div>
+
   <div class="cta">
-    <a class="btn" href="/contact">Questions? Contact me</a>
-    <a class="btn ghost" href="{A}">Start an application</a>
+    <a class="btn go" href="/contact">Questions? Contact me</a>
+    <a class="btn onDark" href="{A}">Start an application</a>
   </div>
 </div>
 <div class="reveal">
@@ -204,9 +274,9 @@ the payment you have.</p>
 </div>
 <div class="reveal">
   <div class="callout" style="margin-top:0">
-    <h3>Licensed in six states</h3>
-    <p>Texas, Alabama, Florida, Louisiana, North Dakota and South Carolina. If you are moving
-    out of the area &mdash; or into it &mdash; we may still be able to help.</p>
+    <h3>Licensed in {S.STATE_COUNT_WORD} states</h3>
+    <p>{S.STATE_NAMES}. If you are moving out of the area &mdash; or into it &mdash; we may
+    still be able to help.</p>
   </div>
   <div class="callout">
     <h3>We do not rebuild the application</h3>
@@ -244,14 +314,23 @@ the payment you have.</p>
 </div>
 </div></section>
 
-<section class="alt"><div class="wrap">
-<p class="eyebrow"><span class="tick" aria-hidden="true"></span>Where we work</p>
-<h2>East Texas is the whole point.</h2>
-<p class="sub">We live here. We know which Longview neighbourhoods appraise the way people
-expect and which ones surprise them, which addresses just outside town still qualify for a
-zero-down USDA loan, and how long a Gregg County closing actually takes.</p>
-<div class="pills">{towns}</div>
-<p class="sub" style="margin-top:24px">Including the {", ".join(S.DISTRICTS)} communities.</p>
+<section class="dark"><div class="wrap">
+<div class="split">
+<div>
+  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>Where we work</p>
+  <h2>East Texas is the whole point.</h2>
+  <p class="sub">We live here. We know which Longview neighborhoods appraise the way people
+  expect and which ones surprise them, which addresses just outside town still qualify for a
+  zero-down USDA loan, and how long a Gregg County closing actually takes.</p>
+  <p class="sub">That is not a marketing line. It is the difference between a file that closes
+  on time and one that falls over at the appraisal.</p>
+</div>
+<div>
+  <p class="places">{towns}</p>
+  <p class="districts">Including the {", ".join(S.DISTRICTS)} communities &mdash; and we lend
+  in {S.STATE_COUNT_WORD} states, so a move out of the area does not have to mean a new lender.</p>
+</div>
+</div>
 </div></section>
 
 {S.cta_band(
@@ -282,7 +361,7 @@ def about():
     # confirmed — use placeholders clearly marked, do not invent people."
     # Six further names appear in the phase-2 back-office spec (Julia, Lisa, Kimberly,
     # Jared, Preston, Ryan). They are almost certainly real colleagues, but we have no
-    # confirmed title, licence number, or permission to publish any of them — and a
+    # confirmed title, license number, or permission to publish any of them — and a
     # consumer-facing page listing an unlicensed person beside a licensed one is a
     # compliance problem, not just an accuracy one. So the cards below are blanks.
     placeholders = "".join(
@@ -311,8 +390,8 @@ def about():
     <h3>Kenneth Travis</h3>
     <p class="role">President &amp; CEO &middot; NMLS #{S.NMLS_KT}</p>
     <p class="meta">Eight years in the United States Marine Corps, discharged as a Sergeant.
-    Founded {S.COMPANY} in 2008. Licensed in six states, working out of the office on Judson
-    Road in Longview.</p>
+    Founded {S.COMPANY} in 2008. Licensed in {S.STATE_COUNT_WORD} states, working out of the
+    office on Judson Road in Longview.</p>
     <p class="meta"><a href="tel:{S.PHONE_HREF}">{S.PHONE}</a></p>
     <p class="tag">&ldquo;{S.TAGLINE}&rdquo;</p>
   </div>
@@ -378,7 +457,7 @@ def about():
 <div>
   <p class="eyebrow"><span class="tick" aria-hidden="true"></span>Licensed in</p>
   <ul class="ticks">
-    {"".join(f"<li>{n} &mdash; license {num}</li>" for n, num in S.LICENSES)}
+    {"".join(f"<li><strong>{n}</strong> &mdash; license {S.lic_num(num)}</li>" for n, num in S.LICENSES)}
   </ul>
   <p class="disclose">Company NMLS #{S.NMLS_CO}. Kenneth Travis individual NMLS #{S.NMLS_KT}.
   Verify at nmlsconsumeraccess.org.</p>
@@ -395,7 +474,7 @@ def about():
         path="/about",
         title="About Greenlight Mortgage | Meet the Team — Longview, TX",
         desc="Greenlight Mortgage was founded in Longview, Texas in 2008 by Kenneth Travis, "
-             "USMC veteran and mortgage broker. Licensed in six states. Powered by Co/LAB "
+             "USMC veteran and mortgage broker. Licensed in five states. Powered by Co/LAB "
              "Lending. Equal Housing Opportunity.",
         body=body,
         trail=[("/", "Home"), ("/about", "About")],
@@ -410,7 +489,7 @@ def testimonials():
     quotes = "".join(
         f'<figure class="quote"><div class="stars">{STAR * 5}</div>'
         f'<blockquote>{S.esc(body)}</blockquote>'
-        f'<figcaption><span class="dot"></span>{S.esc(name)} &middot; {S.esc(place)}</figcaption>'
+        f'<figcaption>{S.esc(name)} &middot; {S.esc(place)}</figcaption>'
         f'</figure>'
         for name, place, body in S.TESTIMONIALS)
 
@@ -639,7 +718,7 @@ TCPA_TEXT = S.TCPA_TEXT   # single source of truth lives in sitegen.py
 
 
 # ==========================================================================
-# LEARNING CENTRE / RESOURCES
+# LEARNING CENTER / RESOURCES
 # ==========================================================================
 
 def learn():
@@ -857,7 +936,7 @@ POSTS = [
                 "most people can save. And you are betting that rates will not move against you, "
                 "which is a bet nobody can win reliably.",
                 "Against that, mortgage insurance is a monthly cost that, on a conventional loan, "
-                "comes off once you have built enough equity. Sometimes the maths says wait. "
+                "comes off once you have built enough equity. Sometimes the math says wait. "
                 "Frequently it says the opposite. It is arithmetic, and it is specific to you.",
             ]),
             ("What we would rather you did", [
@@ -1091,7 +1170,7 @@ email sensitive documents &mdash; your loan officer will send a secure link.</p>
 
 <h2>Why we use it</h2>
 <ul>
-<li>To answer your question and follow up about your enquiry</li>
+<li>To answer your question and follow up about your inquiry</li>
 <li>To prepare the estimate or report you asked for</li>
 <li>To meet our record-keeping obligations as a licensed mortgage broker</li>
 <li>To understand which parts of the site are working</li>
@@ -1108,7 +1187,7 @@ Department of Savings and Mortgage Lending.</p>
 <p><strong>We do not sell your personal information.</strong></p>
 
 <h2>Calls and texts</h2>
-<p>We only call or text you about your enquiry, and we only use an autodialer or send
+<p>We only call or text you about your inquiry, and we only use an autodialer or send
 marketing texts if you gave express written consent by ticking the box. That consent is never
 a condition of getting a loan. Reply <strong>STOP</strong> to any text to opt out, tell any
 caller to remove you, or email us. We honour opt-outs across all our systems.</p>
@@ -1120,7 +1199,7 @@ retargeting pixels, and no data broker integrations. Your browser settings can b
 the site will still work.</p>
 
 <h2>How long we keep it</h2>
-<p>Enquiries are retained while we are in contact and afterwards for as long as our
+<p>Inquiries are retained while we are in contact and afterwards for as long as our
 record-keeping obligations as a licensed mortgage broker require. Consent records are kept for
 at least as long as required to evidence the consent.</p>
 
@@ -1176,12 +1255,12 @@ aim to meet <strong>WCAG 2.1 Level AA</strong>.</p>
 <ul>
 <li>Every page is navigable by keyboard alone, with a visible focus outline on each
 interactive element and a skip-to-content link</li>
-<li>Text and interface colours are tested for contrast, including the small print &mdash;
-disclosure text is set at a legible size with real contrast, never grey-on-grey</li>
+<li>Text and interface colors are tested for contrast, including the small print &mdash;
+disclosure text is set at a legible size with real contrast, never gray-on-gray</li>
 <li>Headings are used in order so screen reader users can navigate by structure</li>
 <li>Images that carry meaning have alternative text; decorative marks are hidden from
 assistive technology</li>
-<li>Forms have real labels, and errors are announced rather than only shown in colour</li>
+<li>Forms have real labels, and errors are announced rather than only shown in color</li>
 <li>Animation is subtle and respects the operating system's reduce-motion setting; no content
 depends on a script running successfully</li>
 <li>Layouts reflow to narrow and magnified screens without horizontal scrolling</li>

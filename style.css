@@ -118,39 +118,75 @@ h1 em,h2 em{font-style:italic;color:var(--g)}
 p+p{margin-top:1em}
 
 .eyebrow{
-  display:flex;align-items:center;gap:9px;
+  display:flex;align-items:center;gap:12px;
   font-family:var(--sans);font-size:var(--t-xs);font-weight:750;
   letter-spacing:.14em;text-transform:uppercase;color:var(--g);
   margin-bottom:18px;
 }
+/* Was a green dot. A dot beside a label is the house style of every generated
+   site on the internet; a short rule is an editorial convention and reads as
+   typeset rather than assembled. */
 .eyebrow .tick{
-  width:8px;height:8px;border-radius:50%;background:var(--go);flex:none;
-  box-shadow:0 0 0 4px var(--go-soft);
+  width:28px;height:2px;flex:none;border-radius:2px;
+  background:linear-gradient(90deg,var(--go),rgba(22,196,106,.25));
 }
-.onDarkText .eyebrow{color:var(--go)}
+.dark .eyebrow,.ctaband .eyebrow{color:var(--go)}
 
 section{padding-block:var(--sec)}
 .alt{background:var(--paper-2);border-block:1px solid var(--line)}
-.dark{background:var(--forest);color:#e8f0ea}
-.dark h1,.dark h2,.dark h3{color:#fff}
+/* Dark sections. KT's note on v1 was that a cream page with green buttons reads
+   as unfinished — the one part he liked was the forest CTA band. So forest is
+   now a real surface in the rotation, not a single accent: masthead, the letter,
+   the East Texas block, the CTA band, the trust bar. */
+.dark{
+  position:relative;isolation:isolate;
+  background:linear-gradient(165deg,var(--forest),var(--forest-2));
+  color:#e8f0ea;
+  border-block:1px solid rgba(255,255,255,.08);
+}
+.dark::before{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(46rem 30rem at 84% -10%,rgba(22,196,106,.17),transparent 62%);
+}
+.dark h1,.dark h2,.dark h3,.dark h4{color:#fff}
 .dark .sub,.dark .lede,.dark p{color:#b6cbbf}
+.dark strong{color:#fff}
+.dark em{color:var(--go)}
+.dark .card{background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.12)}
+.dark .card h3{color:#fff}
+.dark .card p{color:#a9c6b7}
+.dark .card .num{color:var(--go)}
+.dark .ticks li{color:#b6cbbf}
+.dark .ticks li::before{border-color:var(--go)}
+.dark a{color:var(--go)}
+.dark .disclose{color:#8fae9d;border-left-color:rgba(255,255,255,.18)}
 
-/* ------------------------------------------------------------- the green light */
-/* The brand mark. A lamp that is lit. Used in header, footer, trust bar.        */
-.light{
-  position:relative;width:26px;height:26px;border-radius:50%;flex:none;
-  background:radial-gradient(circle at 34% 30%,#1de07c,#0d8f52 62%,#075c34);
-  box-shadow:0 0 0 3px rgba(22,196,106,.16),inset 0 -2px 4px rgba(0,0,0,.28);
-  display:grid;place-items:center;
-}
-.light i{
-  width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.85);
-  filter:blur(.4px);transform:translate(-3px,-3px);
-}
-.dot{
-  width:11px;height:11px;border-radius:50%;background:var(--go);flex:none;
-  box-shadow:0 0 0 4px var(--go-soft);
-}
+/* The welcome letter. Set as correspondence rather than as another content
+   block — bigger measure, serif salutation, and an actual signature. */
+.letter .salut{font-family:var(--serif);font-size:23px;color:#fff;margin-top:22px;
+  letter-spacing:-.015em}
+.letter .sub{font-size:17px;line-height:1.75;max-width:56ch}
+.sign{display:flex;align-items:center;gap:16px;margin-top:32px;padding-top:26px;
+  border-top:1px solid rgba(255,255,255,.14)}
+.sign img{width:72px;height:72px;border-radius:50%;object-fit:cover;flex:none;
+  border:2px solid rgba(22,196,106,.5)}
+.signame{font-family:var(--serif);font-size:26px;color:#fff;letter-spacing:-.02em;
+  line-height:1.1}
+.sigrole{font-size:13px;color:#8fae9d;margin-top:5px;line-height:1.5}
+
+/* ---------------------------------------------------------------- brand marks */
+/* The real logo is a green gaslight lantern with the wordmark and "THE KENNETH
+   TRAVIS TEAM" beneath. It was sitting in assets/ the whole time. There is no
+   reason to draw an abstract substitute for a mark that already exists.
+   logo-header.png is white-on-transparent, which is why the header is dark. */
+.brand{display:flex;align-items:center;flex:none}
+.brand img{height:46px;width:auto}
+@media(max-width:620px){.brand img{height:38px}}
+footer .brand img{height:54px}
+
+/* Vector trust marks — EHO, NMLS, lantern. Inherit currentColor so one file
+   works on cream and on forest. */
+.mark{width:34px;height:34px;flex:none}
 
 /* Three-lamp traffic signal — the CTA band motif. Lights sequence to green. */
 .signal{display:inline-flex;gap:7px;padding:7px 9px;border-radius:999px;
@@ -188,31 +224,33 @@ section{padding-block:var(--sec)}
 .cta{display:flex;gap:13px;flex-wrap:wrap;margin-top:34px;align-items:center}
 
 /* ------------------------------------------------------------------- header */
+/* Dark header. Three reasons, in order of importance: the only logo artwork that
+   exists is white-on-transparent and was drawn for a dark ground; a cream page
+   under a cream header has no anchor and reads unfinished; and the site was
+   "white with some green" — a forest masthead gives the green somewhere to live
+   other than the buttons. */
 header{
   position:sticky;top:0;z-index:80;
-  background:rgba(251,249,244,.86);
-  backdrop-filter:saturate(1.6) blur(14px);
-  -webkit-backdrop-filter:saturate(1.6) blur(14px);
-  border-bottom:1px solid transparent;
-  transition:border-color .25s,box-shadow .25s,background .25s;
+  background:linear-gradient(178deg,var(--forest),var(--forest-2));
+  border-bottom:1px solid rgba(255,255,255,.09);
+  transition:box-shadow .25s,background .25s;
 }
-header.stuck{border-bottom-color:var(--line);box-shadow:0 6px 24px -18px rgba(16,28,21,.5)}
-.nav{display:flex;align-items:center;gap:26px;height:78px;transition:height .25s var(--ease)}
-header.stuck .nav{height:66px}
-.brand{display:flex;align-items:center;gap:11px;flex:none}
-.bname{font-family:var(--serif);font-weight:600;font-size:19.5px;letter-spacing:-.02em;
-  line-height:1.05;color:var(--ink)}
-.bname small{display:block;font-family:var(--sans);font-weight:600;font-size:9.5px;
-  letter-spacing:.11em;text-transform:uppercase;color:var(--mut);margin-top:3px}
+header::after{
+  content:"";position:absolute;inset:auto 0 0 0;height:2px;
+  background:linear-gradient(90deg,var(--go),rgba(22,196,106,0) 42%);
+}
+header.stuck{box-shadow:0 10px 34px -20px rgba(4,26,17,.85)}
+.nav{display:flex;align-items:center;gap:26px;height:84px;transition:height .25s var(--ease)}
+header.stuck .nav{height:70px}
 
-nav.links{display:flex;align-items:center;gap:4px;margin-left:auto}
+nav.links{display:flex;align-items:center;gap:2px;margin-left:auto}
 .navlink{
   display:inline-flex;align-items:center;gap:5px;
   padding:9px 13px;border-radius:9px;
-  font-size:15px;font-weight:550;color:var(--ink-2);
+  font-size:15px;font-weight:550;color:rgba(233,244,237,.82);
   transition:color .15s,background .15s;
 }
-.navlink:hover{color:var(--forest);background:rgba(22,196,106,.09)}
+.navlink:hover{color:#fff;background:rgba(255,255,255,.09)}
 .chev{width:9px;height:6px;opacity:.55;transition:transform .2s var(--ease)}
 .has-menu{position:relative}
 .has-menu:hover .chev,.has-menu:focus-within .chev{transform:rotate(180deg)}
@@ -235,27 +273,33 @@ nav.links{display:flex;align-items:center;gap:4px;margin-left:auto}
 
 .navcta{display:flex;align-items:center;gap:14px;flex:none}
 .phone{display:inline-flex;align-items:center;gap:7px;font-size:14.5px;font-weight:650;
-  color:var(--forest);white-space:nowrap}
-.phone:hover{color:var(--g)}
-.phone svg{opacity:.6}
-.phone.big{font-size:21px;margin-top:16px;display:flex;justify-content:center}
+  color:rgba(233,244,237,.9);white-space:nowrap}
+.phone:hover{color:var(--go)}
+.phone svg{opacity:.55}
+header .btn.sm{--bg:var(--go);--fg:#04241a;--bd:var(--go);font-weight:700}
+header .btn.sm:hover{--bg:#2ad57c;--bd:#2ad57c}
 
-.burger{display:none;width:42px;height:42px;border-radius:10px;border:1px solid var(--line);
-  flex-direction:column;gap:4.5px;align-items:center;justify-content:center;background:var(--card)}
-.burger span{display:block;width:17px;height:1.8px;background:var(--ink);border-radius:2px;
+.burger{display:none;width:44px;height:44px;border-radius:10px;
+  border:1px solid rgba(255,255,255,.22);
+  flex-direction:column;gap:4.5px;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.06)}
+.burger span{display:block;width:17px;height:1.8px;background:#fff;border-radius:2px;
   transition:transform .22s var(--ease),opacity .18s}
 .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(6.3px) rotate(45deg)}
 .burger[aria-expanded="true"] span:nth-child(2){opacity:0}
 .burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-6.3px) rotate(-45deg)}
 
-.drawer{border-top:1px solid var(--line);background:var(--paper);
-  max-height:calc(100dvh - 78px);overflow-y:auto;padding-block:22px 40px}
+.drawer{border-top:1px solid rgba(255,255,255,.1);background:var(--forest-2);color:#e8f0ea;
+  max-height:calc(100dvh - 84px);overflow-y:auto;padding-block:22px 40px}
 .drawer .dh{font-size:11.5px;font-weight:750;letter-spacing:.13em;text-transform:uppercase;
-  color:var(--g);margin:22px 0 6px}
+  color:var(--go);margin:24px 0 6px}
 .drawer .dh:first-child{margin-top:0}
-.drawer a{display:block;padding:11px 0;font-size:17px;font-weight:550;
-  border-bottom:1px solid var(--line)}
-.drawer .btn{display:flex;border-bottom:0}
+.drawer a{display:block;padding:12px 0;font-size:17px;font-weight:550;color:#e8f0ea;
+  border-bottom:1px solid rgba(255,255,255,.09)}
+.drawer a:hover{color:var(--go)}
+.drawer .btn{display:flex;border-bottom:0;--bg:var(--go);--fg:#04241a;--bd:var(--go)}
+.drawer .phone.big{font-size:22px;margin-top:18px;display:flex;justify-content:center;
+  color:#fff;border-bottom:0}
 
 @media(max-width:1080px){
   nav.links{display:none}
@@ -271,7 +315,9 @@ nav.links{display:flex;align-items:center;gap:4px;margin-left:auto}
    bloom top-right so the fold is not a flat rectangle.                        */
 .hero{
   position:relative;isolation:isolate;
-  padding-block:clamp(56px,7vw,104px) clamp(48px,6vw,84px);
+  /* Tightened: the dark masthead now anchors the top of the page, so the hero
+     no longer needs to open with a void to separate itself from the header. */
+  padding-block:clamp(34px,4vw,58px) clamp(44px,5vw,76px);
   background:
     radial-gradient(58rem 34rem at 88% -12%,rgba(22,196,106,.16),transparent 62%),
     radial-gradient(46rem 30rem at -8% 8%,rgba(11,58,41,.06),transparent 60%),
@@ -297,7 +343,7 @@ nav.links{display:flex;align-items:center;gap:4px;margin-left:auto}
 .crumb span{opacity:.5}
 
 /* Homepage hero: asymmetric, with the video as a real design element. */
-.hero.home{padding-block:clamp(52px,6vw,88px) clamp(96px,9vw,132px)}
+.hero.home{padding-block:clamp(38px,4.5vw,66px) clamp(92px,9vw,128px)}
 .herogrid{display:grid;grid-template-columns:1.06fr .94fr;gap:clamp(34px,4.5vw,70px);
   align-items:center}
 @media(max-width:940px){.herogrid{grid-template-columns:1fr;gap:40px}}
@@ -341,10 +387,14 @@ nav.links{display:flex;align-items:center;gap:4px;margin-left:auto}
 }
 .tile:hover{transform:translateY(-4px);border-color:rgba(22,196,106,.5);
   box-shadow:var(--shadow-lg)}
-.tile .ti{display:grid;place-items:center;width:42px;height:42px;border-radius:11px;
-  background:linear-gradient(160deg,var(--go-soft),rgba(11,58,41,.06));
-  color:var(--g);margin-bottom:16px}
-.tile .ti svg{width:20px;height:20px}
+.tile .ti{display:grid;place-items:center;width:52px;height:52px;border-radius:14px;
+  background:linear-gradient(155deg,rgba(22,196,106,.2),rgba(11,58,41,.07));
+  border:1px solid rgba(22,196,106,.22);
+  color:var(--g);margin-bottom:18px;
+  transition:background .2s var(--ease),color .2s,transform .2s var(--ease)}
+.tile .ti svg{width:29px;height:29px}
+.tile:hover .ti{background:var(--forest);color:var(--go);transform:rotate(-3deg) scale(1.04);
+  border-color:var(--forest)}
 .tile h3{font-size:17.5px;margin-bottom:6px}
 .tile p{font-size:14px;color:var(--mut);line-height:1.5}
 .tile .go{display:inline-flex;align-items:center;gap:6px;margin-top:14px;
@@ -470,46 +520,51 @@ nav.links{display:flex;align-items:center;gap:4px;margin-left:auto}
   margin-top:26px !important}
 
 /* ---------------------------------------------------------------- trust bar */
-.trustbar{background:var(--forest);color:#cfe2d6;border-top:1px solid rgba(255,255,255,.08)}
-.trustrow{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;padding-block:30px}
-@media(max-width:880px){.trustrow{grid-template-columns:1fr;gap:20px}}
-.trust{display:flex;gap:13px;align-items:flex-start}
-.trust img{flex:none;border-radius:5px;background:#fff;padding:3px}
-.trust .dot{margin-top:8px}
-.trust strong{display:block;font-size:14px;font-weight:700;color:#fff;letter-spacing:-.005em}
-.trust small{display:block;font-size:12.5px;line-height:1.5;color:#93b3a1;margin-top:4px;
-  max-width:34ch}
+.trustbar{background:var(--forest-2);color:#cfe2d6;
+  border-top:1px solid rgba(255,255,255,.08)}
+.trustrow{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;padding-block:34px}
+@media(max-width:880px){.trustrow{grid-template-columns:1fr;gap:24px}}
+.trust{display:flex;gap:15px;align-items:flex-start}
+.trust .mark{color:var(--go);margin-top:1px}
+.trust strong{display:block;font-size:14.5px;font-weight:700;color:#fff;letter-spacing:-.005em}
+.trust small{display:block;font-size:12.5px;line-height:1.55;color:#95b6a3;margin-top:5px;
+  max-width:36ch}
 
 /* ------------------------------------------------------------------ footer */
-footer{background:var(--paper-2);border-top:1px solid var(--line);
-  padding-block:clamp(48px,5vw,72px) 44px;font-size:14.5px;color:var(--ink-2)}
+/* Footer runs dark, continuous with the trust bar above it. Two reasons: the
+   only logo artwork is white-on-transparent, so a cream footer showed nothing
+   at all; and a solid dark base anchors the page instead of letting it fade
+   out into more cream. */
+footer{background:var(--forest-2);border-top:0;
+  padding-block:clamp(48px,5vw,72px) 44px;font-size:14.5px;color:#a9c6b7}
 .fg{display:grid;grid-template-columns:1.7fr repeat(4,1fr);gap:34px;
-  padding-bottom:38px;border-bottom:1px solid var(--line)}
+  padding-bottom:38px;border-bottom:1px solid rgba(255,255,255,.12)}
 @media(max-width:1000px){.fg{grid-template-columns:1fr 1fr 1fr}}
 @media(max-width:660px){.fg{grid-template-columns:1fr 1fr}.fbrand{grid-column:1/-1}}
-.fbrand p{font-size:14.5px;color:var(--mut);margin-top:14px;max-width:34ch;line-height:1.6}
+.fbrand p{font-size:14.5px;color:#93b3a1;margin-top:16px;max-width:34ch;line-height:1.6}
 .fnap{font-size:14px}
-.fnap strong{color:var(--ink)}
-.fnap a{color:var(--g);font-weight:650}
-.fbadges{display:flex;gap:10px;margin-top:20px}
-.fbadges img{border-radius:6px;background:#fff;padding:4px;border:1px solid var(--line)}
+.fnap strong{color:#fff}
+.fnap a{color:var(--go);font-weight:650}
+.fbadges{display:flex;gap:14px;margin-top:22px;color:var(--go)}
 footer h4{font-family:var(--sans);font-size:11.5px;font-weight:750;letter-spacing:.13em;
-  text-transform:uppercase;color:var(--ink);margin-bottom:15px}
-footer .fg a{display:block;margin-bottom:10px;color:var(--mut);font-size:14.5px;
+  text-transform:uppercase;color:#fff;margin-bottom:15px}
+footer .fg a{display:block;margin-bottom:10px;color:#a9c6b7;font-size:14.5px;
   transition:color .13s}
-footer .fg a:hover{color:var(--g)}
+footer .fg a:hover{color:var(--go)}
 .fbrand .brand{margin-bottom:0}
-.fbrand .brand a{display:flex}
-.fareas{padding-block:24px;font-size:13.5px;color:var(--mut);line-height:1.7;
-  border-bottom:1px solid var(--line)}
-.fareas strong{color:var(--ink-2)}
+.fareas{padding-block:24px;font-size:13.5px;color:#93b3a1;line-height:1.7;
+  border-bottom:1px solid rgba(255,255,255,.12)}
+.fareas strong{color:#fff}
 
-/* Legal: quiet but legible. 13px, real contrast. Never 6pt grey-on-grey. */
-.legal{padding-top:26px;font-size:13px;line-height:1.72;color:#6a7a71}
+/* Legal: quiet but legible. 13px against forest clears AA comfortably —
+   disclosure you cannot read is not disclosure, and it looks cheap. */
+.legal{padding-top:26px;font-size:13px;line-height:1.72;color:#8fae9d}
 .legal p+p{margin-top:13px}
-.legal strong{color:var(--ink-2)}
-.legal a{color:var(--g);text-decoration:underline;text-underline-offset:2px}
-.legal .copy{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);font-size:13px}
+.legal strong{color:#cfe2d6}
+.legal a{color:var(--go);text-decoration:underline;text-underline-offset:2px}
+.legal .copy{margin-top:22px;padding-top:18px;
+  border-top:1px solid rgba(255,255,255,.12);font-size:13px}
+.legal .todo{background:#5a4300;color:#ffd97a}
 .todo{background:#fff4d6;color:#7a5200;padding:1px 6px;border-radius:4px;
   font-style:normal;font-weight:600}
 
@@ -641,10 +696,21 @@ legend{font-family:var(--serif);font-size:var(--t-h3);font-weight:600;margin-bot
   margin-top:16px}
 
 /* ------------------------------------------------------------- misc blocks */
-.pill{display:inline-flex;align-items:center;gap:7px;background:var(--card);
-  border:1px solid var(--line);border-radius:999px;padding:7px 15px;
-  font-size:13.5px;font-weight:600;color:var(--ink-2)}
-.pills{display:flex;flex-wrap:wrap;gap:9px;margin-top:22px}
+/* Town list. Was a row of rounded pills, which every visitor read as buttons and
+   then tried to click. They are place names, not controls — so they are set as
+   type, on a rule, with no affordance suggesting otherwise. */
+.places{display:flex;flex-wrap:wrap;gap:0 10px;margin-top:26px;
+  font-family:var(--serif);font-size:clamp(21px,2.2vw,30px);line-height:1.45;
+  letter-spacing:-.015em;color:var(--forest);max-width:22ch}
+/* Separator trails the name rather than leading the next one, so a wrapped line
+   never opens with a stray middot. */
+.places span{white-space:nowrap}
+.places span:not(:last-child)::after{content:"·";color:var(--go);margin-left:11px;
+  font-weight:700}
+.dark .places{color:#fff}
+.districts{margin-top:20px;padding-top:18px;border-top:1px solid var(--line);
+  font-size:15px;color:var(--mut)}
+.dark .districts{border-top-color:rgba(255,255,255,.14);color:#a9c6b7}
 .callout{background:var(--paper-2);border:1px solid var(--line);border-left:3px solid var(--go);
   border-radius:0 var(--r) var(--r) 0;padding:22px 24px;margin:28px 0}
 .callout h3{font-size:18px;margin-bottom:8px}

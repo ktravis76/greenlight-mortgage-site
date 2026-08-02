@@ -126,7 +126,7 @@ def estimate():
          "start. The calculator asks for nothing if you would rather use that."),
         ("The rate reductions shown — are those your rates?",
          "No, and that matters. They are illustrative scenarios so you can see the shape of "
-         "the maths on your own balance. What is actually available to you depends on your "
+         "the math on your own balance. What is actually available to you depends on your "
          "credit, income, property and the market that day."),
     ]
     faq_html = "".join(

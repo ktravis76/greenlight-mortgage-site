@@ -131,6 +131,31 @@ RATE_FIGURE = re.compile(
     r"|(?:interest\s+)?rate\s*(?:of|:|is|at)\s*\d+(?:\.\d+)?\s*%",
     re.I)
 
+# US English. This is a Longview, Texas mortgage broker — British spellings read
+# as an outsider wrote the page, and "neighbourhood" shipped to production once
+# already. Failing the build is cheaper than KT finding it again.
+BRITISH = [
+    (r"\bneighbourhood(s)?\b", "neighborhood"),
+    (r"\benquir(y|ies|e|ed|ing)\b", "inquir-"),
+    (r"\blicence(s|d)?\b", "license"),
+    (r"\bcolour(s|ed|ing)?\b", "color"),
+    (r"\bmaths\b", "math"),
+    (r"\bcentre(s)?\b", "center"),
+    (r"\bgrey\b", "gray"),
+    (r"\bwhilst\b", "while"),
+    (r"\bfavour(s|ed|ite)?\b", "favor"),
+    (r"\borganis(e|ed|ation|ing)\b", "organiz-"),
+    (r"\brealis(e|ed|ing)\b", "realiz-"),
+    (r"\brecognis(e|ed|ing)\b", "recogniz-"),
+    (r"\bbehaviour(s)?\b", "behavior"),
+    (r"\bprogramme(s)?\b", "program"),
+    (r"\bapologis(e|ed)\b", "apologiz-"),
+    (r"\banalys(e|ed)\b", "analyz-"),
+    (r"\bdefence\b", "defense"),
+    (r"\btravelling\b", "traveling"),
+    (r"\bcancelled\b", "canceled"),
+]
+
 # Disclosures required on every consumer page.
 REQUIRED = [
     ("Powered by Co/LAB Lending", "Co/LAB attribution"),
@@ -171,6 +196,11 @@ def check_compliance():
                 continue
             ctx = flat[max(0, m.start() - 70):m.end() + 70].strip()
             problems.append((url, "stated rate/APR figure", ctx))
+
+        for pattern, us in BRITISH:
+            for m in re.finditer(pattern, flat, re.I):
+                ctx = flat[max(0, m.start() - 50):m.end() + 50].strip()
+                problems.append((url, f"British spelling '{m.group(0)}' — use '{us}'", ctx))
 
         # A rate pre-filled into an input is invisible to the text scan above but
         # perfectly visible to a visitor, who has no reason to read it as anything

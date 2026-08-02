@@ -10,7 +10,7 @@
       travels; the IP, user agent and timestamp are stamped by the Edge Function
       from the real request. A client cannot know its own IP and can lie.
    3. Validate before sending, and announce errors to assistive tech rather
-      than only colouring a border red.
+      than only coloring a border red.
 */
 (function () {
   'use strict';

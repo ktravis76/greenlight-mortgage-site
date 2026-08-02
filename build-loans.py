@@ -210,7 +210,7 @@ def build():
         ("What does it cost to find out where I stand?",
          "Nothing, and there is no hard credit pull to begin the conversation."),
         ("Why use a broker instead of my bank?",
-         "A bank can only offer you what that bank has. We are licensed in six states and we "
+         "A bank can only offer you what that bank has. We are licensed in five states and we "
          "shop a network of lenders, which matters most on the files banks find awkward — "
          "self-employed income, thinner credit, jumbo amounts, or rural addresses."),
     ]
