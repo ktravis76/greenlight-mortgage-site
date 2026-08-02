@@ -7,7 +7,7 @@ import os
 
 import sitegen as S
 
-APPLY = "https://greenlight.my1003app.com/233918/register"
+APPLY = S.APPLY   # /apply — our intake. S.LOS_APPLY is the licensed 1003 system.
 
 LOANS = [
   dict(slug="va", nav="VA",

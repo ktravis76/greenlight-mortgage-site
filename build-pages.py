@@ -1140,6 +1140,203 @@ def survey():
 
 
 # ==========================================================================
+# APPLY — our own intake, replacing the handoff to the external LOS
+# ==========================================================================
+
+def apply_page():
+    """KT's call: Apply Online becomes our form, reaching our team, routed
+    internally rather than dumped in one inbox.
+
+    What this form does NOT ask for: Social Security number, date of birth,
+    account numbers, itemised income. Those belong on the licensed LOS, and the
+    applications table has no columns for them. See the header comment in
+    db/2026-08-01-applications-pipeline.sql for the reasoning.
+    """
+
+    def sel(id_, name, label, options, required=False, help_=""):
+        opts = "".join(f'<option>{o}</option>' for o in options)
+        req = " required" if required else ""
+        h = f'<p class="help">{help_}</p>' if help_ else ""
+        return (f'<div class="field"><label for="{id_}">{label}</label>{h}'
+                f'<select id="{id_}" name="{name}"{req}>'
+                f'<option value="">Choose one…</option>{opts}</select>'
+                f'<p class="err">Please choose an option.</p></div>')
+
+    body = f"""{S.hero(
+        eyebrow="Apply",
+        h1="Start your application",
+        lede="About three minutes. Enough for a licensed loan officer to look at your "
+             "situation properly and come back with real options &mdash; and no more than "
+             "that.",
+        trail=[("/", "Home"), (None, "Apply")])}
+
+<section><div class="wrap"><div class="narrow">
+
+<div class="callout">
+  <h3>What we ask for here, and what we do not</h3>
+  <p>Nothing on this page asks for your Social Security number, date of birth, or account
+  numbers. It does not involve a credit inquiry. It is the conversation-starter &mdash; once a loan
+  officer has spoken to you and you both decide to go ahead, the formal application happens
+  on our secure loan origination system, which is where that information belongs.</p>
+</div>
+
+<form data-glm-form="application" novalidate style="margin-top:36px">
+
+  <fieldset style="margin-bottom:34px">
+    <legend>1 &mdash; Who you are</legend>
+    <div class="frow">
+      <div class="field"><label for="a-first">First name</label>
+        <input id="a-first" name="first_name" type="text" autocomplete="given-name"
+               required maxlength="80"><p class="err">Please enter your first name.</p></div>
+      <div class="field"><label for="a-last">Last name</label>
+        <input id="a-last" name="last_name" type="text" autocomplete="family-name"
+               required maxlength="80"><p class="err">Please enter your last name.</p></div>
+    </div>
+    <div class="frow">
+      <div class="field"><label for="a-email">Email</label>
+        <input id="a-email" name="email" type="email" autocomplete="email"
+               required maxlength="254"><p class="err">Please enter a valid email.</p></div>
+      <div class="field"><label for="a-phone">Phone</label>
+        <input id="a-phone" name="phone" type="tel" autocomplete="tel"
+               required maxlength="32"><p class="err">Please enter a phone number.</p></div>
+    </div>
+    <div class="frow">
+      {sel("a-contact", "preferred_contact", "Best way to reach you",
+           ["Phone call", "Text message", "Email"])}
+      {sel("a-time", "best_time", "Best time",
+           ["Morning", "Afternoon", "Evening", "Any time"])}
+    </div>
+  </fieldset>
+
+  <fieldset style="margin-bottom:34px">
+    <legend>2 &mdash; What you are trying to do</legend>
+    <div class="field"><label>Purpose</label>
+      <div class="choices two">
+        <label class="choice"><input type="radio" name="purpose" value="purchase" required>
+          <span>Buy a home<small>First one or next one</small></span></label>
+        <label class="choice"><input type="radio" name="purpose" value="refinance">
+          <span>Refinance<small>Lower the payment or the term</small></span></label>
+        <label class="choice"><input type="radio" name="purpose" value="cash_out">
+          <span>Use my equity<small>Renovation, or clear other debt</small></span></label>
+        <label class="choice"><input type="radio" name="purpose" value="not_sure">
+          <span>Not sure yet<small>Tell me what makes sense</small></span></label>
+      </div></div>
+    <div class="frow">
+      <div class="field"><label for="a-city">Property city</label>
+        <input id="a-city" name="property_city" type="text" maxlength="80"
+               placeholder="Longview"></div>
+      <div class="field"><label for="a-state">State</label>
+        <select id="a-state" name="property_state">
+          <option value="">Choose one…</option>
+          {"".join(f'<option value="{ab}">{n}</option>' for n, ab in
+                   [("Texas","TX"),("Louisiana","LA"),("Michigan","MI"),
+                    ("North Dakota","ND"),("Alabama","AL")])}
+        </select>
+        <p class="help">We are licensed in these {S.STATE_COUNT_WORD} states.</p></div>
+    </div>
+    <div class="frow">
+      {sel("a-price", "price_band", "Price range (rough)",
+           ["Under $150,000", "$150,000 – $250,000", "$250,000 – $400,000",
+            "$400,000 – $650,000", "Over $650,000", "Not sure"])}
+      {sel("a-time2", "timeline", "Timeline",
+           ["As soon as possible", "1–3 months", "3–6 months",
+            "6+ months", "Just exploring"])}
+    </div>
+  </fieldset>
+
+  <fieldset style="margin-bottom:34px">
+    <legend>3 &mdash; A little context</legend>
+    <p class="sub" style="margin-top:0">Rough answers are fine. Nothing here is checked
+    against anything, and none of it is a commitment.</p>
+    <div class="frow">
+      {sel("a-emp", "employment", "Employment",
+           ["W-2 employee", "Self-employed", "Retired", "Military / VA",
+            "Mix of the above", "Other"])}
+      {sel("a-credit", "credit_band", "Credit, roughly",
+           ["Excellent (740+)", "Good (680–739)", "Fair (620–679)",
+            "Rebuilding (under 620)", "No idea"],
+           help_="Your own estimate. We are not pulling anything.")}
+    </div>
+    <div class="field"><label>Anything that applies</label>
+      <div class="choices two">
+        <label class="choice"><input type="checkbox" name="veteran" value="yes">
+          <span>I am a veteran or service member<small>Or a surviving spouse</small></span></label>
+        <label class="choice"><input type="checkbox" name="first_time_buyer" value="yes">
+          <span>This is my first home</span></label>
+        <label class="choice"><input type="checkbox" name="working_with_agent" value="yes">
+          <span>I am working with a realtor</span></label>
+      </div></div>
+    <div class="field"><label for="a-notes">Anything we should know?</label>
+      <textarea id="a-notes" name="notes" rows="4" maxlength="4000"></textarea></div>
+  </fieldset>
+
+  <fieldset>
+    <legend>4 &mdash; Permission to contact you</legend>
+    <div class="consent">
+      <input type="checkbox" id="a-tcpa" name="tcpa_consent" value="yes">
+      <label for="a-tcpa">{TCPA_TEXT}</label>
+    </div>
+    <p class="disclose">Leave that unticked and we will reply by email only. Your application
+    is handled either way &mdash; ticking it is not a condition of anything.</p>
+
+    <div class="cta"><button class="btn go lg" type="submit">Send my application</button></div>
+    <p class="formstatus" role="status" aria-live="polite"></p>
+    <p class="disclose">Submitting this is not an application for credit and is
+    <strong>not a commitment to lend</strong>. This step does not involve a credit
+    inquiry of any kind. Any loan is subject to credit approval and underwriting, and only a licensed loan officer can quote
+    a rate or confirm eligibility, after a complete application.</p>
+  </fieldset>
+</form>
+</div></div></section>
+
+<section class="dark"><div class="wrap">
+<div class="split">
+<div>
+  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>What happens next</p>
+  <h2>You will hear from a person, once.</h2>
+  <div class="steps">
+    <div class="step"><h3>It reaches our team, not an inbox</h3><p>Your application lands in
+    our pipeline and is assigned to someone by name. Nobody has to notice an email for it to
+    get picked up.</p></div>
+    <div class="step"><h3>A licensed loan officer calls</h3><p>Within one business day. Once
+    &mdash; not six times in an hour.</p></div>
+    <div class="step"><h3>We shop it</h3><p>Your file goes to a network of lenders rather than
+    one bank's menu, and you get the options side by side.</p></div>
+    <div class="step"><h3>The formal application</h3><p>If it makes sense to proceed, we send
+    you a secure link to our loan origination system for the full application. That is the
+    only place your Social Security number is ever asked for.</p></div>
+  </div>
+</div>
+<div>
+  <div class="callout">
+    <h3>Already know you want the full application?</h3>
+    <p>You can go straight to our secure loan origination system and start the formal 1003
+    now. It runs under Kenneth Travis's own NMLS license.</p>
+    <p style="margin-top:14px"><a href="{S.LOS_APPLY}" rel="noopener">
+      Go to the secure application &nearr;</a></p>
+  </div>
+  <div class="callout">
+    <h3>Rather talk first?</h3>
+    <p>Plenty of people do. Call <a href="tel:{S.PHONE_HREF}">{S.PHONE}</a> and skip the form
+    entirely.</p>
+  </div>
+</div>
+</div>
+</div></section>
+"""
+    return S.page(
+        path="/apply",
+        title="Start Your Mortgage Application | Greenlight Mortgage — Longview, TX",
+        desc="Begin your mortgage application with Greenlight Mortgage in Longview, Texas. "
+             "About three minutes, no credit inquiry, and no Social Security number needed "
+             "to start. Powered by Co/LAB Lending. Equal Housing Opportunity.",
+        body=body,
+        trail=[("/", "Home"), ("/apply", "Apply")],
+        scripts='<script src="/forms.js" defer></script>',
+    )
+
+
+# ==========================================================================
 # LEGAL
 # ==========================================================================
 
@@ -1327,6 +1524,7 @@ def build():
     write("/testimonials", testimonials())
     write("/reviews", reviews())
     write("/contact", contact())
+    write("/apply", apply_page())
     write("/learn", learn())
     write("/resources", resources())
     write("/blog", blog_index())

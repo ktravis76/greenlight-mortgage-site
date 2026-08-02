@@ -58,8 +58,15 @@ STATE_COUNT = len(LICENSES)      # five — never hard-code the word "six" again
 STATE_COUNT_WORD = "five"
 STATE_NAMES = ", ".join(n for n, _ in LICENSES[:-1]) + f" and {LICENSES[-1][0]}"
 
-# External licensed LOS. We do not rebuild the 1003 — it collects SSNs.
-APPLY = "https://greenlight.my1003app.com/233918/register"
+# Apply Online now points at OUR intake form, per KT.
+#
+# LOS_APPLY is where the FULL 1003 still happens — a licensed loan origination
+# system under Kenneth's own NMLS. /apply collects enough to start a real
+# conversation and route the file to the right person, then hands off there for
+# the parts that carry a Social Security number. See db/2026-08-01-applications-
+# pipeline.sql for why that line is drawn where it is.
+APPLY = "/apply"
+LOS_APPLY = "https://greenlight.my1003app.com/233918/register"
 
 ORIGIN = "https://greenlightmortgage.com"
 
