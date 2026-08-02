@@ -152,7 +152,7 @@ def loan_body(l):
 </div>
 </div></section>
 
-<section class="alt"><div class="wrap">
+<section class="dark"><div class="wrap">
 <p class="eyebrow"><span class="tick" aria-hidden="true"></span>What matters</p>
 <h2>The parts worth knowing</h2>
 <div class="grid g2">{facts}</div>
