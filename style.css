@@ -71,3 +71,29 @@ footer .brand{margin-bottom:6px}
 .lcard h3{font-size:19px;font-weight:800;letter-spacing:-.015em;margin-bottom:9px;color:var(--ink)}
 .lcard p{color:var(--mut);font-size:14.5px;margin-bottom:14px}
 .lcard .go{font-size:13px;font-weight:700;color:var(--g)}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:-28px 0 8px;position:relative;z-index:2}
+@media(max-width:900px){.tiles{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.tiles{grid-template-columns:1fr}}
+.tile{display:block;text-decoration:none;background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 20px;box-shadow:0 4px 18px rgba(13,27,20,.06);transition:transform .15s,border-color .15s}
+.tile:hover{transform:translateY(-3px);border-color:var(--g2)}
+.tile .ti{display:grid;place-items:center;width:38px;height:38px;border-radius:10px;background:var(--soft);color:var(--g);font-size:18px;margin-bottom:14px}
+.tile h3{font-size:16.5px;font-weight:800;letter-spacing:-.01em;margin-bottom:8px;color:var(--ink)}
+.tile .go{font-size:13px;font-weight:700;color:var(--g)}
+.g3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:880px){.g3{grid-template-columns:1fr}}
+.vid{width:100%;border-radius:14px;border:1px solid var(--line);background:#0d1b14;aspect-ratio:16/9;object-fit:cover}
+.hint{font-size:12.5px;color:var(--mut);margin-top:10px;text-align:center}
+.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px}
+@media(max-width:960px){.tgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.tgrid{grid-template-columns:1fr}}
+.quote{background:#fff;border:1px solid var(--line);border-radius:14px;padding:24px;margin:0}
+.quote blockquote{font-size:15px;color:var(--ink);line-height:1.6;margin-bottom:14px}
+.quote blockquote:before{content:"\201C";color:var(--g2);font-size:34px;line-height:0;vertical-align:-8px;margin-right:3px}
+.quote figcaption{font-size:12.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--mut)}
+.locard{display:flex;gap:32px;align-items:center;flex-wrap:wrap;border:1px solid var(--line);border-radius:16px;padding:32px;background:var(--soft)}
+.locard img{border-radius:14px;border:3px solid #fff;box-shadow:0 4px 18px rgba(13,27,20,.1)}
+.locard h3{font-size:26px;font-weight:800;letter-spacing:-.02em}
+.locard .role{font-size:14px;font-weight:700;color:var(--g);margin:4px 0 12px}
+.locard p{color:var(--mut);font-size:15px}
+.locard a{color:var(--g);font-weight:600}
+.locard .tag{margin-top:14px;font-weight:800;color:var(--ink);font-style:italic}
