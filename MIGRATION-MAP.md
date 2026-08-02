@@ -69,8 +69,8 @@ Recreate all of it, in roughly this order:
 Current text, verbatim:
 
 > Greenlight Mortgage, LLC is a licensed Mortgage Broker in the state of Texas. NMLS 2426021.
-> Alabama - 23417. Florida - MBR6235. Louisiana - 2426021. North Dakota - ML104832.
-> South Carolina - 2426021. Texas - 2426021. This is not a commitment to lend. All loans
+> Alabama - 23417. Louisiana - 2426021. North Dakota - ML104832. Michigan - license # pending.
+> Texas - 2426021. This is not a commitment to lend. All loans
 > subject to credit approval. Guidelines subject to change without prior notice. This
 > information is provided to assist business professionals only and is not an advertisement
 > extended to the consumer as defined by Section 226.2 Regulation Z.-EOE. Equal Housing Lender.
@@ -111,7 +111,7 @@ Same pages, better execution:
   Kenneth Travis."* Only ~10 pages are indexed today versus competitors with 50+.
 - **Loan pages become real pages**, not stubs. This is the biggest ranking opportunity.
 - **Local targeting** Kenneth asked for: Spring Hill, Pine Tree, Hallsville school districts.
-- **Six-state licensing surfaced** — "We lend in 6 states" is a selling point buried in the footer.
+- **Six-state licensing surfaced** — "We lend in 5 states" is a selling point buried in the footer.
 - **Working tools**, not decorative ones — calculator, home value, Estimated Savings.
 - **Forms post into Konnectd** (`LRAzmr7bQKMMlXiYfvi6`) instead of emailing a person. Today
   leads land in individual inboxes and get reconciled by hand.

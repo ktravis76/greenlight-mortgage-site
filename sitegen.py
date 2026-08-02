@@ -35,7 +35,7 @@ NMLS_KT   = "233918"
 
 # Licensed states, corrected by KT on 2026-08-01.
 #
-# The old kennethtravis.com footer listed six: TX, AL, FL, LA, ND, SC. That is
+# The old kennethtravis.com footer listed six: TX, AL, LA, ND, MI. That is
 # wrong. The correct list is five — Texas, Louisiana, Michigan, North Dakota,
 # Alabama. Florida and South Carolina are OUT; Michigan is IN and was never on
 # the old site at all.

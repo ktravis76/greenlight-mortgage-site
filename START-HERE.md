@@ -101,7 +101,8 @@ inboxes and get reconciled by hand. That is the problem this fixes.
 
 - "Powered by Co/LAB Lending"
 - Company NMLS 2426021 · Kenneth Travis individual NMLS 233918
-- State licenses: TX 2426021 · AL 23417 · FL MBR6235 · LA 2426021 · ND ML104832 · SC 2426021
+- State licenses (CONFIRMED by KT, 5 states): TX 2426021 · AL 23417 · LA 2426021 · ND ML104832 · MI (license # still needed)
+  Florida and South Carolina are NOT held. Never list them.
 - Equal Housing Opportunity
 - "This is not a commitment to lend"
 - "Subject to credit approval and underwriting" beside ANY number
@@ -120,7 +121,7 @@ Two things on the OLD site that must NOT carry forward:
 ## VERIFIED FACTS — use these, invent nothing
 
 Greenlight Mortgage, LLC · founded 2008 · 4523 Judson Rd, Longview, TX 75605 · 903-331-0892
-Kenneth Travis, President-CEO, NMLS 233918. USMC 8 years, Sergeant. Licensed in 6 states.
+Kenneth Travis, President-CEO, NMLS 233918. USMC 8 years, Sergeant. Licensed in 5 states.
 Tagline: "Green means GO! Drive home with Greenlight Mortgage."
 Core Values: Service & Compassion · Operational Excellence · Trust & Integrity
 Kenneth's line: "how can we be better, how can we be different?"

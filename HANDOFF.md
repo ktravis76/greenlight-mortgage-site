@@ -98,7 +98,7 @@ REPORT BACK
    and list the state licenses it actually holds. The site currently advertises
    four (TX, LA, ND, AL). KT said Michigan should be there too but there is no
    license number for it and no source confirms it, so it is being held back.
-   Also confirm whether Florida and South Carolina are genuinely gone.
+   RESOLVED: KT confirmed the five states are TX, AL, LA, ND, MI. Florida and South Carolina are NOT held and have been removed sitewide. Still needed: the Michigan license number.
 ```
 
 ---
