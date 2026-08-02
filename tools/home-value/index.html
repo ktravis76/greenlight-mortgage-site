@@ -3,23 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>USDA Loans in Longview &amp; East Texas | Greenlight Mortgage</title>
-<meta name="description" content="USDA rural home loans across East Texas. More of Gregg, Harrison and Upshur County qualifies than most people expect. Powered by Co/LAB Lending.">
-<link rel="canonical" href="https://greenlightmortgage.com/loans/usda">
+<title>Home Value Report | Greenlight Mortgage — Longview, TX</title>
+<meta name="description" content="Request a local home value estimate for your Longview or East Texas property from Greenlight Mortgage. Powered by Co/LAB Lending. Equal Housing Opportunity.">
+<link rel="canonical" href="https://greenlightmortgage.com/tools/home-value">
 <meta name="theme-color" content="#0b3a29">
 <meta property="og:site_name" content="Greenlight Mortgage">
-<meta property="og:title" content="USDA Loans in Longview &amp; East Texas">
-<meta property="og:description" content="USDA rural home loans across East Texas. More of Gregg, Harrison and Upshur County qualifies than most people expect. Powered by Co/LAB Lending.">
+<meta property="og:title" content="Home Value Report">
+<meta property="og:description" content="Request a local home value estimate for your Longview or East Texas property from Greenlight Mortgage. Powered by Co/LAB Lending. Equal Housing Opportunity.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://greenlightmortgage.com/loans/usda">
+<meta property="og:url" content="https://greenlightmortgage.com/tools/home-value">
 <meta property="og:image" content="https://greenlightmortgage.com/assets/from-old-site/logo-header.png">
 <meta name="twitter:card" content="summary">
 
 <link rel="preconnect" href="https://athovwknbwbbqworsbrm.supabase.co">
 <script>document.documentElement.className+=" js"</script>
 <link rel="stylesheet" href="/style.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://greenlightmortgage.com/"},{"@type":"ListItem","position":2,"name":"Loan options","item":"https://greenlightmortgage.com/loans"},{"@type":"ListItem","position":3,"name":"USDA","item":"https://greenlightmortgage.com/loans/usda"}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does my area qualify?","acceptedAnswer":{"@type":"Answer","text":"More of East Texas than most people expect. It's determined by specific address, not by city or county, so check the actual property."}},{"@type":"Question","name":"What are the income limits?","acceptedAnswer":{"@type":"Answer","text":"They're set by household size and area, and they're revised periodically. We'll check yours against the current figures."}},{"@type":"Question","name":"Is it really zero down?","acceptedAnswer":{"@type":"Answer","text":"On eligible properties, yes. There are still closing costs, which is a separate conversation."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://greenlightmortgage.com/"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://greenlightmortgage.com/tools"},{"@type":"ListItem","position":3,"name":"Home value","item":"https://greenlightmortgage.com/tools/home-value"}]}</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -69,50 +68,87 @@
 </header>
 <main id="main">
 <div class="hero "><div class="wrap">
-<nav class="crumb" aria-label="Breadcrumb"><a href="/">Home</a> <span>/</span> <a href="/loans">Loan options</a> <span>/</span> <span>USDA</span></nav>
-<p class="eyebrow"><span class="tick" aria-hidden="true"></span>USDA loans &middot; Longview, TX</p>
-<h1>USDA loans</h1>
-<p class="lede">The most overlooked program in East Texas. Zero down payment on eligible properties — and far more of the area around Longview qualifies than people assume.</p>
-<div class="cta"><a class="btn go" href="/tools/estimate">See what you could save</a><a class="btn ghost" href="/contact">Talk to a person</a></div>
+<nav class="crumb" aria-label="Breadcrumb"><a href="/">Home</a> <span>/</span> <a href="/tools">Tools</a> <span>/</span> <span>Home value</span></nav>
+<p class="eyebrow"><span class="tick" aria-hidden="true"></span>Home value report</p>
+<h1>What is your house actually worth?</h1>
+<p class="lede">Not an algorithm's guess from a satellite photo. A local estimate put together by someone who works this market and knows which Longview streets appraise differently from the ones next to them.</p>
+
 </div></div>
 
 <section><div class="wrap">
 <div class="split">
-<div class="reveal">
-  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>Who this is for</p>
-  <h2>Is this you?</h2>
-  <ul class="ticks"><li>Buyers looking just outside Longview city limits</li><li>Anyone buying in Gilmer, Hallsville, White Oak, Diana, Ore City and similar</li><li>Households within the income limits for the area</li><li>Buyers with nothing saved for a down payment</li></ul>
+<div>
+  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>Request a report</p>
+  <h2>Tell us the address.</h2>
+  <p class="sub">We will put a report together and email it to you, usually within one
+  business day.</p>
+
+  <form data-glm-form="home-value" style="margin-top:28px" novalidate>
+    <div class="field"><label for="h-address">Property address</label>
+      <input id="h-address" name="address" type="text" autocomplete="street-address"
+             required maxlength="200" placeholder="123 Example St, Longview, TX 75605">
+      <p class="err">Please enter the address you would like valued.</p></div>
+    <div class="frow">
+      <div class="field"><label for="h-name">Your name</label>
+        <input id="h-name" name="name" type="text" autocomplete="name" required maxlength="120">
+        <p class="err">Please tell us your name.</p></div>
+      <div class="field"><label for="h-email">Email</label>
+        <input id="h-email" name="email" type="email" autocomplete="email" required maxlength="254">
+        <p class="err">Please enter a valid email address.</p></div>
+    </div>
+    <div class="frow">
+      <div class="field"><label for="h-phone">Phone <span
+        style="font-weight:450;color:var(--mut)">(optional)</span></label>
+        <input id="h-phone" name="phone" type="tel" autocomplete="tel" maxlength="32"></div>
+      <div class="field"><label for="h-plan">What are you thinking?</label>
+        <select id="h-plan" name="goal">
+          <option value="">Choose one…</option>
+          <option>Thinking about selling</option>
+          <option>Thinking about refinancing</option>
+          <option>Removing mortgage insurance</option>
+          <option>Just curious</option>
+        </select></div>
+    </div>
+
+    <div class="consent">
+      <input type="checkbox" id="h-tcpa" name="tcpa_consent" value="yes">
+      <label for="h-tcpa">I agree that Greenlight Mortgage, LLC (NMLS #2426021) and its loan officers may contact me at the phone number I provided, including by autodialed or pre-recorded calls and by text message, about my mortgage enquiry. Message and data rates may apply. <strong>Consent is not a condition of obtaining a loan or any other service.</strong> I can opt out at any time by replying STOP to a text, asking the caller to remove me, or emailing us &mdash; see our <a href="/privacy">Privacy Policy</a>.</label>
+    </div>
+    <p class="disclose">Leave that unticked and we will email the report without calling you.
+    You will still get it.</p>
+
+    <div class="cta"><button class="btn go" type="submit">Send me the report</button></div>
+    <p class="formstatus" role="status" aria-live="polite"></p>
+  </form>
 </div>
-<div class="reveal">
-  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>The honest part</p>
-  <h2>Where it can bite</h2>
-  <p class="sub">Two things have to line up: the property address and your household income. If either misses, USDA is off the table — so it&#x27;s worth checking the address early rather than falling in love with a house first.</p>
+
+<div>
+  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>What you get</p>
+  <ul class="ticks">
+    <li>An estimated value range for your address, not a single false-precision number</li>
+    <li>Recent comparable sales nearby, with what makes them comparable</li>
+    <li>What the equity position means for refinancing or dropping mortgage insurance</li>
+    <li>A plain answer on whether now is a sensible time to do anything at all</li>
+  </ul>
+
   <div class="callout">
-    <h3>We will tell you when it is not worth it.</h3>
-    <p>We are brokers, not a single bank with one menu to sell. If a different program
-    serves you better &mdash; or if doing nothing serves you better &mdash; that is the
-    answer you will get.</p>
+    <h3>This is not an appraisal</h3>
+    <p>An appraisal is a formal opinion of value by a licensed appraiser, ordered as part of a
+    loan, and it is the only one a lender will act on. This report is an informal estimate to
+    help you think. The two are not interchangeable and we will not pretend otherwise.</p>
   </div>
+
+  <p class="disclose">Estimates only, and not a commitment to lend. Property values change and
+  any figure we give you is an opinion, not a guarantee of what a buyer or an appraiser will
+  conclude. Subject to credit approval and underwriting where a loan is involved.</p>
 </div>
 </div>
-</div></section>
-
-<section class="alt"><div class="wrap">
-<p class="eyebrow"><span class="tick" aria-hidden="true"></span>What matters</p>
-<h2>The parts worth knowing</h2>
-<div class="grid g2"><div class="card reveal"><h3>Zero down payment</h3><p>On eligible properties. One of only two zero-down programs, and the other one requires military service.</p></div><div class="card reveal"><h3>The map is bigger than you think</h3><p>People rule themselves out assuming they&#x27;re too close to town. Check the address before you assume.</p></div><div class="card reveal"><h3>Income limits apply</h3><p>It&#x27;s tied to household income for the area, so it isn&#x27;t for everyone.</p></div><div class="card reveal"><h3>Property has to qualify too</h3><p>Both you and the house have to be eligible.</p></div></div>
-</div></section>
-
-<section><div class="wrap">
-<p class="eyebrow"><span class="tick" aria-hidden="true"></span>Questions</p>
-<h2>Straight answers</h2>
-<div class="faq"><details><summary>Does my area qualify?</summary><div class="a"><p>More of East Texas than most people expect. It&#x27;s determined by specific address, not by city or county, so check the actual property.</p></div></details><details><summary>What are the income limits?</summary><div class="a"><p>They&#x27;re set by household size and area, and they&#x27;re revised periodically. We&#x27;ll check yours against the current figures.</p></div></details><details><summary>Is it really zero down?</summary><div class="a"><p>On eligible properties, yes. There are still closing costs, which is a separate conversation.</p></div></details></div>
 </div></section>
 
 <section class="band-wrap"><div class="wrap"><div class="ctaband">
 <span class="signal" aria-hidden="true"><i></i><i></i><i></i></span>
-<h2>Find out where you stand on a USDA loan.</h2>
-<p>Answer a few questions and see an estimate in about two minutes. No hard credit pull to begin, and a licensed loan officer follows up within one business day.</p>
+<h2>Already know the equity is there?</h2>
+<p>Run the savings estimate and see what a refinance would actually do to the payment.</p>
 <div class="cta">
 <a class="btn go" href="/tools/estimate">See what you could save</a>
 <a class="btn onDark" href="/contact">Talk to a person</a>
@@ -184,6 +220,6 @@ Equal Credit Opportunity Act. Equal Housing Opportunity.</p>
 </div></footer>
 <script src="/config.js" defer></script>
 <script src="/site.js" defer></script>
-
+<script src="/forms.js" defer></script>
 </body>
 </html>

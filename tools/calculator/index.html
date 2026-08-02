@@ -3,23 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>USDA Loans in Longview &amp; East Texas | Greenlight Mortgage</title>
-<meta name="description" content="USDA rural home loans across East Texas. More of Gregg, Harrison and Upshur County qualifies than most people expect. Powered by Co/LAB Lending.">
-<link rel="canonical" href="https://greenlightmortgage.com/loans/usda">
+<title>Mortgage Calculator | Greenlight Mortgage — Longview, TX</title>
+<meta name="description" content="Free mortgage calculator with full amortization schedule and extra-payment scenarios. Nothing collected, nothing gated. Greenlight Mortgage, Longview TX. Equal Housing Opportunity.">
+<link rel="canonical" href="https://greenlightmortgage.com/tools/calculator">
 <meta name="theme-color" content="#0b3a29">
 <meta property="og:site_name" content="Greenlight Mortgage">
-<meta property="og:title" content="USDA Loans in Longview &amp; East Texas">
-<meta property="og:description" content="USDA rural home loans across East Texas. More of Gregg, Harrison and Upshur County qualifies than most people expect. Powered by Co/LAB Lending.">
+<meta property="og:title" content="Mortgage Calculator">
+<meta property="og:description" content="Free mortgage calculator with full amortization schedule and extra-payment scenarios. Nothing collected, nothing gated. Greenlight Mortgage, Longview TX. Equal Housing Opportunity.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://greenlightmortgage.com/loans/usda">
+<meta property="og:url" content="https://greenlightmortgage.com/tools/calculator">
 <meta property="og:image" content="https://greenlightmortgage.com/assets/from-old-site/logo-header.png">
 <meta name="twitter:card" content="summary">
 
 <link rel="preconnect" href="https://athovwknbwbbqworsbrm.supabase.co">
 <script>document.documentElement.className+=" js"</script>
 <link rel="stylesheet" href="/style.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://greenlightmortgage.com/"},{"@type":"ListItem","position":2,"name":"Loan options","item":"https://greenlightmortgage.com/loans"},{"@type":"ListItem","position":3,"name":"USDA","item":"https://greenlightmortgage.com/loans/usda"}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does my area qualify?","acceptedAnswer":{"@type":"Answer","text":"More of East Texas than most people expect. It's determined by specific address, not by city or county, so check the actual property."}},{"@type":"Question","name":"What are the income limits?","acceptedAnswer":{"@type":"Answer","text":"They're set by household size and area, and they're revised periodically. We'll check yours against the current figures."}},{"@type":"Question","name":"Is it really zero down?","acceptedAnswer":{"@type":"Answer","text":"On eligible properties, yes. There are still closing costs, which is a separate conversation."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://greenlightmortgage.com/"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://greenlightmortgage.com/tools"},{"@type":"ListItem","position":3,"name":"Calculator","item":"https://greenlightmortgage.com/tools/calculator"}]}</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -69,50 +68,81 @@
 </header>
 <main id="main">
 <div class="hero "><div class="wrap">
-<nav class="crumb" aria-label="Breadcrumb"><a href="/">Home</a> <span>/</span> <a href="/loans">Loan options</a> <span>/</span> <span>USDA</span></nav>
-<p class="eyebrow"><span class="tick" aria-hidden="true"></span>USDA loans &middot; Longview, TX</p>
-<h1>USDA loans</h1>
-<p class="lede">The most overlooked program in East Texas. Zero down payment on eligible properties — and far more of the area around Longview qualifies than people assume.</p>
-<div class="cta"><a class="btn go" href="/tools/estimate">See what you could save</a><a class="btn ghost" href="/contact">Talk to a person</a></div>
+<nav class="crumb" aria-label="Breadcrumb"><a href="/">Home</a> <span>/</span> <a href="/tools">Tools</a> <span>/</span> <span>Calculator</span></nav>
+<p class="eyebrow"><span class="tick" aria-hidden="true"></span>Mortgage calculator</p>
+<h1>Work out the payment</h1>
+<p class="lede">Principal and interest, taxes and insurance, the full amortization schedule, and what an extra payment each month really does. Nothing is collected and nothing leaves your browser.</p>
+
 </div></div>
 
 <section><div class="wrap">
-<div class="split">
-<div class="reveal">
-  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>Who this is for</p>
-  <h2>Is this you?</h2>
-  <ul class="ticks"><li>Buyers looking just outside Longview city limits</li><li>Anyone buying in Gilmer, Hallsville, White Oak, Diana, Ore City and similar</li><li>Households within the income limits for the area</li><li>Buyers with nothing saved for a down payment</li></ul>
+<div class="split even">
+<div>
+  <div class="estcard">
+  <h2 style="font-size:24px">Your numbers</h2>
+  <form id="calc" novalidate style="margin-top:22px">
+    <div class="field"><label for="c-price">Home price</label>
+      <input id="c-price" type="text" inputmode="decimal" value="285,000"></div>
+    <div class="frow">
+      <div class="field"><label for="c-down">Down payment</label>
+        <input id="c-down" type="text" inputmode="decimal" value="28,500"></div>
+      <div class="field"><label for="c-term">Term (years)</label>
+        <select id="c-term">
+          <option>30</option><option>25</option><option>20</option>
+          <option>15</option><option>10</option>
+        </select></div>
+    </div>
+    <div class="field"><label for="c-rate">Interest rate to model (%)</label>
+      <input id="c-rate" type="text" inputmode="decimal" placeholder="Enter a rate"
+             aria-describedby="c-rate-help">
+      <p class="help" id="c-rate-help">A figure <strong>you</strong> choose, to model against.
+      We deliberately do not pre-fill this &mdash; a number sitting in that box would read as
+      a rate we are offering, and only a licensed loan officer can quote you one.</p></div>
+    <div class="frow">
+      <div class="field"><label for="c-tax">Property tax / year</label>
+        <input id="c-tax" type="text" inputmode="decimal" value="5,700"></div>
+      <div class="field"><label for="c-ins">Insurance / year</label>
+        <input id="c-ins" type="text" inputmode="decimal" value="2,400"></div>
+    </div>
+    <div class="field"><label for="c-extra">Extra principal each month</label>
+      <input id="c-extra" type="text" inputmode="decimal" value="0"></div>
+  </form>
+  </div>
 </div>
-<div class="reveal">
-  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>The honest part</p>
-  <h2>Where it can bite</h2>
-  <p class="sub">Two things have to line up: the property address and your household income. If either misses, USDA is off the table — so it&#x27;s worth checking the address early rather than falling in love with a house first.</p>
-  <div class="callout">
-    <h3>We will tell you when it is not worth it.</h3>
-    <p>We are brokers, not a single bank with one menu to sell. If a different program
-    serves you better &mdash; or if doing nothing serves you better &mdash; that is the
-    answer you will get.</p>
+
+<div>
+  <div class="result">
+    <p class="cap">Estimated monthly payment</p>
+    <p class="big" id="c-total">&mdash;</p>
+    <p class="cap" id="c-breakdown">principal &amp; interest, taxes and insurance</p>
+    <p class="rnote">An illustration built from figures you entered. Not a quote, an offer of
+    credit, or an approval, and <strong>not a commitment to lend</strong>. Subject to credit
+    approval and underwriting. Excludes mortgage insurance, HOA dues, and any escrow shortage
+    &mdash; all of which move the real number.</p>
+  </div>
+
+  <div class="estcard" style="margin-top:18px">
+    <h2 style="font-size:22px">With the extra payment</h2>
+    <p class="sub" id="c-extra-out">Add an amount above to see the effect.</p>
   </div>
 </div>
 </div>
-</div></section>
 
-<section class="alt"><div class="wrap">
-<p class="eyebrow"><span class="tick" aria-hidden="true"></span>What matters</p>
-<h2>The parts worth knowing</h2>
-<div class="grid g2"><div class="card reveal"><h3>Zero down payment</h3><p>On eligible properties. One of only two zero-down programs, and the other one requires military service.</p></div><div class="card reveal"><h3>The map is bigger than you think</h3><p>People rule themselves out assuming they&#x27;re too close to town. Check the address before you assume.</p></div><div class="card reveal"><h3>Income limits apply</h3><p>It&#x27;s tied to household income for the area, so it isn&#x27;t for everyone.</p></div><div class="card reveal"><h3>Property has to qualify too</h3><p>Both you and the house have to be eligible.</p></div></div>
-</div></section>
-
-<section><div class="wrap">
-<p class="eyebrow"><span class="tick" aria-hidden="true"></span>Questions</p>
-<h2>Straight answers</h2>
-<div class="faq"><details><summary>Does my area qualify?</summary><div class="a"><p>More of East Texas than most people expect. It&#x27;s determined by specific address, not by city or county, so check the actual property.</p></div></details><details><summary>What are the income limits?</summary><div class="a"><p>They&#x27;re set by household size and area, and they&#x27;re revised periodically. We&#x27;ll check yours against the current figures.</p></div></details><details><summary>Is it really zero down?</summary><div class="a"><p>On eligible properties, yes. There are still closing costs, which is a separate conversation.</p></div></details></div>
+<div style="margin-top:48px">
+  <h2>Amortization</h2>
+  <p class="sub">Year by year, where the money actually goes. In the early years most of it is
+  interest &mdash; that is the part people find surprising.</p>
+  <div class="tablewrap"><table id="c-amort">
+    <thead><tr><th>Year</th><th>Interest paid</th><th>Principal paid</th>
+    <th>Balance remaining</th></tr></thead><tbody></tbody></table></div>
+  <p class="disclose">Estimates only. Subject to credit approval and underwriting.</p>
+</div>
 </div></section>
 
 <section class="band-wrap"><div class="wrap"><div class="ctaband">
 <span class="signal" aria-hidden="true"><i></i><i></i><i></i></span>
-<h2>Find out where you stand on a USDA loan.</h2>
-<p>Answer a few questions and see an estimate in about two minutes. No hard credit pull to begin, and a licensed loan officer follows up within one business day.</p>
+<h2>Want this run against a real file?</h2>
+<p>The calculator models a rate you picked. A licensed loan officer can tell you what is actually available to you — that takes an application, and it starts with a conversation.</p>
 <div class="cta">
 <a class="btn go" href="/tools/estimate">See what you could save</a>
 <a class="btn onDark" href="/contact">Talk to a person</a>
@@ -184,6 +214,6 @@ Equal Credit Opportunity Act. Equal Housing Opportunity.</p>
 </div></footer>
 <script src="/config.js" defer></script>
 <script src="/site.js" defer></script>
-
+<script src="/calculator.js" defer></script>
 </body>
 </html>

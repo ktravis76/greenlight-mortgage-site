@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
+
+  "_comment_redirects": [
+    "301s for the WordPress URL structure on kennethtravis.com. That domain ranks",
+    "#2 organically for 'mortgage longview tx', so a missing redirect is lost equity",
+    "and a dead ad destination.",
+    "",
+    "IMPORTANT: these only fire for requests that reach THIS project. The old paths",
+    "live on kennethtravis.com, so the same map has to be applied wherever that",
+    "domain is served once it is emptied of mortgage content — see MIGRATION-MAP.md.",
+    "They are duplicated here so that any old link pointed at the new domain also",
+    "lands correctly."
+  ],
+
+  "redirects": [
+    { "source": "/loans/conventional-loans", "destination": "/loans/conventional", "permanent": true },
+    { "source": "/loans/fha-loans",          "destination": "/loans/fha",          "permanent": true },
+    { "source": "/loans/jumbo-loans",        "destination": "/loans/jumbo",        "permanent": true },
+    { "source": "/loans/va-loans",           "destination": "/loans/va",           "permanent": true },
+    { "source": "/loans/usda-loans",         "destination": "/loans/usda",         "permanent": true },
+    { "source": "/loans/refinancing",        "destination": "/loans/refinance",    "permanent": true },
+
+    { "source": "/mortgage-calculator",      "destination": "/tools/calculator",   "permanent": true },
+    { "source": "/home-valuation-report",    "destination": "/tools/home-value",   "permanent": true },
+    { "source": "/lender-learning-center",   "destination": "/learn",              "permanent": true },
+    { "source": "/privacy-policy",           "destination": "/privacy",            "permanent": true },
+
+    { "source": "/apply",  "destination": "https://greenlight.my1003app.com/233918/register", "permanent": false },
+    { "source": "/estimate", "destination": "/tools/estimate", "permanent": true },
+    { "source": "/calculator", "destination": "/tools/calculator", "permanent": true },
+    { "source": "/home-value", "destination": "/tools/home-value", "permanent": true },
+    { "source": "/team", "destination": "/about", "permanent": true }
+  ],
+
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "geolocation=(), microphone=(), camera=(), interest-cohort=()" },
+        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self' https://athovwknbwbbqworsbrm.supabase.co https://athovwknbwbbqworsbrm.functions.supabase.co; form-action 'self' https://greenlight.my1003app.com; frame-ancestors 'self'; base-uri 'self'"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.(css|js)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }
+      ]
+    }
+  ]
+}

@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
-"""Generates the six loan-program pages. One template, one compliance block, six data sets.
-Run: python3 build-loans.py   ->  writes loans/*.html"""
-import os, html
+"""Generates the six loan-program pages and the /loans hub.
+
+One content dict per program; all chrome, compliance and schema come from site.py.
+Run: python3 build-loans.py   ->  writes loans/<slug>/index.html + loans/index.html"""
+import os
+
+import sitegen as S
 
 APPLY = "https://greenlight.my1003app.com/233918/register"
 
@@ -101,142 +105,186 @@ LOANS = [
           ("Can I take cash out?","Often, yes. It increases your balance, so it should be for something worth it.")]),
 ]
 
-NAV = "".join(f'<a href="/loans/{l["slug"]}">{l["nav"]}</a>' for l in LOANS)
+# ---------------------------------------------------------------------------
+# Rendering. Chrome, compliance, and schema all come from site.py so the
+# license block cannot drift between these pages and the rest of the site.
 
-FOOT = """<footer><div class="wrap">
-<div class="fg">
-<div><a class="brand" href="/">Greenlight Mortgage<small>Powered by Co/LAB Lending</small></a>
-<p style="margin-top:12px;max-width:32ch">A mortgage brokerage serving Longview and East Texas.</p></div>
-<div><h4>Loan options</h4>%NAVCOL%</div>
-<div><h4>Company</h4><a href="/about">Our team</a><a href="/reviews">Reviews</a><a href="/contact">Contact</a><a href="/blog">Blog</a></div>
-</div>
-<div class="legal">
-<div class="eho">&#127968; Equal Housing Opportunity</div>
-<p><strong>Greenlight Mortgage, LLC</strong> is a licensed Mortgage Broker in the state of Texas.
-NMLS 2426021 &middot; Alabama 23417 &middot; Florida MBR6235 &middot; Louisiana 2426021 &middot;
-North Dakota ML104832 &middot; South Carolina 2426021 &middot; Texas 2426021.
-Kenneth Travis NMLS #233918. 4523 Judson Rd, Longview, TX 75605 &middot; 903-331-0892.</p>
-<p>This page is for informational purposes and is <strong>not a commitment to lend</strong>. All loans are
-subject to credit approval, underwriting, income and asset verification, and satisfactory property
-appraisal. Program availability, rates, and terms are subject to change without notice and vary based on
-loan amount, credit profile, occupancy, property type, and other factors. Any figures or examples shown
-are illustrative only and are not an offer or guarantee of a specific interest rate, APR, monthly payment,
-or loan term. Rate quotes, eligibility determinations, and loan approvals are made only by licensed loan
-officers following a complete application.</p>
-<p>We do not provide legal or tax advice. We do business in accordance with the Federal Fair Housing Act
-and the Equal Credit Opportunity Act.</p>
-<p style="margin-top:14px">&copy; 2026 Greenlight Mortgage, LLC. All rights reserved.</p>
-</div></div></footer>"""
+ARROW = ('<svg viewBox="0 0 14 9" aria-hidden="true"><path d="M9.2.8 13 4.5 9.2 8.2M13 4.5H1"'
+         ' fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"'
+         ' stroke-linejoin="round"/></svg>')
 
-TPL = """<!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{title}</title>
-<meta name="description" content="{desc}">
-<meta name="theme-color" content="#0f7a4d">
-<link rel="stylesheet" href="/style.css">
-<script type="application/ld+json">{schema}</script>
-</head><body>
-<header><div class="wrap nav">
-<a class="brand" href="/"><span class="dot"></span><span>Greenlight Mortgage<small>Powered by Co/LAB Lending</small></span></a>
-<nav class="links">{nav}</nav>
-<a class="btn" href="{apply}">Apply online</a>
-</div></header>
 
-<div class="hero"><div class="wrap">
-<div class="crumb"><a href="/">Home</a> / <a href="/loans">Loan options</a> / {navname}</div>
-<h1>{h1}</h1>
-<p class="lede">{lede}</p>
-<div class="cta"><a class="btn" href="/tools/estimate">See what you could save</a>
-<a class="btn ghost" href="/contact">Talk to someone</a></div>
-</div></div>
+def loan_body(l):
+    who = "".join(f"<li>{S.esc(w)}</li>" for w in l["who"])
+    facts = "".join(
+        f'<div class="card reveal"><h3>{S.esc(k)}</h3><p>{S.esc(v)}</p></div>'
+        for k, v in l["facts"])
+    faqs = "".join(
+        f'<details><summary>{S.esc(q)}</summary><div class="a"><p>{S.esc(a)}</p></div></details>'
+        for q, a in l["faqs"])
+
+    return f"""{S.hero(
+        eyebrow=f'{S.esc(l["nav"])} loans &middot; Longview, TX',
+        h1=S.esc(l["h1"]),
+        lede=S.esc(l["lede"]),
+        ctas=[("/tools/estimate", "See what you could save", "go"),
+              ("/contact", "Talk to a person", "ghost")],
+        trail=[("/", "Home"), ("/loans", "Loan options"), (None, l["nav"])])}
 
 <section><div class="wrap">
 <div class="split">
-<div><div class="eyebrow">Who this is for</div>
-<h2>Is this you?</h2>
-<ul class="ticks">{who}</ul></div>
-<div><div class="eyebrow">The honest part</div>
-<h2 style="font-size:26px">Where it can bite</h2>
-<p class="sub">{catch}</p></div>
+<div class="reveal">
+  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>Who this is for</p>
+  <h2>Is this you?</h2>
+  <ul class="ticks">{who}</ul>
+</div>
+<div class="reveal">
+  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>The honest part</p>
+  <h2>Where it can bite</h2>
+  <p class="sub">{S.esc(l["catch"])}</p>
+  <div class="callout">
+    <h3>We will tell you when it is not worth it.</h3>
+    <p>We are brokers, not a single bank with one menu to sell. If a different program
+    serves you better &mdash; or if doing nothing serves you better &mdash; that is the
+    answer you will get.</p>
+  </div>
+</div>
 </div>
 </div></section>
 
 <section class="alt"><div class="wrap">
-<div class="eyebrow">What matters</div>
+<p class="eyebrow"><span class="tick" aria-hidden="true"></span>What matters</p>
 <h2>The parts worth knowing</h2>
 <div class="grid g2">{facts}</div>
 </div></section>
 
 <section><div class="wrap">
-<div class="eyebrow">Questions</div>
+<p class="eyebrow"><span class="tick" aria-hidden="true"></span>Questions</p>
 <h2>Straight answers</h2>
 <div class="faq">{faqs}</div>
 </div></section>
 
-<section><div class="wrap"><div class="ctaband">
-<h2>Let's find out where you stand.</h2>
-<p>A short conversation, no hard credit pull to begin, and a straight answer either way.</p>
-<a class="btn" href="{apply}">Start your application</a>
-</div></div></section>
-{foot}
-</body></html>
+{S.cta_band(
+    head=f'Find out where you stand on a {l["nav"]} loan.',
+    sub="Answer a few questions and see an estimate in about two minutes. No hard credit "
+        "pull to begin, and a licensed loan officer follows up within one business day.")}
 """
 
+
 def build():
-    os.makedirs("loans", exist_ok=True)
-    navcol = "".join(f'<a href="/loans/{l["slug"]}">{l["nav"]}</a>' for l in LOANS)
-    foot = FOOT.replace("%NAVCOL%", navcol)
+    print("loan pages")
     for l in LOANS:
-        who = "".join(f"<li>{html.escape(w)}</li>" for w in l["who"])
-        facts = "".join(
-            f'<div class="card"><h3>{html.escape(k)}</h3><p>{html.escape(v)}</p></div>'
-            for k, v in l["facts"])
-        faqs = "".join(
-            f'<details><summary>{html.escape(q)}</summary><p>{html.escape(a)}</p></details>'
-            for q, a in l["faqs"])
-        schema = ('{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[' + ",".join(
-            '{"@type":"Question","name":%s,"acceptedAnswer":{"@type":"Answer","text":%s}}'
-            % (jstr(q), jstr(a)) for q, a in l["faqs"]) + ']}')
-        out = TPL.format(title=html.escape(l["title"]), desc=html.escape(l["desc"]),
-                         nav=NAV, apply=APPLY, navname=l["nav"], h1=html.escape(l["h1"]),
-                         lede=html.escape(l["lede"]), who=who, catch=html.escape(l["catch"]),
-                         facts=facts, faqs=faqs, foot=foot, schema=schema)
-        # directory-style URLs so /loans/va works on both the local server and Vercel
-        os.makedirs(f"loans/{l['slug']}", exist_ok=True)
-        with open(f"loans/{l['slug']}/index.html", "w") as f:
+        body = loan_body(l)
+        out = S.page(
+            path=f'/loans/{l["slug"]}',
+            title=l["title"],
+            desc=l["desc"],
+            body=body,
+            trail=[("/", "Home"), ("/loans", "Loan options"), (f'/loans/{l["slug"]}', l["nav"])],
+            faqs=l["faqs"],
+        )
+        os.makedirs(f'loans/{l["slug"]}', exist_ok=True)
+        with open(f'loans/{l["slug"]}/index.html', "w") as f:
             f.write(out)
-        # legacy flat file removed if present
-        if os.path.exists(f"loans/{l['slug']}.html"):
-            os.remove(f"loans/{l['slug']}.html")
-        print(f"  wrote loans/{l['slug']}/index.html  ({len(out):,} bytes)")
+        # Legacy flat file from the pass that shipped nav pointing at /loans/va
+        # while the files were at /loans/va.html. Remove it if it reappears.
+        if os.path.exists(f'loans/{l["slug"]}.html'):
+            os.remove(f'loans/{l["slug"]}.html')
+        print(f'  loans/{l["slug"]}/index.html  ({len(out):,} bytes)')
 
-    # ---- hub page ----
+    # ---------------------------------------------------------------- hub page
     cards = "".join(
-        f'<a class="lcard" href="/loans/{l["slug"]}"><h3>{html.escape(l["nav"])}</h3>'
-        f'<p>{html.escape(l["lede"][:132])}…</p><span class="go">Read more &rarr;</span></a>'
+        f'<a class="lcard reveal" href="/loans/{l["slug"]}"><h3>{S.esc(l["nav"])}</h3>'
+        f'<p>{S.esc(l["lede"])}</p>'
+        f'<span class="go">Read more {ARROW}</span></a>'
         for l in LOANS)
-    hub = TPL.format(
-        title="Loan Options | Greenlight Mortgage — Longview, TX",
-        desc="Conventional, FHA, Jumbo, VA, USDA and refinance options in Longview and East Texas. Powered by Co/LAB Lending. Equal Housing Opportunity.",
-        nav=NAV, apply=APPLY, navname="Loan options",
-        h1="Whatever the situation actually is",
-        lede="First house, fifth house, self-employed, rebuilding credit, or just tired of the payment you have. There is usually a path — and we shop a network of lenders to find it instead of selling you one bank&#39;s menu.",
-        who="<li>Buying your first home in East Texas</li><li>Refinancing a payment that no longer makes sense</li><li>Self-employed or with income that does not fit a W-2</li><li>Turned down somewhere else</li>",
-        catch="No single program is best for everyone. FHA beats conventional for some files and costs more on others. USDA is free money if the address qualifies and useless if it does not. That is the whole reason a broker beats a bank — we are not paid to steer you to one answer.",
-        facts=f'<div class="lgrid">{cards}</div>',
-        faqs='<details><summary>How do I know which one I need?</summary><p>You do not have to. That is our job. Tell us the situation and we will show you the options side by side in plain English.</p></details>'
-             '<details><summary>Can I switch programs later?</summary><p>Often, yes. Plenty of people start on FHA and refinance to conventional once credit and equity improve. It is a legitimate strategy.</p></details>'
-             '<details><summary>What does it cost to find out?</summary><p>Nothing, and there is no hard credit pull to begin the conversation.</p></details>',
-        foot=foot,
-        schema='{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[]}')
-    with open("loans/index.html", "w") as f:
-        f.write(hub)
-    print(f"  wrote loans/index.html  ({len(hub):,} bytes)")
 
-def jstr(s):
-    return '"' + s.replace('\\', '\\\\').replace('"', '\\"') + '"'
+    hub_faqs = [
+        ("How do I know which loan I need?",
+         "You do not have to. That is our job. Tell us the situation and we will lay the "
+         "options out side by side in plain English, including what each one actually costs "
+         "you over time."),
+        ("Can I switch programs later?",
+         "Often, yes. Plenty of people start on FHA and refinance to conventional once credit "
+         "and equity improve. It is a legitimate strategy, not a workaround."),
+        ("What does it cost to find out where I stand?",
+         "Nothing, and there is no hard credit pull to begin the conversation."),
+        ("Why use a broker instead of my bank?",
+         "A bank can only offer you what that bank has. We are licensed in six states and we "
+         "shop a network of lenders, which matters most on the files banks find awkward — "
+         "self-employed income, thinner credit, jumbo amounts, or rural addresses."),
+    ]
+    faq_html = "".join(
+        f'<details><summary>{S.esc(q)}</summary><div class="a"><p>{S.esc(a)}</p></div></details>'
+        for q, a in hub_faqs)
+
+    body = f"""{S.hero(
+        eyebrow="Loan options",
+        h1="Whatever the situation <em>actually</em> is",
+        lede="First house, fifth house, self-employed, rebuilding credit, or just tired of "
+             "the payment you have. There is usually a path &mdash; and we shop a network of "
+             "lenders to find it instead of selling you one bank&rsquo;s menu.",
+        ctas=[("/tools/estimate", "See what you could save", "go"),
+              ("/contact", "Talk to a person", "ghost")],
+        trail=[("/", "Home"), (None, "Loan options")])}
+
+<section><div class="wrap">
+<p class="eyebrow"><span class="tick" aria-hidden="true"></span>Six programs</p>
+<h2>Start with the one that sounds like you.</h2>
+<p class="sub">Not sure? Start anywhere. The differences matter less than getting an actual
+look at your file.</p>
+<div class="lgrid">{cards}</div>
+</div></section>
+
+<section class="alt"><div class="wrap">
+<div class="split">
+<div class="reveal">
+  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>The honest part</p>
+  <h2>No single program is best for everyone.</h2>
+  <p class="sub">FHA beats conventional on some files and costs more on others. USDA is
+  effectively free money if the address qualifies and useless if it does not. VA is almost
+  always the strongest option for someone eligible &mdash; and a lot of eligible people never
+  find out they are.</p>
+  <p class="sub">That is the whole reason a broker beats a bank here. We are not paid to steer
+  you toward one answer.</p>
+</div>
+<div class="reveal">
+  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>How it goes</p>
+  <div class="steps">
+    <div class="step"><h3>Tell us the situation</h3><p>A short conversation or the online
+    estimator. No hard credit pull to begin.</p></div>
+    <div class="step"><h3>We shop it</h3><p>We take your file to a network of lenders rather
+    than a single menu, and bring back what is actually available.</p></div>
+    <div class="step"><h3>You decide</h3><p>Options side by side, in plain English, including
+    the option of doing nothing.</p></div>
+  </div>
+</div>
+</div>
+</div></section>
+
+<section><div class="wrap">
+<p class="eyebrow"><span class="tick" aria-hidden="true"></span>Questions</p>
+<h2>Straight answers</h2>
+<div class="faq">{faq_html}</div>
+</div></section>
+
+{S.cta_band()}
+"""
+    out = S.page(
+        path="/loans",
+        title="Loan Options in Longview, TX | Greenlight Mortgage",
+        desc="Conventional, FHA, VA, USDA, jumbo and refinance options in Longview and East "
+             "Texas. A mortgage broker that shops a network of lenders. Powered by Co/LAB "
+             "Lending. Equal Housing Opportunity.",
+        body=body,
+        trail=[("/", "Home"), ("/loans", "Loan options")],
+        faqs=hub_faqs,
+    )
+    with open("loans/index.html", "w") as f:
+        f.write(out)
+    print(f"  loans/index.html  ({len(out):,} bytes)")
+
 
 if __name__ == "__main__":
     build()
-    print(f"\n{len(LOANS)} loan pages built.")
+    print(f"\n{len(LOANS)} loan pages + hub built.")

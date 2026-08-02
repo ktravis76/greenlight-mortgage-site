@@ -228,5 +228,82 @@ ND, SC), Core Values, and the "Green means GO!" tagline.
 
 ## Stack
 
-Static HTML/CSS today. No build step, no dependencies. Deploys on push. Supabase backs
-the tools and structured intake; forms post through to Konnectd.
+Static HTML/CSS/vanilla JS. No framework, no npm, no dependencies. Deploys on push.
+Supabase backs the tools and structured intake; forms post through to Konnectd.
+
+## Build
+
+Every page is generated. Nothing in the tree is hand-edited HTML — edit the generator
+and rebuild, or your change is gone next time somebody runs the build.
+
+```bash
+python3 build.py                       # generate everything, then run the checks
+python3 -m http.server 8787            # preview at http://127.0.0.1:8787
+```
+
+| File | What it owns |
+| --- | --- |
+| `sitegen.py` | Header, footer, compliance block, schema, the TCPA sentence, verified facts. **Single source of truth.** |
+| `build-loans.py` | Six loan programs + `/loans` hub |
+| `build-pages.py` | Homepage, about, contact, testimonials, reviews, learn, resources, blog, survey, legal |
+| `build-tools.py` | `/tools` hub, Estimated Savings, calculator, home value |
+| `build.py` | Runs all three, writes `sitemap.xml` + `robots.txt`, then runs `check.py` |
+| `check.py` | Link resolution + compliance gate. Exits non-zero on failure. |
+
+`sitegen.py` is named that, not `site.py`, because Python imports a stdlib module called
+`site` at startup and a local `site.py` would be silently shadowed by it.
+
+### The checks are not advisory
+
+```bash
+python3 check.py
+```
+
+- **Links.** Resolves every internal `href`/`src` against the built tree the way Vercel
+  would serve it. A previous pass shipped nav pointing at `/loans/va` while the files sat
+  at `/loans/va.html` and every link on the site 404'd. This is what stops that.
+- **Compliance.** Greps rendered copy for guarantees, superlative rate claims, stated
+  rate/APR figures, and the Reg Z "business professionals only" line. Negation-aware, so
+  the required disclaimers do not trip it. Also fails if a rate input ships pre-filled —
+  a number sitting in that box reads as a rate we are offering.
+- **Open items.** Prints every unconfirmed fact deliberately marked on a live page.
+
+## State of the build
+
+Marketing site and tools are built and passing. **The site is not launch-ready**, and the
+blockers are listed here rather than buried.
+
+### Launch blockers
+
+1. **Apply `db/2026-08-01-rls-hardening.sql`.** Two SECURITY DEFINER views over
+   `soft_quotes` are readable by anyone holding the publishable key, which ships in this
+   site's page source. Aggregates only — no borrower PII — but it publishes lead volume,
+   conversion mix and average quoted rate to any competitor. Also fixes an unvalidated
+   `leads` insert that lets anyone forge a TCPA consent record. Full write-up in
+   [`db/RLS-AUDIT.md`](db/RLS-AUDIT.md). **Nothing has been applied** — two sections touch
+   surfaces the live VA screener writes to.
+2. **Deploy the Edge Function**, then set `LEAD_ENDPOINT_LIVE: true` in `config.js`.
+   Until then every form tells the visitor it is not connected and shows the office number.
+   It does not fake a thank-you. See `supabase/functions/submit-lead/`.
+3. **Compliance sign-off on the TCPA sentence** in `sitegen.py` (`TCPA_TEXT`) and on the
+   Texas SML complaint notice (`TX_SML_NOTICE`, currently a marked placeholder — we did
+   not invent the regulator's address).
+4. **Legal review of `/privacy`.** Drafted to describe what the site actually does; GLBA
+   annual-notice obligations need a lawyer's eye.
+5. **Confirm the team roster.** `/about` ships six deliberately blank cards. No colleague
+   has been invented, and no unconfirmed NMLS number published.
+
+### Also outstanding
+
+- Homepage video has no captions or transcript — the biggest known accessibility gap,
+  and it is disclosed on `/accessibility` rather than quietly ignored.
+- Eight WordPress blog posts still to migrate off the vendor multisite. One original post
+  was written here to exercise the template; KT should read it before it stays up.
+- Google / Facebook / Zillow profile URLs unknown, so `/reviews` links nowhere yet. No
+  star rating is published anywhere — unsourced performance claims stay off a regulated site.
+- Office hours unconfirmed, so they are absent from the page and from schema.
+- Resource PDFs were never recovered from the old site. Pull them before the domain flips
+  — that is the one irreversible step in this project.
+- CSP allows `'unsafe-inline'` for scripts because of the anti-flash inline snippet in
+  `<head>`. Moving to hashes would tighten it.
+- Phase 2 (`/portal`, `/admin`) not started, per the brief's ordering.

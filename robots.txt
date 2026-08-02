@@ -1,0 +1,9 @@
+# Greenlight Mortgage, LLC — https://greenlightmortgage.com
+User-agent: *
+Allow: /
+
+# Feedback form and the internal sales tool have no business in search results.
+Disallow: /survey
+Disallow: /tools/va-refi-screener
+
+Sitemap: https://greenlightmortgage.com/sitemap.xml
