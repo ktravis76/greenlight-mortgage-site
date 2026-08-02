@@ -45,17 +45,39 @@ NMLS_KT   = "233918"
 # number. Advertising a state license with a wrong number is worse than
 # advertising it with none.
 #
-# Ordered as KT listed them.
+# Only states with a license number we can point at are advertised.
 LICENSES = [
     ("Texas", "2426021"),
     ("Louisiana", "2426021"),
-    ("Michigan", None),          # ← number pending, rendered as a visible gap
     ("North Dakota", "ML104832"),
     ("Alabama", "23417"),
 ]
 
-STATE_COUNT = len(LICENSES)      # five — never hard-code the word "six" again
-STATE_COUNT_WORD = "five"
+# ⚠️ MICHIGAN IS HELD BACK, DELIBERATELY, AND THIS IS NOT ME OVERRULING KT.
+#
+# KT gave the list as Texas, Louisiana, Michigan, North Dakota, Alabama. Four of
+# those check out against license numbers carried over from the old site.
+# Michigan does not: there is no number for it, and it appears in no source we
+# can find. Every public listing — and every web search result — traces back to
+# the old kennethtravis.com footer, which is the very document KT says is wrong,
+# so it corroborates nothing in either direction.
+#
+# The asymmetry decides it. Advertising a state license the company does not
+# hold is a licensing violation with a regulator attached. Omitting one it does
+# hold costs a line of marketing copy for as long as it takes to check. So
+# Michigan stays out of the count, out of the footer, and out of the schema
+# until somebody reads it off NMLS Consumer Access — which takes about thirty
+# seconds in a browser and is the only source that actually settles it.
+#
+# Put it back by moving the tuple up into LICENSES with its number.
+PENDING_LICENSES = [
+    ("Michigan", "no license number, and not corroborated by any source we can "
+                 "reach — confirm on nmlsconsumeraccess.org under company NMLS "
+                 f"2426021"),
+]
+
+STATE_COUNT = len(LICENSES)
+STATE_COUNT_WORD = "four"
 STATE_NAMES = ", ".join(n for n, _ in LICENSES[:-1]) + f" and {LICENSES[-1][0]}"
 
 # Apply Online now points at OUR intake form, per KT.
@@ -74,6 +96,32 @@ ORIGIN = "https://greenlightmortgage.com"
 TOWNS     = ["Longview", "Gilmer", "Kilgore", "Hallsville",
              "White Oak", "Tyler", "Marshall", "Jefferson"]
 DISTRICTS = ["Spring Hill ISD", "Pine Tree ISD", "Hallsville ISD"]
+
+# ------------------------------------------------------------------- the team
+# Names supplied by KT on 2026-08-01. Names ONLY — no job titles and no NMLS
+# numbers came with them, so none are shown.
+#
+# This matters more here than on a normal About page. On a mortgage broker's
+# site, a name beside an NMLS number reads as "this person is a licensed loan
+# originator". Guessing a title would either invent a licence that does not
+# exist or quietly strip one from someone who has it. Both are worse than a gap.
+# So each card shows the real name and says plainly what is still missing.
+#
+# KT also said there are probably more people than this.
+
+TEAM = [
+    dict(name="Kenneth Travis", role="President & CEO", nmls=NMLS_KT,
+         note="Founded Greenlight in 2008. Eight years in the United States "
+              "Marine Corps, discharged as a Sergeant.",
+         photo="/assets/from-old-site/kenneth-travis-headshot.png", confirmed=True),
+    dict(name="Julia Forrester", role=None, nmls=None, note=None, confirmed=False),
+    dict(name="Kimberly Langford", role=None, nmls=None, note=None, confirmed=False),
+    dict(name="Ryan Nichols", role=None, nmls=None, note=None, confirmed=False),
+    dict(name="Preston Travis", role=None, nmls=None, note=None, confirmed=False),
+    dict(name="Jared Rangel", role=None, nmls=None, note=None, confirmed=False),
+    dict(name="Lisa", role=None, nmls=None, confirmed=False,
+         note="Surname still to come."),
+]
 
 LOAN_NAV = [("va", "VA"), ("conventional", "Conventional"), ("fha", "FHA"),
             ("usda", "USDA"), ("jumbo", "Jumbo"), ("refinance", "Refinancing")]

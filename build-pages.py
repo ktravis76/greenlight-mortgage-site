@@ -350,22 +350,28 @@ the payment you have.</p>
 # ==========================================================================
 
 def about():
-    # TODO — CONFIRM WITH KT BEFORE LAUNCH.
-    # START-HERE.md is explicit: "Team roster and individual LO NMLS numbers are NOT
-    # confirmed — use placeholders clearly marked, do not invent people."
-    # Six further names appear in the phase-2 back-office spec (Julia, Lisa, Kimberly,
-    # Jared, Preston, Ryan). They are almost certainly real colleagues, but we have no
-    # confirmed title, license number, or permission to publish any of them — and a
-    # consumer-facing page listing an unlicensed person beside a licensed one is a
-    # compliance problem, not just an accuracy one. So the cards below are blanks.
-    placeholders = "".join(
-        f'<div class="person"><div class="ph" aria-hidden="true">?</div>'
-        f'<h3><span class="todo">Team member {i}</span></h3>'
-        f'<p class="role">Title pending confirmation</p>'
-        f'<p class="nmls">NMLS # pending</p>'
-        f'<p>Name, role, photo and individual NMLS number to be confirmed by Kenneth before '
-        f'this page goes live.</p></div>'
-        for i in range(1, 7))
+    # Real names from KT. No titles or NMLS numbers came with them, so none are
+    # shown — see the TEAM comment in sitegen.py for why guessing either one is
+    # worse than leaving a visible gap on a mortgage broker's team page.
+    def person(p):
+        if p.get("photo"):
+            img = f'<img src="{p["photo"]}" alt="{S.esc(p["name"])}" width="104" height="104">'
+        else:
+            initials = "".join(w[0] for w in p["name"].split()[:2]).upper()
+            img = f'<div class="ph" aria-hidden="true">{initials}</div>'
+
+        role = (f'<p class="role">{S.esc(p["role"])}</p>' if p.get("role")
+                else '<p class="role pending">Role to be confirmed</p>')
+        nmls = (f'<p class="nmls">NMLS #{p["nmls"]}</p>' if p.get("nmls")
+                else '<p class="nmls pending">NMLS # to be confirmed</p>')
+        note = f'<p>{S.esc(p["note"])}</p>' if p.get("note") else ""
+        cls = "person" if p.get("confirmed") else "person unconfirmed"
+        return f'<div class="{cls}">{img}<h3>{S.esc(p["name"])}</h3>{role}{nmls}{note}</div>'
+
+    cards = "".join(person(p) for p in S.TEAM)
+    pending = "".join(
+        f'<li><strong>{S.esc(n)}</strong> &mdash; {S.esc(why)}</li>'
+        for n, why in S.PENDING_LICENSES)
 
     body = f"""{S.hero(
         eyebrow="About Greenlight",
@@ -382,17 +388,16 @@ def about():
        alt="Kenneth Travis, President and CEO of Greenlight Mortgage" width="168" height="168">
   <div>
     <h3>Kenneth Travis</h3>
-    <p class="role">President &amp; CEO &middot; NMLS #{S.NMLS_KT}</p>
+    <p class="role">President &amp; CEO &middot; Loan Originator NMLS #{S.NMLS_KT}</p>
     <p class="meta">Eight years in the United States Marine Corps, discharged as a Sergeant.
-    Founded {S.COMPANY} in 2008. Licensed in {S.STATE_COUNT_WORD} states, working out of the
-    office on Judson Road in Longview.</p>
+    Founded {S.COMPANY} in 2008. Working out of the office on Judson Road in Longview.</p>
     <p class="meta"><a href="tel:{S.PHONE_HREF}">{S.PHONE}</a></p>
     <p class="tag">&ldquo;{S.TAGLINE}&rdquo;</p>
   </div>
 </div>
 </div></section>
 
-<section class="alt"><div class="wrap">
+<section class="dark"><div class="wrap">
 <div class="split">
 <div class="reveal">
   <p class="eyebrow"><span class="tick" aria-hidden="true"></span>The company</p>
@@ -427,16 +432,21 @@ def about():
 <section><div class="wrap">
 <p class="eyebrow"><span class="tick" aria-hidden="true"></span>Meet the team</p>
 <h2>The people who will actually answer.</h2>
+<p class="sub">Everyone below works here. What is not yet shown is each person's job title
+and, where they hold one, their individual NMLS number &mdash; those are being confirmed
+rather than guessed at.</p>
+
+<div class="team">{cards}</div>
 
 <div class="callout">
-  <h3><span class="todo">Build note — not for launch</span></h3>
-  <p>The six cards below are deliberately blank. Every name, job title, photograph and
-  individual NMLS number on a consumer-facing mortgage page has to be confirmed before it is
-  published, and none of the roster was confirmed for this build. Kenneth supplies the list,
-  we fill these in and rebuild. Nobody has been invented to fill the space.</p>
+  <h3><span class="todo">Build note</span> &mdash; titles and NMLS numbers outstanding</h3>
+  <p>On a mortgage site a name shown beside an NMLS number reads as &ldquo;this person is a
+  licensed loan originator.&rdquo; Inventing a title would either manufacture a license that
+  does not exist or quietly remove one from somebody who has it, so every unconfirmed field
+  is left visibly blank. Send titles, NMLS numbers where applicable, photos, and Lisa's
+  surname, and these fill in on the next build. KT also noted there are likely more people
+  than the seven here.</p>
 </div>
-
-<div class="team">{placeholders}</div>
 </div></section>
 
 <section class="alt"><div class="wrap">
@@ -451,10 +461,17 @@ def about():
 <div>
   <p class="eyebrow"><span class="tick" aria-hidden="true"></span>Licensed in</p>
   <ul class="ticks">
-    {"".join(f"<li><strong>{n}</strong> &mdash; license {S.lic_num(num)}</li>" for n, num in S.LICENSES)}
+    {"".join(f"<li><strong>{n}</strong> &mdash; license {num}</li>" for n, num in S.LICENSES)}
   </ul>
-  <p class="disclose">Company NMLS #{S.NMLS_CO}. Kenneth Travis individual NMLS #{S.NMLS_KT}.
-  Verify at nmlsconsumeraccess.org.</p>
+  <p class="disclose">Company NMLS #{S.NMLS_CO}. Kenneth Travis, loan originator,
+  NMLS #{S.NMLS_KT}. Verify either at nmlsconsumeraccess.org.</p>
+  <div class="callout">
+    <h3><span class="todo">Build note</span> &mdash; state not yet advertised</h3>
+    <ul style="margin:10px 0 0 20px">{pending}</ul>
+    <p style="margin-top:12px">Held back rather than published. Advertising a license the
+    company does not hold is a licensing problem; omitting one it does hold costs a line of
+    copy until someone checks.</p>
+  </div>
 </div>
 </div>
 </div></section>
@@ -468,8 +485,8 @@ def about():
         path="/about",
         title="About Greenlight Mortgage | Meet the Team — Longview, TX",
         desc="Greenlight Mortgage was founded in Longview, Texas in 2008 by Kenneth Travis, "
-             "USMC veteran and mortgage broker. Licensed in five states. Powered by Co/LAB "
-             "Lending. Equal Housing Opportunity.",
+             "USMC veteran and mortgage broker. Powered by Co/LAB Lending. Equal Housing "
+             "Opportunity.",
         body=body,
         trail=[("/", "Home"), ("/about", "About")],
     )
