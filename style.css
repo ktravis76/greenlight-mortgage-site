@@ -310,6 +310,11 @@ header .btn.sm:hover{--bg:#2ad57c;--bd:#2ad57c}
 @media(max-width:1080px){
   nav.links{display:none}
   .burger{display:flex}
+  /* nav.links carries the margin-left:auto that pushes everything after it to
+     the right edge. Hiding it took that away, so phone / Apply / burger sat
+     flush against the logo with the whole right-hand side empty. The controls
+     own the push at this width instead. */
+  .navcta{margin-left:auto}
 }
 @media(max-width:620px){
   .navcta .phone{display:none}
