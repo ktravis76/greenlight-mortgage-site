@@ -128,6 +128,9 @@ LOAN_NAV = [("va", "VA"), ("conventional", "Conventional"), ("fha", "FHA"),
 
 TOOL_NAV = [("/tools/estimate", "Estimated Savings"),
             ("/tools/calculator", "Mortgage Calculator"),
+            ("/tools/affordability", "What Can I Afford?"),
+            ("/tools/net-proceeds", "Seller Net Proceeds"),
+            ("/tools/rent-vs-buy", "Rent vs Buy"),
             ("/tools/home-value", "Home Value Report")]
 
 LEARN_NAV = [("/learn", "Learning Center"), ("/resources", "Resources"),
@@ -525,6 +528,7 @@ def header():
   {_dropdown("Tools", TOOL_NAV)}
   {_dropdown("Learn", LEARN_NAV)}
   <a class="navlink" href="/archive">Archive</a>
+  <a class="navlink" href="/pros">For Pros</a>
   <a class="navlink" href="/about">About</a>
   <a class="navlink" href="/reviews">Reviews</a>
   <a class="navlink" href="/contact">Contact</a>
@@ -544,6 +548,8 @@ def header():
     {"".join(f'<a href="{h}">{t}</a>' for h, t in TOOL_NAV)}
     <p class="dh">Learn</p>
     {"".join(f'<a href="{h}">{t}</a>' for h, t in LEARN_NAV)}
+    <p class="dh">For professionals</p>
+    <a href="/pros">Tools to share</a><a href="/archive">Longview Archive</a>
     <p class="dh">Company</p>
     <a href="/about">About</a><a href="/reviews">Reviews</a><a href="/testimonials">Testimonials</a><a href="/contact">Contact</a>
     <a class="btn" href="{APPLY}" style="margin-top:18px">Apply Online</a>
@@ -686,6 +692,7 @@ _PAGE = """<!DOCTYPE html>
 {{footer}}
 <script src="/config.js" defer></script>
 <script src="/site.js" defer></script>
+<script src="/partner.js" defer></script>
 {{scripts}}
 </body>
 </html>

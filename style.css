@@ -848,3 +848,32 @@ table.deets a{color:var(--g);font-weight:650}
 .person.unconfirmed{background:var(--paper-2);border-style:dashed}
 .person .role.pending,.person .nmls.pending{color:#8a6d1f;font-weight:600}
 .person .role.pending{font-style:italic}
+
+/* --------------------------------------------------------- partner co-brand */
+/* Shown when a professional shares a tool link. Reads "shared with you by",
+   never "brought to you by" — they passed on a tool, they did not endorse a
+   lender, and we do not get to imply otherwise on their behalf. */
+.cobrand{background:var(--sand);border-bottom:1px solid var(--line-2);
+  padding-block:12px;font-size:14px}
+.cobrand .wrap{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.cobrand .cb-label{color:var(--mut);font-size:13px}
+.cobrand strong{font-family:var(--serif);font-size:18px;color:var(--forest);
+  letter-spacing:-.01em}
+.cobrand .cb-note{color:var(--mut);font-size:12.5px;flex-basis:100%;line-height:1.5}
+
+/* Compact input rows for the pro calculators — a lot of fields in a small box. */
+.field.pf{margin-bottom:14px}
+.field.pf label{font-size:13.5px;margin-bottom:4px}
+.field.pf .help{font-size:12px;margin:-1px 0 6px;line-height:1.45}
+.pfin{position:relative}
+.pfin .affix{position:absolute;top:50%;transform:translateY(-50%);left:14px;
+  font-size:15px;color:var(--mut);pointer-events:none}
+.pfin .affix.right{left:auto;right:14px}
+.pfin input{padding-left:30px;font-variant-numeric:tabular-nums}
+.pfin .affix.right ~ input,.field.pf input[id$="-rate"],.field.pf input[id$="-tax"],
+.field.pf input[id$="-maint"],.field.pf input[id$="-sellcost"],
+.field.pf input[id$="-commission"],.field.pf input[id$="-closing"],
+.field.pf input[id$="-appreciation"],.field.pf input[id$="-rentgrowth"]{padding-left:15px}
+table tr.total th,table tr.total td{border-top:2px solid var(--line-2);
+  font-weight:800;color:var(--ink);padding-top:14px}
+.cobrand+main .hero{padding-top:clamp(26px,3vw,44px)}

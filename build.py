@@ -34,6 +34,10 @@ ARCHIVE_PRIORITY = "0.5"
 PRIORITY = {
     "/": "1.0",
     "/tools/estimate": "0.9",
+    "/pros": "0.8",
+    "/tools/affordability": "0.8",
+    "/tools/net-proceeds": "0.8",
+    "/tools/rent-vs-buy": "0.7",
     "/loans": "0.9",
     "/loans/va": "0.9",
     "/contact": "0.8",
@@ -95,7 +99,7 @@ Sitemap: {S.ORIGIN}/sitemap.xml
 
 
 def main():
-    for mod in ("build-loans", "build-pages", "build-tools", "build-archive"):
+    for mod in ("build-loans", "build-pages", "build-tools", "build-archive", "build-pros"):
         load(mod).build()
 
     urls = discover()
