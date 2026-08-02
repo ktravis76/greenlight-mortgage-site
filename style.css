@@ -63,3 +63,11 @@ footer .brand{margin-bottom:6px}
 .legal p+p{margin-top:12px}
 .legal strong{color:var(--mut)}
 .eho{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:var(--mut);margin-bottom:12px}
+.lgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;grid-column:1/-1}
+@media(max-width:900px){.lgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.lgrid{grid-template-columns:1fr}}
+.lcard{display:block;text-decoration:none;border:1px solid var(--line);border-radius:14px;padding:24px;background:#fff;transition:border-color .15s,transform .15s}
+.lcard:hover{border-color:var(--g2);transform:translateY(-2px)}
+.lcard h3{font-size:19px;font-weight:800;letter-spacing:-.015em;margin-bottom:9px;color:var(--ink)}
+.lcard p{color:var(--mut);font-size:14.5px;margin-bottom:14px}
+.lcard .go{font-size:13px;font-weight:700;color:var(--g)}

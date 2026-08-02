@@ -202,9 +202,37 @@ def build():
                          nav=NAV, apply=APPLY, navname=l["nav"], h1=html.escape(l["h1"]),
                          lede=html.escape(l["lede"]), who=who, catch=html.escape(l["catch"]),
                          facts=facts, faqs=faqs, foot=foot, schema=schema)
-        with open(f"loans/{l['slug']}.html", "w") as f:
+        # directory-style URLs so /loans/va works on both the local server and Vercel
+        os.makedirs(f"loans/{l['slug']}", exist_ok=True)
+        with open(f"loans/{l['slug']}/index.html", "w") as f:
             f.write(out)
-        print(f"  wrote loans/{l['slug']}.html  ({len(out):,} bytes)")
+        # legacy flat file removed if present
+        if os.path.exists(f"loans/{l['slug']}.html"):
+            os.remove(f"loans/{l['slug']}.html")
+        print(f"  wrote loans/{l['slug']}/index.html  ({len(out):,} bytes)")
+
+    # ---- hub page ----
+    cards = "".join(
+        f'<a class="lcard" href="/loans/{l["slug"]}"><h3>{html.escape(l["nav"])}</h3>'
+        f'<p>{html.escape(l["lede"][:132])}…</p><span class="go">Read more &rarr;</span></a>'
+        for l in LOANS)
+    hub = TPL.format(
+        title="Loan Options | Greenlight Mortgage — Longview, TX",
+        desc="Conventional, FHA, Jumbo, VA, USDA and refinance options in Longview and East Texas. Powered by Co/LAB Lending. Equal Housing Opportunity.",
+        nav=NAV, apply=APPLY, navname="Loan options",
+        h1="Whatever the situation actually is",
+        lede="First house, fifth house, self-employed, rebuilding credit, or just tired of the payment you have. There is usually a path — and we shop a network of lenders to find it instead of selling you one bank&#39;s menu.",
+        who="<li>Buying your first home in East Texas</li><li>Refinancing a payment that no longer makes sense</li><li>Self-employed or with income that does not fit a W-2</li><li>Turned down somewhere else</li>",
+        catch="No single program is best for everyone. FHA beats conventional for some files and costs more on others. USDA is free money if the address qualifies and useless if it does not. That is the whole reason a broker beats a bank — we are not paid to steer you to one answer.",
+        facts=f'<div class="lgrid">{cards}</div>',
+        faqs='<details><summary>How do I know which one I need?</summary><p>You do not have to. That is our job. Tell us the situation and we will show you the options side by side in plain English.</p></details>'
+             '<details><summary>Can I switch programs later?</summary><p>Often, yes. Plenty of people start on FHA and refinance to conventional once credit and equity improve. It is a legitimate strategy.</p></details>'
+             '<details><summary>What does it cost to find out?</summary><p>Nothing, and there is no hard credit pull to begin the conversation.</p></details>',
+        foot=foot,
+        schema='{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[]}')
+    with open("loans/index.html", "w") as f:
+        f.write(hub)
+    print(f"  wrote loans/index.html  ({len(hub):,} bytes)")
 
 def jstr(s):
     return '"' + s.replace('\\', '\\\\').replace('"', '\\"') + '"'
