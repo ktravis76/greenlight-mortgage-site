@@ -194,9 +194,7 @@ def build():
 
     # ---------------------------------------------------------------- hub page
     cards = "".join(
-        f'<a class="lcard reveal" href="/loans/{l["slug"]}"><h3>{S.esc(l["nav"])}</h3>'
-        f'<p>{S.esc(l["lede"])}</p>'
-        f'<span class="go">Read more {ARROW}</span></a>'
+        S.loan_card(l["slug"], l["nav"], S.esc(l["lede"]), cls="reveal")
         for l in LOANS)
 
     hub_faqs = [

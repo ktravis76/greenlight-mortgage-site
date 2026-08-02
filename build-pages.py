@@ -119,7 +119,7 @@ def homepage():
         ("/tools/home-value", "home", "Check my home value",
          "A local estimate on your address, prepared by someone who works this market."),
         ("/testimonials", "star", "Client testimonials",
-         "Seven families, in their own words, with no edits from us."),
+         "Real clients, in their own words, with the source shown on every one."),
     ]
     tile_html = "".join(
         f'<a class="tile" href="{h}"><span class="ti">{ICONS[i]}</span>'
@@ -127,16 +127,10 @@ def homepage():
         f'<span class="go">Open {ARROW}</span></a>'
         for h, i, t, p in tiles)
 
-    quotes = "".join(
-        f'<figure class="quote"><div class="stars">{STAR * 5}</div>'
-        f'<blockquote>{S.esc(body)}</blockquote>'
-        f'<figcaption>{S.esc(name)} &middot; {S.esc(place)}</figcaption>'
-        f'</figure>'
-        for name, place, body in S.TESTIMONIALS[:6])
+    quotes = "".join(S.review_card(r) for r in S.REVIEWS[:6])
 
     loans = "".join(
-        f'<a class="lcard reveal" href="/loans/{slug}"><h3>{nav}</h3><p>{blurb}</p>'
-        f'<span class="go">Read more {ARROW}</span></a>'
+        S.loan_card(slug, nav, blurb, cls="reveal")
         for slug, nav, blurb in [
             ("conventional", "Conventional",
              "The standard route, and often the lowest total cost once you qualify."),
@@ -290,7 +284,7 @@ the payment you have.</p>
 <section class="alt"><div class="wrap">
 <p class="eyebrow"><span class="tick" aria-hidden="true"></span>Client testimonials</p>
 <h2>What East Texas says.</h2>
-<p class="sub">Seven families, in their own words. We have not edited them.</p>
+<p class="sub">Real clients, in their own words. Each one shows where it came from &mdash; and where we have not yet re-checked the wording against its source, it says so.</p>
 <div class="tgrid">{quotes}</div>
 <div class="cta"><a class="btn ghost" href="/testimonials">Read all seven {ARROW}</a>
 <a class="btn ghost" href="/reviews">Where to find our reviews</a></div>
@@ -486,12 +480,7 @@ def about():
 # ==========================================================================
 
 def testimonials():
-    quotes = "".join(
-        f'<figure class="quote"><div class="stars">{STAR * 5}</div>'
-        f'<blockquote>{S.esc(body)}</blockquote>'
-        f'<figcaption>{S.esc(name)} &middot; {S.esc(place)}</figcaption>'
-        f'</figure>'
-        for name, place, body in S.TESTIMONIALS)
+    quotes = "".join(S.review_card(r) for r in S.REVIEWS)
 
     body = f"""{S.hero(
         eyebrow="Client testimonials",
@@ -555,62 +544,91 @@ read it later.</p>
 
 
 def reviews():
-    # TODO — CONFIRM URLS. We know from the migration notes that Greenlight has a
-    # presence on Google, Facebook and Zillow, but no profile URL was captured and
-    # no star rating or review count was verified. Publishing "4.9 from 87 reviews"
-    # without a source would be an unsubstantiated claim on a regulated site, and
-    # linking to the wrong profile is worse. Both are left visibly blank.
+    def plat(pr):
+        if pr["verified"]:
+            score = (f'<p class="score">{pr["rating"]}</p>'
+                     f'<p class="of">out of 5 &middot; {pr["count"]} reviews'
+                     f'<br>read {pr["checked"]}</p>')
+            link = (f'<span class="go">Read them on {S.esc(pr["platform"])} &nearr;</span>')
+            return (f'<a class="plat" href="{pr["url"]}" rel="nofollow noopener" '
+                    f'target="_blank">{score}<h3>{S.esc(pr["platform"])}</h3>'
+                    f'<p>{S.esc(pr["note"])}</p>{link}</a>')
+        return (f'<div class="plat unconfirmed"><p class="score">&mdash;</p>'
+                f'<p class="of"><span class="todo">not yet confirmed</span></p>'
+                f'<h3>{S.esc(pr["platform"])}</h3><p>{S.esc(pr["note"])}</p></div>')
+
+    cards = "".join(plat(pr) for pr in S.REVIEW_PROFILES)
+    quotes = "".join(S.review_card(r) for r in S.REVIEWS[:3])
+
     body = f"""{S.hero(
         eyebrow="Reviews",
         h1="Read us somewhere we cannot edit",
-        lede="Testimonials on our own website are, in the end, testimonials we chose. These "
-             "are the places you can read about Greenlight where we do not control the page.",
+        lede="Testimonials we choose and publish ourselves are, in the end, testimonials we "
+             "chose. These are the places you can read about Greenlight on a page we do not "
+             "control &mdash; with the rating, the count, and the date we last checked it.",
+        ctas=[("/testimonials", "Or read the ones on this site", "ghost")],
         trail=[("/", "Home"), (None, "Reviews")])}
 
 <section><div class="wrap">
-<div class="callout">
-  <h3><span class="todo">Build note — not for launch</span></h3>
-  <p>Profile links below are placeholders. Greenlight's Google Business Profile, Facebook
-  page and Zillow lender profile URLs were not captured during the migration, and no star
-  rating or review count has been verified. We have deliberately not published a rating
-  figure: an unsubstantiated performance claim on a mortgage site is exactly the kind of
-  thing that draws attention. Kenneth confirms the three URLs, we wire them up, and we add a
-  rating only if it can be sourced.</p>
-</div>
+<p class="eyebrow"><span class="tick" aria-hidden="true"></span>Independent profiles</p>
+<h2>Where the reviews actually live.</h2>
+<p class="sub">Ratings move. Each card shows the date we read it, and every link goes
+straight to the source so you can check the current number yourself.</p>
+<div class="grid g3">{cards}</div>
+<p class="disclose">Star ratings and review counts are those published by each platform on the
+date shown and will have changed since. We do not control, moderate, or select which reviews
+appear on any of these sites. Individual experiences vary and are not a guarantee of any
+particular outcome, loan approval, rate or term.</p>
+</div></section>
 
-<div class="grid g3">
-  <div class="card"><h3>Google</h3>
-  <p>The reviews most people actually read, attached to the map listing for the Judson Road
-  office.</p>
-  <p class="nmls"><span class="todo">Profile URL pending</span></p></div>
-  <div class="card"><h3>Facebook</h3>
-  <p>The @glmtg page, where the day-to-day of the office tends to end up.</p>
-  <p class="nmls"><span class="todo">Profile URL pending</span></p></div>
-  <div class="card"><h3>Zillow</h3>
-  <p>Lender reviews from buyers who found us through a listing.</p>
-  <p class="nmls"><span class="todo">Profile URL pending</span></p></div>
+<section class="dark"><div class="wrap">
+<div class="split">
+<div>
+  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>How we handle reviews</p>
+  <h2>If we cannot source it, we say so.</h2>
+  <p class="sub">Every review on this site carries where it came from. Where the exact wording
+  has been read from a page we can link you to, it says <em>verified</em> and links there.
+  Where it was carried across from our previous website and has not been re-checked
+  word-for-word, it says that instead.</p>
+  <p class="sub">That is a deliberately unflattering thing to publish. It is also the only
+  version of a review page worth trusting.</p>
+</div>
+<div>
+  <div class="callout">
+    <h3><span class="todo">Open</span> &mdash; three profiles to confirm</h3>
+    <p>A Zillow lender profile was found in search but could not be confirmed as Greenlight's.
+    The Google Business Profile and Facebook review URLs have not been supplied. None of the
+    three link out from this page until KT confirms them.</p>
+  </div>
+  <div class="callout">
+    <h3><span class="todo">Open</span> &mdash; address mismatch</h3>
+    <p>The Birdeye listing shows <strong>1328 Heritage Blvd</strong>, not
+    <strong>{S.STREET}</strong>. One of the two is out of date. Beyond the confusion for a
+    client trying to find the office, inconsistent address data across listings measurably
+    hurts local search &mdash; and this domain ranks #2 for &ldquo;mortgage longview tx.&rdquo;</p>
+  </div>
+</div>
 </div>
 </div></section>
 
-<section class="alt"><div class="wrap">
+<section><div class="wrap">
 <p class="eyebrow"><span class="tick" aria-hidden="true"></span>On this site</p>
-<h2>Seven clients, verbatim.</h2>
-<p class="sub">Carried across from the previous site without edits, including the one that
-mentions the free moving truck.</p>
-<div class="cta"><a class="btn go" href="/testimonials">Read the testimonials {ARROW}</a></div>
+<h2>A few of them.</h2>
+<div class="tgrid">{quotes}</div>
+<div class="cta"><a class="btn go" href="/testimonials">Read all of them {ARROW}</a></div>
 </div></section>
 
 {S.cta_band(head="Rather just talk to someone?",
-            sub="Ask us anything. There is no obligation and no hard credit pull to begin.",
+            sub="Ask us anything. No obligation and no hard credit pull to begin.",
             primary=("/contact", "Contact us"),
             secondary=("/tools/estimate", "See what you could save"))}
 """
     return S.page(
         path="/reviews",
         title="Reviews | Greenlight Mortgage — Longview, TX",
-        desc="Where to read independent reviews of Greenlight Mortgage in Longview, Texas, "
-             "plus seven client testimonials in full. Powered by Co/LAB Lending. Equal "
-             "Housing Opportunity.",
+        desc="Independent reviews of Greenlight Mortgage in Longview, Texas on "
+             "Experience.com and Birdeye, plus client testimonials with their sources shown. "
+             "Powered by Co/LAB Lending. Equal Housing Opportunity.",
         body=body,
         trail=[("/", "Home"), ("/reviews", "Reviews")],
     )

@@ -1,8 +1,18 @@
 # RLS audit — Supabase `athovwknbwbbqworsbrm`
 
-Audited 2026-08-01, before any borrower data lands. Every table had RLS enabled and
-zero rows, so nothing below is a breach that has already happened — it is a list of
-what would have been true the first day real traffic hit.
+Audited 2026-08-01.
+
+> **Correction, same day.** This document originally said every table held zero rows.
+> That repeated the claim in START-HERE.md instead of counting, and it is wrong:
+> `leads` holds **4 rows** (2026-06-26) and `soft_quotes` holds **5** (2026-07-28,
+> the VA screener). `businesses` holds 140 and `categories` 20 — that is the Longview
+> directory, a separate app sharing this database.
+>
+> What changes: the findings below are not purely hypothetical, and the remediation
+> now runs against a table with real rows. The migration is policy-and-grants only —
+> it does not read, alter, or delete a single row — but "nothing has happened yet" was
+> not a safe thing to have written. The exposure in §1 has been live for whatever
+> period those views have existed.
 
 **Nothing in this audit has been applied.** The remediation lives in
 [`2026-08-01-rls-hardening.sql`](2026-08-01-rls-hardening.sql), unapplied, because two

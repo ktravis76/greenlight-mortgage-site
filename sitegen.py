@@ -78,40 +78,119 @@ TOOL_NAV = [("/tools/estimate", "Estimated Savings"),
 LEARN_NAV = [("/learn", "Learning Center"), ("/resources", "Resources"),
              ("/blog", "Blog"), ("/survey", "Client Survey")]
 
-# ------------------------------------------------------------- the 7 testimonials
-# Verbatim from the current site. Do not paraphrase these — they are real people.
+# ------------------------------------------------------------- client reviews
+#
+# ⚠️ CORRECTION, 2026-08-01. An earlier pass of this build shipped a SEVENTH
+# testimonial attributed to "Brent" whose text was written by the builder, not by
+# Brent. MIGRATION-MAP.md listed seven names but the old homepage carried only
+# six quotes, and the gap was filled instead of flagged. That is fabrication of a
+# client testimonial on a regulated site and it should never have happened.
+#
+# Brent's real review has since been retrieved from its permalink on the live
+# site and is below, verbatim, with its published date. Maxwell's stored text had
+# also been tidied and truncated; it is now the verbatim original.
+#
+# THE RULE FROM HERE: a review only renders with `verified=True` if its exact
+# wording has been read from a source we can link to. Everything else renders
+# with a visible provenance note. Never write words and put a client's name on
+# them.
+#
+# Fields: name, place, text, date (as published), source, url, verified.
 
-TESTIMONIALS = [
-    ("Tim", "Longview, TX",
-     "They got us closed! That's the bottom line. Good group and a total team effort. "
-     "Give them a challenge to get you closed. They are more than capable. Will "
-     "definitely use them again in the future."),
-    ("Jason", "Gilmer, TX",
-     "Greenlight Mortgage was referred to me and I couldn't be happier. As a first time "
-     "buyer, I had a lot of questions and concerns. The entire team was always available "
-     "and kept me informed the entire time. A very nice closure was Kenneth being at my "
-     "closing just to congratulate me and thank me in person."),
-    ("Maxwell", "Jefferson, TX",
-     "The Kenneth Travis Team was wonderful to work with. They made the whole process run "
-     "smooth. Candice and Anna made sure we stayed informed throughout and helped whenever "
-     "and wherever along the way. I would recommend this group to everyone!"),
-    ("John", "Longview, TX",
-     "Kenneth and his team have helped with my refinance and buying a home now. Very "
-     "effective, efficient, and welcoming to every need. Even when the wife started "
-     "freaking out during parts of the transaction, they stayed calm and professional. "
-     "They also do not stop when the closing is done. Best lender in East Texas."),
-    ("Robyn", "Longview, TX",
-     "I cannot express enough how pleased I am with every member of the Kenneth Travis "
-     "team. What could have been an extremely stressful process was not stressful at all. "
-     "What's even better is that they also offer a moving truck free of charge."),
-    ("Jasper", "Longview, TX",
-     "Hands down the best lending team in East Texas. They were there for me throughout "
-     "the whole process and handled any issues promptly. If they can't get it done then "
-     "no one can!"),
-    ("Brent", "Longview, TX",
-     "Kenneth and his team made the process simple and kept us in the loop the whole way "
-     "through. Straight answers every time we asked a question."),
+REVIEWS = [
+    dict(name="Brent", place="Longview, TX", date="2021-10-01",
+         source="kennethtravis.com",
+         url="https://www.kennethtravis.com/review/a-great-lender-knowledgeable-and-friendly/",
+         verified=True,
+         text="From pre-approval right through to closing on my home the Kenneth Travis "
+              "team at Greenlight Mortgage did a great job. All the staff were extremely "
+              "friendly, helpful and knowledgeable. The whole process was very smooth and "
+              "helped remove a lot of potential stress. I would definitely use them again."),
+
+    dict(name="Maxwell", place="Jefferson, TX", date="2021-10-01",
+         source="kennethtravis.com",
+         url="https://www.kennethtravis.com/review/maxwell/",
+         verified=True,
+         text="The Kenneth Travis Team was wonderful to work with they made the whole "
+              "process run smooth. Candice and Anna made sure we stayed informed throughout "
+              "the whole process and helped whenever and wherever along the way. I would "
+              "recommend this group to everyone! Thank Ya'll So Much!!"),
+
+    # --- The five below came across from the old site's homepage. Their opening
+    # lines match what is published today, but the full stored wording has not
+    # been read from a permalink, and at least one other review in this set was
+    # found to have been silently tidied. Treated as unverified until each one's
+    # source page is retrieved. They render with a provenance note.
+    dict(name="Tim", place="Longview, TX", date=None,
+         source="kennethtravis.com", url="https://www.kennethtravis.com/reviews/",
+         verified=False,
+         text="They got us closed! That's the bottom line. Good group and a total team "
+              "effort. Give them a challenge to get you closed. They are more than capable. "
+              "Will definitely use them again in the future."),
+    dict(name="Jason", place="Gilmer, TX", date=None,
+         source="kennethtravis.com", url="https://www.kennethtravis.com/reviews/",
+         verified=False,
+         text="Greenlight Mortgage was referred to me and I couldn't be happier. As a first "
+              "time buyer, I had a lot of questions and concerns. The entire team was always "
+              "available and kept me informed the entire time. A very nice closure was "
+              "Kenneth being at my closing just to congratulate me and thank me in person."),
+    dict(name="John", place="Longview, TX", date=None,
+         source="kennethtravis.com", url="https://www.kennethtravis.com/reviews/",
+         verified=False,
+         text="Kenneth and his team have helped with my refinance and buying a home now. "
+              "Very effective, efficient, and welcoming to every need. Even when the wife "
+              "started freaking out during parts of the transaction, they stayed calm and "
+              "professional. They also do not stop when the closing is done. Best lender in "
+              "East Texas."),
+    dict(name="Robyn", place="Longview, TX", date=None,
+         source="kennethtravis.com", url="https://www.kennethtravis.com/reviews/",
+         verified=False,
+         text="I cannot express enough how pleased I am with every member of the Kenneth "
+              "Travis team. What could have been an extremely stressful process was not "
+              "stressful at all. What's even better is that they also offer a moving truck "
+              "free of charge."),
+    dict(name="Jasper", place="Longview, TX", date=None,
+         source="kennethtravis.com", url="https://www.kennethtravis.com/reviews/",
+         verified=False,
+         text="Hands down the best lending team in East Texas. They were there for me "
+              "throughout the whole process and handled any issues promptly. If they can't "
+              "get it done then no one can!"),
 ]
+
+# ------------------------------------------------------- external review profiles
+# Real, checked 2026-08-01. Ratings move, so each carries the date it was read and
+# the page links out — we do not present a stale number as current.
+#
+# ⚠️ Birdeye lists the address as 1328 Heritage Blvd, Longview TX 75605, which is
+# NOT the 4523 Judson Rd address used everywhere else on this site. One of the two
+# is out of date. KT needs to confirm which, and the wrong one needs correcting at
+# the source — a mismatched NAP across listings also costs local search ranking.
+
+REVIEW_PROFILES = [
+    dict(platform="Experience.com", rating="4.85", count="398",
+         url="https://www.experience.com/reviews/kenneth-12682826",
+         checked="1 August 2026", verified=True,
+         note="Kenneth Travis, Greenlight Mortgage, NMLS #2426021, Longview TX."),
+    dict(platform="Birdeye", rating="4.8", count="197",
+         url="https://birdeye.com/greenlight-mortgage-168122712651937",
+         checked="1 August 2026", verified=True,
+         note="Aggregates Google reviews. Address on this listing does not match "
+              "4523 Judson Rd — see note in sitegen.py."),
+    dict(platform="Zillow", rating=None, count=None,
+         url="https://www.zillow.com/lender-profile/glmortgagelender/",
+         checked=None, verified=False,
+         note="Profile found in search but could not be read to confirm it is "
+              "Greenlight's. KT to confirm before this links out."),
+    dict(platform="Google Business Profile", rating=None, count=None, url=None,
+         checked=None, verified=False,
+         note="KT to supply the profile URL."),
+    dict(platform="Facebook", rating=None, count=None, url=None,
+         checked=None, verified=False,
+         note="The @glmtg page exists; review-tab URL to be supplied by KT."),
+]
+
+# Back-compat for callers that just want (name, place, text).
+TESTIMONIALS = [(r["name"], r["place"], r["text"]) for r in REVIEWS]
 
 # ------------------------------------------------------------------ tiny templater
 # Token syntax is {{name}} rather than str.format, because these templates carry
@@ -159,6 +238,83 @@ TCPA_TEXT = (
     "I can opt out at any time by replying STOP to a text, asking the caller to remove me, or "
     'emailing us &mdash; see our <a href="/privacy">Privacy Policy</a>.'
 )
+
+# ----------------------------------------------------------- loan program marks
+# One per program, each with its own accent, so the six cards stop reading as one
+# card repeated. Accents stay inside the brand's green-to-teal-to-gold range —
+# they differentiate without turning the page into a paint chart.
+#
+# The "who" line is deliberately blunt: most visitors do not know which program
+# they need, and a label they can match themselves against beats a product name.
+
+def _m(body):
+    return (f'<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" '
+            f'stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" '
+            f'aria-hidden="true">{body}</svg>')
+
+
+LOAN_MARKS = {
+    # Conventional — a straightforward house on a level base.
+    "conventional": ("#0f7a4d", "Steady income, solid credit",
+                     _m('<path d="M4 14 16 5l12 9"/><path d="M7 12.5V26h18V12.5"/>'
+                        '<path d="M13 26v-7h6v7"/><path d="M3 28h26"/>')),
+    # FHA — a key, the first door.
+    "fha": ("#1f8fa8", "First house, or credit still healing",
+            _m('<circle cx="11" cy="12" r="6"/><path d="m15.4 16.4 10 10"/>'
+               '<path d="m22 23 2.6-2.6M24.6 25.6 27 23"/>')),
+    # VA — a service chevron inside a shield.
+    "va": ("#8a6d1f", "You served, or your spouse did",
+           _m('<path d="M16 3.5 6 7.5v8.8c0 6.2 4.1 11.4 10 12.9 5.9-1.5 10-6.7 10-12.9V7.5z"/>'
+              '<path d="m11 16 5-4.5 5 4.5M11 21.5l5-4.5 5 4.5"/>')),
+    # USDA — a field horizon with a sun. Rural, literally.
+    "usda": ("#2f8f3f", "Just outside town, or nothing saved",
+             _m('<circle cx="16" cy="12" r="4.5"/>'
+                '<path d="M16 3.5v2M16 18.5v2M7.5 12h-2M28.5 12h-2'
+                'M10 6l-1.4-1.4M23.4 19.4 22 18M10 18l-1.4 1.4M23.4 4.6 22 6"/>'
+                '<path d="M3 25h26M6 28h20"/>')),
+    # Jumbo — stacked tiers, a bigger building.
+    "jumbo": ("#7a4fa3", "Above the conforming limit",
+              _m('<path d="M6 28V13l10-6 10 6v15"/><path d="M3 28h26"/>'
+                 '<path d="M11 28v-6h10v6M11 17h4M17 17h4"/>')),
+    # Refinance — a loop, going around again.
+    "refinance": ("#0f7a4d", "Tired of the payment you have",
+                  _m('<path d="M27 16a11 11 0 0 1-18.8 7.8"/>'
+                     '<path d="M5 16A11 11 0 0 1 23.8 8.2"/>'
+                     '<path d="M23.8 3.5v4.7h-4.7M8.2 28.5v-4.7h4.7"/>')),
+}
+
+
+def review_card(r, cls=""):
+    """A review with its provenance attached. Anything we cannot link to says so
+    on the page rather than borrowing the credibility of the ones we can."""
+    when = ""
+    if r.get("date"):
+        y, m, d = r["date"].split("-")
+        months = ("January February March April May June July August September "
+                  "October November December").split()
+        when = f'<time datetime="{r["date"]}">{int(d)} {months[int(m)-1]} {y}</time>'
+
+    if r.get("verified") and r.get("url"):
+        prov = (f'<a class="prov ok" href="{r["url"]}" rel="nofollow noopener" '
+                f'target="_blank">Verified on {esc(r["source"])} &nearr;</a>')
+    else:
+        prov = ('<span class="prov pending">Carried over from the previous site &mdash; '
+                'wording not yet re-checked against its source</span>')
+
+    return (f'<figure class="quote {cls}">'
+            f'<blockquote>{esc(r["text"])}</blockquote>'
+            f'<figcaption><span class="who">{esc(r["name"])} &middot; {esc(r["place"])}</span>'
+            f'{when}{prov}</figcaption></figure>')
+
+
+def loan_card(slug, nav, blurb, cls=""):
+    accent, who, mark = LOAN_MARKS[slug]
+    return (f'<a class="lcard {cls}" href="/loans/{slug}" style="--accent:{accent}">'
+            f'<span class="lmark">{mark}</span>'
+            f'<span class="who">{esc(who)}</span>'
+            f'<h3>{esc(nav)}</h3><p>{blurb}</p>'
+            f'<span class="go">Read more {ARROW}</span></a>')
+
 
 # Small inline arrow used on card links throughout the site.
 ARROW = ('<svg viewBox="0 0 14 9" aria-hidden="true"><path d="M9.2.8 13 4.5 9.2 8.2M13 4.5H1"'

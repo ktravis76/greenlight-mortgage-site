@@ -23,8 +23,12 @@
   --ink:#101c15;          /* body text — near-black with green in it          */
   --ink-2:#4a5a51;        /* secondary text                                    */
   --mut:#63736a;          /* muted / captions — passes AA on cream            */
-  --forest:#0b3a29;       /* deep brand green, dark surfaces                   */
-  --forest-2:#072a1e;     /* deeper, for gradients                             */
+  /* Lifted from #0b3a29/#072a1e on KT's note that it read a shade too heavy.
+     Still unmistakably forest, but the surfaces breathe and the green reads as
+     a colour rather than as near-black. White on --forest is ~9:1. */
+  --forest:#12503a;       /* deep brand green, dark surfaces                   */
+  --forest-2:#0c3c2a;     /* deeper, for gradients                             */
+  --forest-3:#082b1e;     /* deepest, footer base                              */
   --g:#0f7a4d;            /* mid green — links, primary buttons                */
   --g-dark:#0b5c3a;
   --go:#16c46a;           /* the signal. accents, the lamp, "GO"               */
@@ -158,7 +162,9 @@ section{padding-block:var(--sec)}
 .dark .card .num{color:var(--go)}
 .dark .ticks li{color:#b6cbbf}
 .dark .ticks li::before{border-color:var(--go)}
-.dark a{color:var(--go)}
+/* Not .btn — buttons carry their own foreground. Without this exclusion the
+   "Questions? Contact me" button rendered green-on-green and was unreadable. */
+.dark a:not(.btn){color:var(--go)}
 .dark .disclose{color:#8fae9d;border-left-color:rgba(255,255,255,.18)}
 
 /* The welcome letter. Set as correspondence rather than as another content
@@ -427,19 +433,43 @@ header .btn.sm:hover{--bg:#2ad57c;--bd:#2ad57c}
 .lgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:38px}
 @media(max-width:920px){.lgrid{grid-template-columns:1fr 1fr}}
 @media(max-width:620px){.lgrid{grid-template-columns:1fr}}
+/* Loan cards were six identical white blocks. Each now carries its own mark and
+   its own accent, plus a one-line "who it's for" tag — so the grid reads as six
+   different products rather than one product repeated. */
 .lcard{
+  --accent:var(--go);
   position:relative;display:flex;flex-direction:column;
   background:var(--card);border:1px solid var(--line);border-radius:var(--r);
-  padding:28px 26px;overflow:hidden;
+  padding:26px;overflow:hidden;isolation:isolate;
   transition:transform .2s var(--ease),box-shadow .2s var(--ease),border-color .2s;
 }
+/* Tinted wash in the top corner, keyed to the program. */
+.lcard::after{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(16rem 9rem at 100% 0%,
+             color-mix(in srgb,var(--accent) 20%,transparent),transparent 68%);
+  opacity:.85;transition:opacity .25s var(--ease);
+}
 .lcard::before{
-  content:"";position:absolute;inset:0 auto 0 0;width:3px;background:var(--go);
+  content:"";position:absolute;inset:0 auto 0 0;width:3px;background:var(--accent);
   transform:scaleY(0);transform-origin:top;transition:transform .28s var(--ease);
 }
 .lcard:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--line-2)}
 .lcard:hover::before{transform:scaleY(1)}
-.lcard h3{font-size:21px;margin-bottom:10px}
+.lcard:hover::after{opacity:1}
+.lcard .lmark{
+  display:grid;place-items:center;width:46px;height:46px;border-radius:12px;
+  margin-bottom:16px;color:var(--accent);
+  background:color-mix(in srgb,var(--accent) 14%,#fff);
+  border:1px solid color-mix(in srgb,var(--accent) 26%,transparent);
+}
+.lcard .lmark svg{width:26px;height:26px}
+.lcard .who{
+  display:inline-block;font-family:var(--sans);font-size:11.5px;font-weight:750;
+  letter-spacing:.09em;text-transform:uppercase;margin-bottom:11px;
+  color:color-mix(in srgb,var(--accent) 72%,var(--ink));
+}
+.lcard h3{font-size:21px;margin-bottom:9px}
 .lcard p{color:var(--ink-2);font-size:15px;line-height:1.58;flex:1}
 .lcard .go{display:inline-flex;align-items:center;gap:7px;margin-top:18px;
   font-family:var(--sans);font-size:13.5px;font-weight:700;color:var(--g)}
@@ -492,13 +522,34 @@ header .btn.sm:hover{--bg:#2ad57c;--bd:#2ad57c}
   color:var(--ink);letter-spacing:-.008em}
 .quote blockquote::before{content:"\201C";color:var(--go);font-size:42px;line-height:0;
   vertical-align:-.28em;margin-right:2px}
-.quote figcaption{display:flex;align-items:center;gap:9px;margin-top:18px;
-  padding-top:16px;border-top:1px solid var(--line);
-  font-family:var(--sans);font-size:12.5px;font-weight:700;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--mut)}
-.quote figcaption .dot{width:7px;height:7px;box-shadow:0 0 0 3px var(--go-soft)}
+.quote figcaption{display:flex;flex-direction:column;gap:6px;margin-top:18px;
+  padding-top:16px;border-top:1px solid var(--line);font-family:var(--sans)}
+.quote figcaption .who{font-size:12.5px;font-weight:800;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ink)}
+.quote figcaption time{font-size:12.5px;color:var(--mut)}
 .stars{display:flex;gap:2px;color:var(--go);margin-bottom:14px}
 .stars svg{width:15px;height:15px}
+
+/* Provenance. A review we can link to and one we cannot must not look alike —
+   that is the whole point of showing a source at all. */
+.prov{font-size:12px;font-weight:650;line-height:1.45}
+.prov.ok{color:var(--g);text-decoration:none;
+  display:inline-flex;align-items:center;gap:4px}
+.prov.ok:hover{text-decoration:underline}
+.prov.pending{color:#8a6d1f;background:#fdf6e3;border:1px solid #f0e2b8;
+  padding:5px 9px;border-radius:6px;font-weight:600;display:inline-block}
+
+/* External review platforms */
+.plat{display:flex;flex-direction:column;background:var(--card);
+  border:1px solid var(--line);border-radius:var(--r);padding:24px;height:100%}
+.plat .score{font-family:var(--serif);font-size:42px;font-weight:600;color:var(--forest);
+  line-height:1;letter-spacing:-.03em}
+.plat .of{font-size:13px;color:var(--mut);margin-top:6px}
+.plat h3{font-size:18px;margin:14px 0 8px}
+.plat p{font-size:14px;color:var(--ink-2);line-height:1.55;flex:1}
+.plat .go{margin-top:16px;font-size:13.5px;font-weight:700;color:var(--g)}
+.plat.unconfirmed{background:var(--paper-2);border-style:dashed}
+.plat.unconfirmed .score{color:var(--line-2)}
 
 /* --------------------------------------------------------------- CTA band */
 .band-wrap{padding-block:0 var(--sec)}
