@@ -307,3 +307,22 @@ blockers are listed here rather than buried.
 - CSP allows `'unsafe-inline'` for scripts because of the anti-flash inline snippet in
   `<head>`. Moving to hashes would tighten it.
 - Phase 2 (`/portal`, `/admin`) not started, per the brief's ordering.
+
+---
+
+## ⚠️ Repo naming — read before setting a remote
+
+**Do NOT push this to `github.com/ktravis76/GreenlightMortgage`.**
+
+That repo is the **Greenlight Sales Dashboard** — a Next.js app with NextAuth, Teli AI
+pull scripts, leaderboard, speed-to-lead and an admin cockpit. It deploys to the Vercel
+project `greenlight-mortgage` and the sales team uses it daily. Pushing this static
+marketing site over it would destroy that codebase.
+
+This repo needs its **own** GitHub repo. Suggested name: `greenlight-mortgage-site`,
+matching its Vercel project.
+
+| Thing | GitHub repo | Vercel project |
+| --- | --- | --- |
+| Sales Dashboard (internal) | `ktravis76/GreenlightMortgage` | `greenlight-mortgage` |
+| Marketing site (this repo) | **needs creating** | `greenlight-mortgage-site` |
