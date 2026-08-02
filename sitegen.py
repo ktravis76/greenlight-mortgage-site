@@ -83,7 +83,8 @@ TOOL_NAV = [("/tools/estimate", "Estimated Savings"),
             ("/tools/home-value", "Home Value Report")]
 
 LEARN_NAV = [("/learn", "Learning Center"), ("/resources", "Resources"),
-             ("/blog", "Blog"), ("/survey", "Client Survey")]
+             ("/archive", "Longview Archive"), ("/blog", "Blog"),
+             ("/survey", "Client Survey")]
 
 # ------------------------------------------------------------- client reviews
 #
@@ -475,6 +476,7 @@ def header():
   {_dropdown("Loan Options", loans)}
   {_dropdown("Tools", TOOL_NAV)}
   {_dropdown("Learn", LEARN_NAV)}
+  <a class="navlink" href="/archive">Archive</a>
   <a class="navlink" href="/about">About</a>
   <a class="navlink" href="/reviews">Reviews</a>
   <a class="navlink" href="/contact">Contact</a>
