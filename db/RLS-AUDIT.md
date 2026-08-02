@@ -14,10 +14,29 @@ Audited 2026-08-01.
 > not a safe thing to have written. The exposure in §1 has been live for whatever
 > period those views have existed.
 
-**Nothing in this audit has been applied.** The remediation lives in
-[`2026-08-01-rls-hardening.sql`](2026-08-01-rls-hardening.sql), unapplied, because two
-of the changes touch surfaces the live internal VA screener already writes to. It needs
-a human yes before it runs.
+> ## ✅ APPLIED 2026-08-01
+>
+> Migration `rls_hardening_2026_08_01`, on KT's go-ahead. Verified after:
+>
+> * `soft_quotes_daily` and `soft_quotes_by_source` now return **401 permission
+>   denied** to the publishable key. The exposure in §1 is closed.
+> * A forged-consent insert (`tcpa_consent`, `consent_ip`, `consent_at` from a
+>   browser) is **rejected** — `42501 permission denied for table leads`.
+> * An attempt to self-escalate (`priority: true`, `status: "Hot"`) is **rejected**.
+> * A normal lead insert on permitted columns still returns **201**.
+> * **The VA screener still works.** It posts with `Prefer: return=minimal`, which
+>   needs no SELECT — confirmed 201 against the live endpoint with its exact call
+>   shape. An earlier smoke test failed only because it used
+>   `return=representation`, which does require SELECT and correctly no longer has
+>   it. That was the test being wrong, not the screener.
+> * The archive (`businesses`, `categories`) still reads fine — the public site
+>   depends on it.
+> * All test rows removed; back to the pre-existing 4 leads and 5 soft_quotes.
+>
+> Follow-up migration `revoke_execute_on_trigger_functions` also removed RPC
+> EXECUTE from the five trigger/event-trigger functions the linter flagged and
+> pinned the last mutable `search_path`. Both SECURITY DEFINER view errors are
+> gone from the advisor.
 
 ---
 

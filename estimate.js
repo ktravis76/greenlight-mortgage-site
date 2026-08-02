@@ -290,7 +290,9 @@
     // The result is shown whether or not the send succeeded — they did the work
     // and they were promised the number. But we tell them the truth about the
     // email either way rather than claiming it is on its way when it is not.
-    form.addEventListener('glm:sent', function () { renderResult(true); });
+    form.addEventListener('glm:sent', function (e) {
+      renderResult(!!(e.detail && e.detail.result && e.detail.result.emailed));
+    });
     form.addEventListener('submit', function () {
       if (!CFG.LEAD_ENDPOINT_LIVE) {
         setTimeout(function () { renderResult(false); }, 250);
@@ -316,11 +318,15 @@
         + 'a standard worth applying to any refinance, not just a VA one.</p></div>'
       : '';
 
+    // `sent` is the server's own report of whether the email went out. If it did
+    // not, say so — a promise of an email that never arrives is worse than no
+    // promise. The estimate itself is on screen either way; they earned it.
     var emailLine = sent
       ? 'A copy is on its way to your inbox, and a licensed loan officer will follow up within '
         + 'one business day. Once — not six times in an hour.'
-      : 'We could not email your copy just now, so please save this screen or call us on '
-        + (CFG.PHONE || '903-331-0892') + ' and we will pick it up from there.';
+      : 'Your details reached us and a licensed loan officer will follow up within one '
+        + 'business day. We could not email you a copy just now, so save this screen or call '
+        + (CFG.PHONE || '903-331-0892') + ' if you want it sent over.';
 
     root.innerHTML = ''
       + '<div class="result">'

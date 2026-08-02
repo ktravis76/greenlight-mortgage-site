@@ -22,10 +22,13 @@ window.GLM = {
   // GoHighLevel / Konnectd location. Used server-side; here for reference only.
   GHL_LOCATION: 'LRAzmr7bQKMMlXiYfvi6',
 
-  // ⚠️ NOT YET DEPLOYED. Until the Edge Function is live, forms fail closed:
-  // the visitor is shown the office phone number instead of a false success
-  // message. Never pretend a submission worked.
-  LEAD_ENDPOINT_LIVE: false,
+  // Deployed and tested 2026-08-01 — leads and applications both land, with
+  // consent stamped server-side from the real request IP.
+  //
+  // Email delivery is a separate switch: the function returns `emailed`, and it
+  // is false until RESEND_API_KEY is set on the function. The estimator reads
+  // that flag and only claims a copy was sent when one actually was.
+  LEAD_ENDPOINT_LIVE: true,
 
   PHONE: '903-331-0892',
 };

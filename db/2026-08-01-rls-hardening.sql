@@ -2,13 +2,13 @@
 -- RLS hardening — Supabase athovwknbwbbqworsbrm (Greenlight Mortgage)
 -- Written 2026-08-01. See RLS-AUDIT.md for the reasoning behind each section.
 --
--- NOT YET APPLIED. Sections 1, 4 and 5 are safe to run as-is. Sections 2 and 3
--- change surfaces the live internal VA screener writes to — run those, then
--- record one quote end-to-end through tools/va-refi-screener.html before
--- pointing any consumer traffic at /tools/estimate.
+-- ✅ APPLIED 2026-08-01 as migration `rls_hardening_2026_08_01`.
+-- Verified after: both aggregate views 401 to the publishable key; forged
+-- consent and self-escalation rejected; normal lead insert 201; the VA screener
+-- confirmed still working with its exact `Prefer: return=minimal` call.
 --
--- Every table is at zero rows as of the audit, so none of this is a data
--- migration. It is all policy and grants.
+-- Policy and grants only — no row was read, altered or deleted. (Note: the
+-- tables were NOT empty. leads held 4 rows and soft_quotes 5.)
 -- ============================================================================
 
 begin;

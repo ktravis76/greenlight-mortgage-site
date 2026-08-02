@@ -104,8 +104,12 @@
     }).then(function (res) {
       if (!res.ok) throw new Error('HTTP ' + res.status);
       return res.json();
-    }).then(function () {
-      form.dispatchEvent(new CustomEvent('glm:sent', { bubbles: true, detail: body }));
+    }).then(function (result) {
+      // The server tells us whether it actually emailed. Pass that through so a
+      // page can never promise an email that was not sent.
+      form.dispatchEvent(new CustomEvent('glm:sent', {
+        bubbles: true, detail: { sent: body, result: result || {} },
+      }));
       if (!form.hasAttribute('data-glm-keep')) {
         status(form,
           'Got it. A licensed loan officer will be in touch within one business day.', 'ok');

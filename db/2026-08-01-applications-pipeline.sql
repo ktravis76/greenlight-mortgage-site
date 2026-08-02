@@ -1,6 +1,9 @@
 -- ============================================================================
 -- Applications + the internal pipeline ("the conveyor belt")
--- Written 2026-08-01 from KT's spec. NOT YET APPLIED.
+-- Written 2026-08-01 from KT's spec.
+-- ✅ APPLIED as migration `applications_pipeline_2026_08_01`.
+-- End-to-end tested: an application inserts, gets a GL-YYMMDD-XXXX reference,
+-- lands in stage 'new', and writes its 'created' event. Test rows removed.
 --
 -- WHAT THIS DOES AND DELIBERATELY DOES NOT DO
 --
@@ -206,8 +209,13 @@ commit;
 
 -- ============================================================================
 -- Still to do once this is applied
---   * Deploy supabase/functions/submit-application
---   * Seed allowed_staff + profiles so is_staff() returns true for the team
---     (profiles is currently EMPTY — every staff policy denies everyone today)
+--   * ✅ Edge Function deployed — submit-lead handles both leads and applications
+--   * Seed allowed_staff + profiles so is_staff() returns true for the team.
+--     profiles is still EMPTY, so every staff read policy denies everyone right
+--     now. Nothing can see the pipeline until the team has accounts.
+--   * Set RESEND_API_KEY so the confirmation and notification emails actually
+--     send. Until then the function returns emailed:false and the site says so
+--     rather than promising an email nobody gets.
+--   * Set GHL_WEBHOOK_URL to resume the Konnectd forward.
 --   * Build the board UI at /admin
 -- ============================================================================
