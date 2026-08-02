@@ -168,11 +168,18 @@ REQUIRED = [
 TAGS = re.compile(r"<(script|style)[^>]*>.*?</\1>", re.S | re.I)
 STRIP = re.compile(r"<[^>]+>")
 
+# Third-party prose: a directory listing quoting how another business describes
+# itself. It is attributed on the page and the archive carries a not-endorsed
+# disclaimer, so a roofer's own "satisfaction guarantee" is a fact about their
+# marketing rather than a claim Greenlight is making. Our own copy is still held
+# to the full standard — this only exempts explicitly attributed quotes.
+THIRDPARTY = re.compile(r"<blockquote[^>]*\bdata-thirdparty\b.*?</blockquote>", re.S | re.I)
+
 
 def visible_text(raw):
     """Rendered copy only — script/style bodies and attributes are not read by
     a consumer and would produce false positives (e.g. 'rate' in a JS var)."""
-    return html.unescape(STRIP.sub(" ", TAGS.sub(" ", raw)))
+    return html.unescape(STRIP.sub(" ", THIRDPARTY.sub(" ", TAGS.sub(" ", raw))))
 
 
 def check_compliance():

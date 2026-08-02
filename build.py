@@ -24,6 +24,11 @@ NOINDEX = {
     "/tools/va-refi-screener",   # internal sales tool, not for consumers
 }
 
+# The archive is the bulk of the site's indexable surface — 161 pages against a
+# domain that currently has about ten indexed. Listings sit below the money
+# pages but well above nothing.
+ARCHIVE_PRIORITY = "0.5"
+
 # Priority hints. The estimator is the primary CTA across the whole site, so it
 # sits with the homepage rather than in with the legal pages.
 PRIORITY = {
@@ -64,7 +69,7 @@ def sitemap(urls):
     body = "\n".join(
         f"  <url><loc>{S.ORIGIN}{'' if u == '/' else u}</loc>"
         f"<lastmod>{today}</lastmod>"
-        f"<priority>{PRIORITY.get(u, '0.6')}</priority></url>"
+        f"<priority>{PRIORITY.get(u, ARCHIVE_PRIORITY if u.startswith('/archive/') else '0.6')}</priority></url>"
         for u in urls if u not in NOINDEX)
     xml = ('<?xml version="1.0" encoding="UTF-8"?>\n'
            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
@@ -90,7 +95,7 @@ Sitemap: {S.ORIGIN}/sitemap.xml
 
 
 def main():
-    for mod in ("build-loans", "build-pages", "build-tools"):
+    for mod in ("build-loans", "build-pages", "build-tools", "build-archive"):
         load(mod).build()
 
     urls = discover()

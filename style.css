@@ -830,3 +830,16 @@ td.num{font-variant-numeric:tabular-nums}
   body{background:#fff}
   .legal{font-size:9pt}
 }
+
+/* ------------------------------------------------------- archive listings */
+.attrib{font-size:13px;font-weight:650;color:var(--mut);margin-bottom:10px;
+  text-transform:uppercase;letter-spacing:.06em}
+blockquote.thirdparty{font-family:var(--serif);font-size:18px;line-height:1.65;
+  color:var(--ink-2);padding:20px 24px;background:var(--paper-2);
+  border-left:3px solid var(--line-2);border-radius:0 var(--r) var(--r) 0}
+.lcard .bmeta{font-size:13px;color:var(--mut);margin-top:10px;flex:none}
+table.deets{min-width:0}
+table.deets th{text-align:left;white-space:nowrap;width:1%;background:transparent;
+  position:static;font-size:11.5px;color:var(--mut);vertical-align:top;padding-right:18px}
+table.deets td{text-align:left;font-size:14.5px}
+table.deets a{color:var(--g);font-weight:650}
