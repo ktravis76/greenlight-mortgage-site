@@ -1,0 +1,14 @@
+{
+  "name": "greenlight-mortgage-site",
+  "version": "1.0.0",
+  "description": "Greenlight Mortgage marketing site",
+  "scripts": {
+    "build": "python3 build.py"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/speed-insights": "^2.0.0"
+  }
+}
