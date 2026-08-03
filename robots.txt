@@ -1,4 +1,4 @@
-# Greenlight Mortgage, LLC — https://greenlightmortgage.com
+# Greenlight Mortgage, LLC — https://www.glmtg.com
 User-agent: *
 Allow: /
 
@@ -6,4 +6,4 @@ Allow: /
 Disallow: /survey
 Disallow: /tools/va-refi-screener
 
-Sitemap: https://greenlightmortgage.com/sitemap.xml
+Sitemap: https://www.glmtg.com/sitemap.xml

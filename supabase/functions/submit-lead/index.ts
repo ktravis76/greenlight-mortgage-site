@@ -38,7 +38,7 @@ const FROM_EMAIL = Deno.env.get("FROM_EMAIL")
 const NOTIFY_EMAIL = Deno.env.get("NOTIFY_EMAIL") ?? "kenneth@glmtg.com";
 
 const ALLOWED_ORIGINS = [
-  "https://greenlightmortgage.com",
+  "https://www.glmtg.com",
   "https://www.greenlightmortgage.com",
   "https://greenlight-mortgage-site.vercel.app",
   "http://127.0.0.1:8787",

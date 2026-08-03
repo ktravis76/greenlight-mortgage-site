@@ -90,7 +90,7 @@ STATE_NAMES = ", ".join(n for n, _ in LICENSES[:-1]) + f" and {LICENSES[-1][0]}"
 APPLY = "/apply"
 LOS_APPLY = "https://greenlight.my1003app.com/233918/register"
 
-ORIGIN = "https://greenlightmortgage.com"
+ORIGIN = "https://www.glmtg.com"
 
 # Local intent targets. Towns are real places we serve; districts came from KT directly.
 TOWNS     = ["Longview", "Gilmer", "Kilgore", "Hallsville",

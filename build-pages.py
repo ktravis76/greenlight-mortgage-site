@@ -1449,7 +1449,7 @@ information.</p>
         path="/privacy",
         title="Privacy Policy | Greenlight Mortgage — Longview, TX",
         desc="How Greenlight Mortgage collects, uses and protects information submitted "
-             "through greenlightmortgage.com, including call and text consent records.",
+             "through www.glmtg.com, including call and text consent records.",
         body=body,
         trail=[("/", "Home"), ("/privacy", "Privacy Policy")],
     )
