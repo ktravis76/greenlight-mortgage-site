@@ -3,18 +3,6 @@
   "cleanUrls": true,
   "trailingSlash": false,
 
-  "_comment_redirects": [
-    "301s for the WordPress URL structure on kennethtravis.com. That domain ranks",
-    "#2 organically for 'mortgage longview tx', so a missing redirect is lost equity",
-    "and a dead ad destination.",
-    "",
-    "IMPORTANT: these only fire for requests that reach THIS project. The old paths",
-    "live on kennethtravis.com, so the same map has to be applied wherever that",
-    "domain is served once it is emptied of mortgage content — see MIGRATION-MAP.md.",
-    "They are duplicated here so that any old link pointed at the new domain also",
-    "lands correctly."
-  ],
-
   "redirects": [
     { "source": "/loans/conventional-loans", "destination": "/loans/conventional", "permanent": true },
     { "source": "/loans/fha-loans",          "destination": "/loans/fha",          "permanent": true },
