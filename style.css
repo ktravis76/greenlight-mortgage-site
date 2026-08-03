@@ -246,14 +246,14 @@ header::after{
   background:linear-gradient(90deg,var(--go),rgba(22,196,106,0) 42%);
 }
 header.stuck{box-shadow:0 10px 34px -20px rgba(4,26,17,.85)}
-.nav{display:flex;align-items:center;gap:26px;height:84px;transition:height .25s var(--ease)}
+.nav{display:flex;align-items:center;gap:34px;height:84px;transition:height .25s var(--ease)}
 header.stuck .nav{height:70px}
 
-nav.links{display:flex;align-items:center;gap:2px;margin-left:auto}
+nav.links{display:flex;align-items:center;gap:6px;margin-left:auto}
 .navlink{
   display:inline-flex;align-items:center;gap:5px;
-  padding:9px 13px;border-radius:9px;
-  font-size:15px;font-weight:550;color:rgba(233,244,237,.82);
+    padding:9px 12px;border-radius:9px;white-space:nowrap;
+    font-size:14.5px;font-weight:550;color:rgba(233,244,237,.82);
   transition:color .15s,background .15s;
 }
 .navlink:hover{color:#fff;background:rgba(255,255,255,.09)}
@@ -278,7 +278,7 @@ nav.links{display:flex;align-items:center;gap:2px;margin-left:auto}
 .menu a:hover{background:var(--paper-2);color:var(--forest)}
 
 .navcta{display:flex;align-items:center;gap:14px;flex:none}
-.phone{display:inline-flex;align-items:center;gap:7px;font-size:14.5px;font-weight:650;
+.navcta{display:flex;align-items:center;gap:18px;flex:none;margin-left:26px}
   color:rgba(233,244,237,.9);white-space:nowrap}
 .phone:hover{color:var(--go)}
 .phone svg{opacity:.55}
@@ -307,7 +307,7 @@ header .btn.sm:hover{--bg:#2ad57c;--bd:#2ad57c}
 .drawer .phone.big{font-size:22px;margin-top:18px;display:flex;justify-content:center;
   color:#fff;border-bottom:0}
 
-@media(max-width:1080px){
+@media(max-width:1180px){
   nav.links{display:none}
   .burger{display:flex}
   /* nav.links carries the margin-left:auto that pushes everything after it to
