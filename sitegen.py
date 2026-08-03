@@ -683,6 +683,10 @@ _PAGE = """<!DOCTYPE html>
 <link rel="preconnect" href="https://athovwknbwbbqworsbrm.supabase.co">
 <script>document.documentElement.className+=" js"</script>
 <link rel="stylesheet" href="/style.css">
+<script>
+  window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
 {{schema}}
 </head>
 <body{{bodyattr}}>
