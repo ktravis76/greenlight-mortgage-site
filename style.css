@@ -1358,3 +1358,34 @@ html:not(.js) .fupload{display:none}
   .recoupbar .fill{transition:none}
   .fslider input[type="range"]::-webkit-slider-thumb{transition:none}
 }
+
+/* --- dual rig tabs (homepage) + hidden-lane handling ----------------------- */
+.ftabs{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.ftabs button{
+  padding:13px 20px;border-radius:999px;font-size:15px;font-weight:750;
+  background:var(--card);color:var(--ink-2);border:1.5px solid var(--line-2);
+  cursor:pointer;min-height:48px;
+  transition:background .18s var(--ease),border-color .18s,color .18s;
+}
+.ftabs button:hover{border-color:var(--g);color:var(--g)}
+.ftabs button[aria-pressed="true"]{
+  background:var(--forest);border-color:var(--forest);color:#fff;
+  box-shadow:0 6px 18px -8px rgba(11,58,41,.5)}
+.frig [hidden],.yesfacts [hidden]{display:none!important}
+
+/* --- program strip: pill links straight to the seven funnels --------------- */
+.progstrip{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.progstrip a{
+  padding:11px 18px;border-radius:999px;font-size:14.5px;font-weight:700;
+  background:var(--card);color:var(--g);border:1px solid var(--line-2);
+  min-height:44px;display:inline-flex;align-items:center;
+  transition:background .18s var(--ease),border-color .18s,color .18s;
+}
+.progstrip a:hover{background:var(--forest);border-color:var(--forest);color:#fff}
+
+/* --- rig embedded mid-post (blog) ------------------------------------------ */
+.prose .frig-wrap,.postbody .frig-wrap{
+  margin:clamp(30px,4vw,46px) calc(-1 * var(--gut));
+  border-radius:var(--r-lg);border:1px solid var(--line-2);
+}
+@media(max-width:700px){.prose .frig-wrap,.postbody .frig-wrap{margin-inline:0}}

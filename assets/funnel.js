@@ -29,7 +29,10 @@
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var rig = document.querySelector('[data-funnel]');
-  var slug = rig ? (rig.getAttribute('data-slug') || location.pathname.replace(/\/$/, '').split('/').pop()) : null;
+  // Pages without a rig (tools, blog) still carry the YES flow, so the slug
+  // falls back to the path either way.
+  var slug = (rig && rig.getAttribute('data-slug'))
+    || location.pathname.replace(/\/$/, '').split('/').pop() || 'home';
 
   /* ------------------------------------------------------------ analytics */
   // A row in analytics_events. Fire-and-forget: analytics must never break
@@ -63,7 +66,7 @@
     if (kicker) kicker.textContent = 'You’re in the right place — here’s what happens next.';
   }
 
-  if (rig) {
+  if (rig || document.querySelector('form[data-yes-form]')) {
     pixel('track', 'ViewContent', { content_name: slug, content_category: 'loan-funnel' });
   }
 
@@ -129,7 +132,9 @@
         + 'Your actual rate will differ.';
     });
 
-    var mode = rig.getAttribute('data-mode');           // 'refi' | 'purchase'
+    // 'refi' | 'purchase'. Read live, because a dual rig (the homepage) can
+    // switch modes with its tabs.
+    function mode() { return rig.getAttribute('data-mode'); }
     var out = rig.querySelector('[data-out]');
     var sub = rig.querySelector('[data-out-sub]');
     var live = rig.querySelector('[data-out-live]');    // sr-only, aria-live
@@ -178,7 +183,7 @@
     var balDetails = rig.querySelector('details[data-balance]');
 
     function compute() {
-      if (mode === 'refi') {
+      if (mode() === 'refi') {
         var pmt = val('pay', 1850);
         var cur = val('cur', 6.875);
         var months, bal;
@@ -250,7 +255,10 @@
       // Hidden fields on the walk-through form — their dials, submitted with
       // the lead so the loan officer calls already knowing the shape of it.
       if (yesForm) {
-        var map = mode === 'refi'
+        var refiKeys = ['current_payment', 'current_rate', 'mortgage_balance',
+                        'estimated_monthly_savings'];
+        var buyKeys = ['home_price', 'down_payment_pct', 'estimated_payment'];
+        var map = mode() === 'refi'
           ? { current_payment: Math.round(s.pay), current_rate: s.cur,
               mortgage_balance: Math.round(s.bal), estimated_monthly_savings: Math.round(s.saving) }
           : { home_price: Math.round(s.price), down_payment_pct: s.down,
@@ -259,9 +267,17 @@
           var input = yesForm.querySelector('input[name="' + name + '"]');
           if (input) input.value = String(map[name]);
         });
+        // A dual rig carries both field sets; blank the inactive one so a
+        // mode switch never submits stale numbers from the other lane.
+        if (rig.hasAttribute('data-dual')) {
+          (mode() === 'refi' ? buyKeys : refiKeys).forEach(function (name) {
+            var input = yesForm.querySelector('input[name="' + name + '"]');
+            if (input) input.value = '';
+          });
+        }
       }
       // The 36-month meter (refi only): sample costs vs monthly saving.
-      if (recoup && mode === 'refi') {
+      if (recoup && mode() === 'refi') {
         var fee = s.bal * 0.005;                       // VA funding fee, sample
         var costs = (RATES.ASSUMED_REFI_COSTS || 3000) + (recoup.hasAttribute('data-va') ? fee : 0);
         var bar = recoup.querySelector('.recoupbar');
@@ -293,7 +309,7 @@
       if (live) {
         clearTimeout(liveTimer);
         liveTimer = setTimeout(function () {
-          live.textContent = (mode === 'refi' ? 'Estimated monthly savings: ' : 'Estimated monthly payment: ')
+          live.textContent = (mode() === 'refi' ? 'Estimated monthly savings: ' : 'Estimated monthly payment: ')
             + money0(res.value) + '. ' + res.sub;
         }, 600);
       }
@@ -302,7 +318,7 @@
     function firstTouch() {
       if (touched) return;
       touched = true;
-      track('funnel_slide', { slug: slug, mode: mode, page: location.pathname });
+      track('funnel_slide', { slug: slug, mode: mode(), page: location.pathname });
       pixel('trackCustom', 'EstimatorUsed', { content_name: slug });
     }
 
@@ -313,8 +329,43 @@
     });
     if (balDetails) balDetails.addEventListener('toggle', function () { render(true); });
 
-    // The YES moment: the shiny button under the number takes them — and
-    // their dials — straight to the walk-through form.
+    // Dual rig (the homepage): tabs flip data-mode, everything marked
+    // data-mode-only follows, and the walk-through form's goal follows too.
+    function applyMode() {
+      var m = mode();
+      $all('[data-mode-only]').forEach(function (el) {
+        el.hidden = el.getAttribute('data-mode-only') !== m;
+      });
+      if (yesForm) {
+        var goal = yesForm.querySelector('input[name="goal"]');
+        if (goal) goal.value = m === 'refi' ? 'refinance' : 'purchase';
+      }
+    }
+    if (rig.hasAttribute('data-dual')) {
+      $all('[data-mode-tab]', rig).forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          rig.setAttribute('data-mode', btn.getAttribute('data-mode-tab'));
+          $all('[data-mode-tab]', rig).forEach(function (b) {
+            b.setAttribute('aria-pressed', String(b === btn));
+          });
+          applyMode();
+          best = -Infinity;              // new lane, new baseline — no pulse
+          firstTouch();
+          render(false);
+        });
+      });
+      applyMode();
+    }
+
+    render(false);
+  }
+
+  /* ------------------------------------------------------- the YES moment */
+  // Standalone on purpose: tools and blog pages carry the walk-through form
+  // without a slider rig, and the shiny button must still work there.
+  function initYes() {
+    var yesForm = document.querySelector('form[data-yes-form]');
+
     $all('[data-yes-btn]').forEach(function (btn) {
       btn.addEventListener('click', function () {
         track('funnel_cta', { slug: slug, cta: 'yes_click', page: location.pathname });
@@ -337,8 +388,6 @@
         track('funnel_cta', { slug: slug, cta: 'yes_submitted', page: location.pathname });
       });
     }
-
-    render(false);
   }
 
   /* ------------------------------------------------------- CTA click rows */
@@ -511,6 +560,7 @@
 
   try {
     initRig();
+    initYes();
     initTowns();
     initUpload();
     retargetActionbar();

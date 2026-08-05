@@ -1301,6 +1301,84 @@ def _funnel_rig(slug, f):
 </div></section>"""
 
 
+def funnel_rig(slug, mode, h2, sub, price=(80000, 900000, 250000, 5000),
+               down=(0, 25, 5, 0.5)):
+    """Public wrapper: drop a slider rig on any page (blog posts, hubs).
+    `slug` should be the PROGRAM the rig feeds (e.g. 'va-irrrl') so the lead's
+    loan_type is meaningful — analytics rows carry the page path separately."""
+    return _funnel_rig(slug, dict(mode=mode, rig_h2=h2, rig_sub=sub,
+                                  price=price, down=down))
+
+
+def funnel_rig_dual():
+    """The homepage rig: refi | purchase behind two tabs, one result card.
+    funnel.js flips data-mode, everything marked data-mode-only follows, and
+    the YES form's goal and hidden fields follow too."""
+    return f"""<section class="frig-wrap" id="estimator"><div class="wrap">
+<div class="frig" data-funnel data-dual data-mode="refi" data-slug="home">
+  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>The estimator</p>
+  <h2>Drag the dials. Watch the number.</h2>
+  <p class="sub">Pick your lane, set the dials, and get a real starting number in about
+  ten seconds &mdash; an estimate, not a promise, and nobody asks for your email first.</p>
+  <div class="ftabs" role="group" aria-label="What are you here to do?">
+    <button type="button" data-mode-tab="refi" aria-pressed="true">I own &mdash; lower my payment</button>
+    <button type="button" data-mode-tab="purchase" aria-pressed="false">I'm buying &mdash; size my payment</button>
+  </div>
+  <div class="frig-live">
+    <div class="fresult">
+      <p class="fcap"><span data-mode-only="refi">Estimated monthly savings</span><span data-mode-only="purchase" hidden>Estimated monthly payment (P&amp;I)</span></p>
+      <p class="fnum" data-out>&mdash;</p>
+      <p class="fsub" data-out-sub></p>
+      <p class="fnote">{FUNNEL_FOOTNOTE}</p>
+      <p class="fsample" data-sample-label></p>
+      <span class="sr-only" role="status" aria-live="polite" data-out-live></span>
+      <div class="yesrow">
+        <p class="yesq">Want your real number?</p>
+        <button type="button" class="btn-yes" data-yes-btn>YES &mdash; run my real numbers <span class="arrow">&rarr;</span></button>
+        <p class="yessmall">30 seconds. No credit inquiry at this step. One call from a licensed loan officer.</p>
+      </div>
+    </div>
+    <div class="fsliders" data-mode-only="refi">
+      <div class="fslider">
+        <div class="flabel"><label for="h-pay">Your current monthly payment (P&amp;I)</label><output data-for="pay" for="h-pay">$1,850</output></div>
+        <input type="range" id="h-pay" data-var="pay" data-fmt="money" min="500" max="4000" step="25" value="1850" aria-label="Your current monthly principal and interest payment, dollars">
+        <p class="fhint">Principal &amp; interest &mdash; the part before taxes and insurance.</p>
+      </div>
+      <div class="fslider">
+        <div class="flabel"><label for="h-cur">Your current rate</label><output data-for="cur" for="h-cur">6.875%</output></div>
+        <input type="range" id="h-cur" data-var="cur" data-fmt="pct" min="3" max="9" step="0.125" value="6.875" aria-label="Your current interest rate, percent">
+        <p class="fhint">It's on page one of your statement.</p>
+      </div>
+      <details class="fbal" data-balance>
+        <summary>Know your balance? Dial it in for a tighter estimate</summary>
+        <div class="fslider">
+          <div class="flabel"><label for="h-bal">Loan balance</label><output data-for="bal" for="h-bal">$250,000</output></div>
+          <input type="range" id="h-bal" data-var="bal" data-fmt="money" min="50000" max="800000" step="5000" value="250000" aria-label="Your current loan balance, dollars">
+        </div>
+      </details>
+    </div>
+    <div class="fsliders" data-mode-only="purchase" hidden>
+      <div class="fslider">
+        <div class="flabel"><label for="h-price">Home price</label><output data-for="price" for="h-price">$250,000</output></div>
+        <input type="range" id="h-price" data-var="price" data-fmt="money" min="80000" max="900000" step="5000" value="250000" aria-label="Home price, dollars">
+      </div>
+      <div class="fslider">
+        <div class="flabel"><label for="h-down">Down payment</label><output data-for="down" for="h-down">5%</output></div>
+        <input type="range" id="h-down" data-var="down" data-fmt="pct" min="0" max="30" step="0.5" value="5" aria-label="Down payment, percent of price">
+        <p class="fhint">Zero is real on VA and USDA. The 20% rule is a myth.</p>
+      </div>
+    </div>
+  </div>
+  <div class="frig-fallback">
+    <p>The interactive estimator needs JavaScript &mdash; but the people don't.
+    A licensed loan officer can run your real numbers on one call.</p>
+    <a class="btn go" href="tel:{PHONE_HREF}">Call {PHONE}</a>
+    <p class="fnote" style="max-width:52ch;margin-inline:auto">{FUNNEL_FOOTNOTE}</p>
+  </div>
+</div>
+</div></section>"""
+
+
 def _funnel_towns(slug, f):
     """USDA only: static list of known-eligible East Texas area names.
     Deliberately not an eligibility API — the real check is by exact address."""
@@ -1323,46 +1401,69 @@ def _funnel_towns(slug, f):
 </div></section>"""
 
 
-def _funnel_yes(slug, f):
-    """The YES moment's landing spot: a walk-through card that already knows
-    their dials. funnel.js keeps the hidden fields and recap chips synced with
-    the estimator, so what they played with is what the loan officer sees.
-    Posts through forms.js to the existing submit-lead Edge Function."""
-    refi = f["mode"] == "refi"
-    if refi:
-        facts = ('<span class="yfact">You pay<b data-yes-fact="pay">&mdash;</b></span>'
-                 '<span class="yfact">Your rate<b data-yes-fact="cur">&mdash;</b></span>'
-                 '<span class="yfact">Estimated saving<b data-yes-fact="saving">&mdash;</b></span>')
-        hidden = ('<input type="hidden" name="current_payment" value="">'
-                  '<input type="hidden" name="current_rate" value="">'
-                  '<input type="hidden" name="mortgage_balance" value="">'
-                  '<input type="hidden" name="estimated_monthly_savings" value="">'
-                  '<input type="hidden" name="goal" value="refinance">')
-        h2 = "Yes? Then let&rsquo;s make it real."
-        sub = ("Thirty seconds. Your dials ride along with it, a licensed loan officer "
-               "checks them against your actual loan, and you get one call &mdash; not a "
-               "call center.")
-        btn = 'YES &mdash; I want <span data-yes-amount>this</span>/mo back <span class="arrow">&rarr;</span>'
+def funnel_yes(slug, mode, *, goal=None, facts=True, h2=None, sub=None):
+    """The YES moment's landing spot: a walk-through card. On rig pages
+    funnel.js keeps the hidden fields and recap chips synced with the
+    estimator, so what they played with is what the loan officer sees. On
+    pages without a rig (tools, blog) it stands alone: facts=False drops the
+    chips and estimator fields, `goal` pins the lead's intent. Posts through
+    forms.js to the existing submit-lead Edge Function.
+
+    mode: 'refi' | 'purchase' | 'dual' (homepage — carries both field sets,
+    funnel.js blanks whichever lane is inactive)."""
+    refi = mode == "refi"
+    dual = mode == "dual"
+
+    refi_facts = ('<span class="yfact" data-mode-only="refi">You pay<b data-yes-fact="pay">&mdash;</b></span>'
+                  '<span class="yfact" data-mode-only="refi">Your rate<b data-yes-fact="cur">&mdash;</b></span>'
+                  '<span class="yfact" data-mode-only="refi">Estimated saving<b data-yes-fact="saving">&mdash;</b></span>')
+    buy_facts = ('<span class="yfact" data-mode-only="purchase">Home price<b data-yes-fact="price">&mdash;</b></span>'
+                 '<span class="yfact" data-mode-only="purchase">Down payment<b data-yes-fact="down">&mdash;</b></span>'
+                 '<span class="yfact" data-mode-only="purchase">Estimated payment<b data-yes-fact="pi">&mdash;</b></span>')
+    refi_hidden = ('<input type="hidden" name="current_payment" value="">'
+                   '<input type="hidden" name="current_rate" value="">'
+                   '<input type="hidden" name="mortgage_balance" value="">'
+                   '<input type="hidden" name="estimated_monthly_savings" value="">')
+    buy_hidden = ('<input type="hidden" name="home_price" value="">'
+                  '<input type="hidden" name="down_payment_pct" value="">'
+                  '<input type="hidden" name="estimated_payment" value="">')
+
+    if dual:
+        facts_html = refi_facts + buy_facts
+        hidden = refi_hidden + buy_hidden + '<input type="hidden" name="goal" value="refinance">'
+    elif refi:
+        facts_html = refi_facts.replace(' data-mode-only="refi"', "")
+        hidden = refi_hidden + '<input type="hidden" name="goal" value="refinance">'
+    else:
+        facts_html = buy_facts.replace(' data-mode-only="purchase"', "")
+        hidden = buy_hidden + '<input type="hidden" name="goal" value="purchase">'
+    if goal is not None:
+        hidden = re.sub(r'<input type="hidden" name="goal" value="[^"]*">', "", hidden)
+        hidden += f'<input type="hidden" name="goal" value="{esc(goal)}">'
+    if not facts:
+        facts_html = ""
+        hidden = ('' if goal is None else f'<input type="hidden" name="goal" value="{esc(goal)}">')
+
+    if refi or dual:
+        default_h2 = "Yes? Then let&rsquo;s make it real."
+        default_sub = ("Thirty seconds. Your dials ride along with it, a licensed loan "
+                       "officer checks them against your actual loan, and you get one "
+                       "call &mdash; not a call center.")
+        btn = ('YES &mdash; I want <span data-yes-amount>this</span>/mo back <span class="arrow">&rarr;</span>'
+               if refi else
+               'YES &mdash; run my real numbers <span class="arrow">&rarr;</span>')
         nxt = f"""<div class="yesnext">
   <h3>That&rsquo;s a YES. Here&rsquo;s how to make it fast.</h3>
   <p>A licensed loan officer picks this up and calls once &mdash; usually same day.
-  Two ways to speed it up while you're here:
-  <a href="#cta">send your statement now</a> (it has every number we need), or jump
+  Want to speed it up? Call <a href="tel:{PHONE_HREF}">{PHONE}</a> now, or jump
   straight into <a href="{LOS_APPLY}" rel="noopener">the full secure application</a>
   if you already know you're in.</p>
 </div>"""
     else:
-        facts = ('<span class="yfact">Home price<b data-yes-fact="price">&mdash;</b></span>'
-                 '<span class="yfact">Down payment<b data-yes-fact="down">&mdash;</b></span>'
-                 '<span class="yfact">Estimated payment<b data-yes-fact="pi">&mdash;</b></span>')
-        hidden = ('<input type="hidden" name="home_price" value="">'
-                  '<input type="hidden" name="down_payment_pct" value="">'
-                  '<input type="hidden" name="estimated_payment" value="">'
-                  '<input type="hidden" name="goal" value="purchase">')
-        h2 = "Like that number? Let&rsquo;s check it for real."
-        sub = ("Thirty seconds. Your dials ride along, and a licensed loan officer runs "
-               "your actual numbers &mdash; credit, income, program &mdash; and calls "
-               "once with real answers.")
+        default_h2 = "Like that number? Let&rsquo;s check it for real."
+        default_sub = ("Thirty seconds. Your numbers ride along, and a licensed loan "
+                       "officer runs your actual situation &mdash; credit, income, "
+                       "program &mdash; and calls once with real answers.")
         btn = 'YES &mdash; run my real numbers <span class="arrow">&rarr;</span>'
         nxt = f"""<div class="yesnext">
   <h3>That&rsquo;s a YES. Here&rsquo;s what happens next.</h3>
@@ -1371,13 +1472,16 @@ def _funnel_yes(slug, f):
   start <a href="{LOS_APPLY}" rel="noopener">the full secure application</a>.</p>
 </div>"""
 
+    facts_row = (f'<div class="yesfacts" aria-label="What you set on the estimator">{facts_html}</div>'
+                 if facts_html else "")
+
     return f"""<section class="yeswrap alt" id="yes"><div class="wrap">
 <p class="eyebrow" style="text-align:center;justify-content:center"><span class="tick" aria-hidden="true"></span>The next step</p>
-<h2 style="text-align:center;margin-inline:auto">{h2}</h2>
-<p class="sub" style="text-align:center;margin-inline:auto;max-width:52ch">{sub}</p>
+<h2 style="text-align:center;margin-inline:auto">{h2 or default_h2}</h2>
+<p class="sub" style="text-align:center;margin-inline:auto;max-width:52ch">{sub or default_sub}</p>
 <div class="yescard">
   <div class="yesbeats"><span>1 &middot; Your numbers ride along</span><span>2 &middot; 30 seconds of contact info</span><span>3 &middot; One call from a licensed loan officer</span></div>
-  <div class="yesfacts" aria-label="What you set on the estimator">{facts}</div>
+  {facts_row}
   <form data-yes-form data-glm-form="funnel_yes" data-glm-keep novalidate>
     <input type="hidden" name="loan_type" value="{slug}">
     {hidden}
@@ -1408,6 +1512,10 @@ def _funnel_yes(slug, f):
   </form>
 </div>
 </div></section>"""
+
+
+def _funnel_yes(slug, f):
+    return funnel_yes(slug, f["mode"])
 
 
 def _funnel_why(slug, f):
