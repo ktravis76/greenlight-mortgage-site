@@ -1245,3 +1245,11 @@ html.js .frig-fallback{display:none}
   .fnum.pulse,.townout.pop{animation:none}
   .fslider input[type="range"]::-webkit-slider-thumb{transition:none}
 }
+
+/* funnel proof section runs on paper, so the trust marks need ink, not white */
+.fproof-trust{margin-top:38px;padding-top:30px;border-top:1px solid var(--line)}
+.fproof-trust .trust strong{color:var(--forest)}
+.fproof-trust .trust small{color:var(--mut)}
+.fproof-trust .trust .mark{color:var(--g)}
+/* the statement upload is JS-driven; without JS the noscript line takes over */
+html:not(.js) .fupload{display:none}
