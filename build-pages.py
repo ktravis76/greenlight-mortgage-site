@@ -158,7 +158,7 @@ def homepage():
   bring back the real options, and tell you which one actually costs you less &mdash;
   including when the answer is to do nothing.</p>
   <div class="cta">
-    <a class="btn go lg" href="/tools/estimate">See what you could save</a>
+    <a class="btn go lg" href="#estimator" data-big-cta data-short-label="See your number">See what you could save &darr;</a>
     <a class="btn ghost lg" href="/about">Meet the team</a>
   </div>
   <div class="heroproof">
@@ -181,6 +181,10 @@ def homepage():
 </div>
 </div>
 </div></div>
+
+{S.funnel_rig_dual()}
+
+{S.funnel_yes("home", "dual")}
 
 <div class="wrap"><div class="tiles">{tile_html}</div></div>
 
@@ -342,6 +346,7 @@ the payment you have.</p>
         body=body,
         org=True,
         trail=[("/", "Home")],
+        scripts=S.FUNNEL_SCRIPTS,
     )
 
 
@@ -969,6 +974,274 @@ POSTS = [
                 "We are brokers &mdash; we are not paid to push you toward one answer.",
             ]),
         ],
+        embed=dict(program="conventional", mode="purchase", after=2,
+                   h2="Try it: what does YOUR down payment actually change?",
+                   sub="Drag the down payment dial and watch the monthly number. Most "
+                       "people are surprised how small the gap is between 5% and 20% "
+                       "&mdash; and how many years of rent the difference costs.",
+                   down=(3, 30, 5, 0.5)),
+        funnel=("conventional", "Conventional loans",
+                "The standard route, and often the lowest total cost once you qualify. "
+                "The 20% rule is a myth — here's what's real."),
+    ),
+
+    dict(
+        slug="va-irrrl-streamline-refinance-veterans",
+        date="2026-08-05",
+        dateline="5 August 2026",
+        tag="Veterans",
+        title="The VA refinance most East Texas veterans have never used: the IRRRL",
+        desc="The VA's streamline refinance — usually no appraisal, far less paperwork, "
+             "and a federal rule that forces the math to work in your favor. What the "
+             "IRRRL is, who qualifies, and the disability-rating detail nobody asks about.",
+        lede="The VA built a refinance so streamlined they gave it its own word. Most of "
+             "the veterans it was built for have never heard it.",
+        sections=[
+            ("What an IRRRL actually is", [
+                "Interest Rate Reduction Refinance Loan. It exists for exactly one "
+                "situation: you already hold a VA loan, and a lower cost is available. "
+                "No cash out, no equity games &mdash; the same loan at a lower cost.",
+                "Because the VA already knows the loan and you have already proven "
+                "yourself on it, the process skips most of the obstacle course. Usually "
+                "no appraisal. Usually no new certificate of eligibility. Far less "
+                "credit paperwork than a full refinance. Clean files have closed in as "
+                "little as eight business days &mdash; every file sets its own pace, but "
+                "&ldquo;streamline&rdquo; is the VA's word for it, not ours.",
+            ]),
+            ("The six-month box", [
+                "The biggest qualification question is one you can answer right now: "
+                "have you paid your VA loan on time for the last six months? If yes, "
+                "the biggest box is already checked.",
+                "That is the whole spirit of the program. You proved yourself on the "
+                "loan you have. The VA's position is that you should not have to "
+                "re-audition to keep more of your own money.",
+            ]),
+            ("The rule that protects you", [
+                "VA requires the costs of an IRRRL to be recovered by the monthly "
+                "saving within 36 months, and the refinance to produce a real net "
+                "tangible benefit. If a file does not clear that test, the loan "
+                "cannot be written &mdash; full stop.",
+                "That rule exists because streamline refinances are easy to sell and "
+                "easy to abuse. We run it first, and if your file fails it, we tell "
+                "you that for free instead of after somebody pulled your credit.",
+            ]),
+            ("The 10% detail nobody asks about", [
+                "There is a one-time VA funding fee on an IRRRL &mdash; half a percent "
+                "of the loan. It is waived entirely for veterans with a "
+                "service-connected disability rating of 10% or higher.",
+                "On a $250,000 balance that is $1,250 of cost that simply disappears, "
+                "and it regularly flips a marginal file into a clear win. If you are "
+                "rated and nobody has asked you about it, they have not run your "
+                "numbers properly.",
+            ]),
+        ],
+        embed=dict(program="va-irrrl", mode="refi", after=2,
+                   h2="Try it: what would a streamline change monthly?",
+                   sub="Set the dials to what you pay now. The green number is the "
+                       "monthly difference &mdash; an estimate to start a real "
+                       "conversation, not the end of one."),
+        funnel=("va-irrrl", "VA IRRRL",
+                "The full page: the live 36-month test, how the process runs, and the "
+                "fastest way to get your real numbers."),
+    ),
+
+    dict(
+        slug="zero-down-usda-loans-east-texas",
+        date="2026-08-05",
+        dateline="5 August 2026",
+        tag="Buying a home",
+        title="Zero down around Longview: the USDA map is bigger than you think",
+        desc="USDA loans put people in homes around Gilmer, Hallsville, White Oak, Diana "
+             "and Ore City with no down payment. How eligibility actually works, the "
+             "income limits, and why you should check the address before you assume.",
+        lede="One of exactly two zero-down loans in America does not require military "
+             "service. It requires the right address — and East Texas has a lot of them.",
+        sections=[
+            ("The most overlooked program in the region", [
+                "USDA rural development loans finance eligible homes with zero down "
+                "payment. Not low. Zero. And the word &ldquo;rural&rdquo; does a lot of "
+                "quiet damage here, because people picture forty acres and a tractor "
+                "and rule themselves out from the couch.",
+                "The map is drawn address by address, not by town or county &mdash; and "
+                "communities just outside Longview qualify constantly. Gilmer, "
+                "Hallsville, White Oak, Diana, Ore City, Jefferson &mdash; homes around "
+                "all of them regularly fit.",
+            ]),
+            ("Two things have to line up", [
+                "First, the property address has to sit inside the current USDA map. "
+                "Second, your household income has to fit the limit for the area and "
+                "your family size. Both are checkable in minutes, and both change "
+                "periodically &mdash; which is why the answer is checking, not "
+                "assuming.",
+                "If either one misses, USDA is off the table and we will tell you what "
+                "does fit instead. If both line up, the down payment conversation is "
+                "over before it starts.",
+            ]),
+            ("What zero down does and does not mean", [
+                "It means the purchase price is fully financed. It does not mean the "
+                "transaction is free &mdash; closing costs still exist, though there "
+                "are legitimate ways to handle them, including seller contributions.",
+                "What it changes is the timeline. The five years you were going to "
+                "spend saving a down payment can become this year, in a house, "
+                "building your own equity instead of a landlord's.",
+            ]),
+        ],
+        embed=dict(program="usda", mode="purchase", after=1,
+                   h2="Try it: what does zero-down cost monthly?",
+                   sub="Leave the down payment dial on zero &mdash; that's the program. "
+                       "The number is principal and interest on a sample figure.",
+                   down=(0, 20, 0, 0.5)),
+        funnel=("usda", "USDA loans",
+                "The full page: the town picker, the income-limit reality, and the "
+                "two-minute address check."),
+    ),
+
+    dict(
+        slug="fha-loans-rebuilding-credit-longview",
+        date="2026-08-05",
+        dateline="5 August 2026",
+        tag="Buying a home",
+        title="Rebuilding credit? FHA was built for exactly that",
+        desc="FHA loans exist for real people with real credit histories — 3.5% down for "
+             "qualifying buyers, gift funds allowed, and guidelines more forgiving than "
+             "conventional. What actually matters and why one lender's no is not the answer.",
+        lede="Perfect credit is not a requirement to buy a house in East Texas. It never "
+             "was. That is the entire reason FHA exists.",
+        sections=[
+            ("The point of the program", [
+                "FHA was created for buyers the conventional box does not fit &mdash; "
+                "thinner savings, credit still healing from a rough stretch, a file "
+                "with a story in it. Lower down payment, more forgiving guidelines, "
+                "and the most common first step into a first house in this market.",
+                "It is not a consolation prize. For plenty of files it is genuinely "
+                "the better deal, and a broker who says otherwise without running "
+                "both is guessing.",
+            ]),
+            ("What underwriting actually cares about", [
+                "Less than you fear, more than you hope. Payment history and how much "
+                "of your available credit you are using carry most of the weight. A "
+                "rough patch two years ago with clean payments since reads very "
+                "differently from chaos last month.",
+                "And the down payment can come from an eligible gift &mdash; family "
+                "helping with the 3.5% is normal, documented, and allowed.",
+            ]),
+            ("One lender's no is one data point", [
+                "FHA sets the floor, but individual lenders stack their own "
+                "requirements on top &mdash; overlays, in the jargon. That means the "
+                "same file gets declined at one desk and approved at another, every "
+                "single week.",
+                "This is precisely where a broker earns their keep. We already know "
+                "which lenders are comfortable with which files, and we shop yours "
+                "instead of letting one bank's overlay be the final word.",
+            ]),
+        ],
+        embed=dict(program="fha", mode="purchase", after=1,
+                   h2="Try it: what would the payment be?",
+                   sub="The down payment dial starts at 3.5% &mdash; FHA's floor for "
+                       "qualifying buyers. Principal and interest on a sample figure.",
+                   down=(3.5, 25, 3.5, 0.5)),
+        funnel=("fha", "FHA loans",
+                "The full page: what the credit conversation really looks like, and "
+                "the fastest way to find out where you stand."),
+    ),
+
+    dict(
+        slug="refinance-break-even-math",
+        date="2026-08-05",
+        dateline="5 August 2026",
+        tag="Refinancing",
+        title="When refinancing is a bad idea — and how to know in five minutes",
+        desc="Refinancing costs money, and it only pays if the savings outrun the costs "
+             "before you move. The break-even test, the term-restart trap, and the three "
+             "honest reasons to refinance a Longview mortgage.",
+        lede="Half this business is telling people when NOT to do the thing we sell. "
+             "Here is that math, in the open.",
+        sections=[
+            ("Three honest reasons to refinance", [
+                "A lower payment. A shorter term. Getting rid of mortgage insurance. "
+                "If none of those three is on the table, the conversation should end "
+                "there &mdash; and with us, it does.",
+                "Cash-out is its own animal: legitimate for the right purpose, "
+                "expensive as a habit. Your balance goes up. That is the trade, and "
+                "anyone who does not say so plainly is selling, not advising.",
+            ]),
+            ("The break-even test", [
+                "Every refinance has costs. Divide them by the monthly saving and you "
+                "get the number of months until the refinance has paid for itself. "
+                "If you will still own the house past that month, the math works. If "
+                "you might move before it, the refinance loses you money no matter "
+                "how good the new payment feels.",
+                "That is the entire test. The VA makes a version of it federal law on "
+                "streamline refinances &mdash; costs must recoup within 36 months "
+                "&mdash; and it is a standard worth applying to every refinance, not "
+                "just VA ones.",
+            ]),
+            ("The term-restart trap", [
+                "Stretching a balance back out to thirty years drops the monthly "
+                "payment and can quietly raise the total cost by tens of thousands. "
+                "A lower payment on a longer clock is not automatically a win.",
+                "It is also avoidable: a refinance can keep your remaining term, or "
+                "shorten it. Ask for both numbers &mdash; the new payment AND the "
+                "total cost over the years you expect to hold the loan. We show "
+                "both, unprompted.",
+            ]),
+        ],
+        embed=dict(program="refinance", mode="refi", after=1,
+                   h2="Try it: is there anything on the table?",
+                   sub="Set the dials to your current loan. The number is the monthly "
+                       "difference a refinance could make &mdash; the break-even math "
+                       "comes next, and we run it with you."),
+        funnel=("refinance", "Refinancing",
+                "The full page: the live break-even meter, the honest cases for and "
+                "against, and the fastest path to real numbers."),
+    ),
+
+    dict(
+        slug="va-loan-benefit-worth-east-texas",
+        date="2026-08-05",
+        dateline="5 August 2026",
+        tag="Veterans",
+        title="You earned the VA loan. Here's what it's actually worth in East Texas.",
+        desc="No down payment in many cases, no monthly mortgage insurance, reusable, and "
+             "a funding fee that disappears at a 10% disability rating. What the VA home "
+             "loan benefit really does for Longview-area veterans.",
+        lede="A striking number of East Texas veterans qualify for the strongest loan "
+             "program in the country and never find out.",
+        sections=[
+            ("What the benefit actually does", [
+                "In many cases: no down payment. On every VA loan: no monthly mortgage "
+                "insurance &mdash; the quiet cost that drags on FHA and low-down "
+                "conventional loans for years. Over a full term, that second part is "
+                "usually worth more than the first.",
+                "It is also reusable. The benefit is not one-and-done; entitlement can "
+                "often be restored or partially reused, even if you bought before.",
+            ]),
+            ("The funding fee, and the rating that removes it", [
+                "There is a one-time VA funding fee. It is waived entirely for "
+                "veterans with a service-connected disability rating of 10% or more. "
+                "That single fact changes the math on a great many files, and it is "
+                "the most commonly missed question in the whole process.",
+                "If you are rated and your lender has not asked, your numbers have "
+                "not been run properly. Ours asks first.",
+            ]),
+            ("The myth that costs veterans houses", [
+                "Some sellers still believe VA offers are slow or fragile. That "
+                "belief is mostly outdated &mdash; a VA loan closes on the same "
+                "calendar as any other when the lender knows the program.",
+                "It is a communication problem, not a loan problem, and handling it "
+                "is your lender's job. We close VA files every week, and our team "
+                "was built by a Marine. The seller conversation is ours to win, not "
+                "yours to dread.",
+            ]),
+        ],
+        embed=dict(program="va", mode="purchase", after=1,
+                   h2="Try it: the payment with nothing down",
+                   sub="Start the down payment dial at zero &mdash; that's the point "
+                       "of the benefit. Principal and interest on a sample figure.",
+                   down=(0, 25, 0, 0.5)),
+        funnel=("va", "VA loans",
+                "The full page: eligibility, the funding-fee math, and what your "
+                "entitlement is actually worth."),
     ),
 ]
 
@@ -992,12 +1265,12 @@ def blog_index():
 <div class="postlist">{postlist}</div>
 
 <div class="callout">
-  <h3><span class="todo">Build note</span> &mdash; eight posts still to migrate</h3>
+  <h3><span class="todo">Build note</span> &mdash; eight WordPress posts still to migrate</h3>
   <p>Eight posts exist on the current WordPress site &mdash; one legacy article and seven from
   July &mdash; and they have not been migrated. They live on a vendor's multisite that
-  Greenlight does not control, so they need pulling before the domain moves. The post above was
-  written for this build to prove the template works end to end; Kenneth should read it before
-  it stays up.</p>
+  Greenlight does not control, so they need pulling before the domain moves. The posts above
+  were written for this build in Kenneth's voice, each with a live estimator inside it;
+  Kenneth should read them before launch.</p>
 </div>
 
 <div class="split" style="margin-top:56px">
@@ -1032,17 +1305,67 @@ def blog_index():
     )
 
 
-def blog_post(slug, title, desc, date, dateline, lede, sections, tag="Guide"):
-    """The reusable post template. Add real posts by calling this."""
-    inner = "".join(
-        f"<h2>{h}</h2>" + "".join(f"<p>{p}</p>" for p in ps)
-        for h, ps in sections)
+def blog_post(slug, title, desc, date, dateline, lede, sections, tag="Guide",
+              embed=None, funnel=None):
+    """The reusable post template.
+
+    embed:  dict(program=<loan slug>, mode='refi'|'purchase', h2=..., sub=...,
+                 after=<section index>, price=..., down=...) — drops the live
+                 slider rig mid-post and the YES walk-through after the prose.
+                 `program` is the loan the rig feeds, so the lead's loan_type
+                 is meaningful; analytics rows carry the page path separately.
+    funnel: (loan_slug, title, blurb) — the go-deeper card routing the reader
+                 to that program's funnel page."""
+    blocks = [f"<h2>{h}</h2>" + "".join(f"<p>{p}</p>" for p in ps)
+              for h, ps in sections]
 
     schema = (
         '{"@context":"https://schema.org","@type":"Article","headline":%s,'
         '"datePublished":%s,"author":{"@type":"Organization","name":%s},'
         '"publisher":{"@type":"Organization","name":%s},"description":%s}'
     ) % (S.jstr(title), S.jstr(date), S.jstr(S.COMPANY), S.jstr(S.COMPANY), S.jstr(desc))
+
+    disclose = ("""<p class="disclose">General information only. Nothing here is a commitment to lend, an offer
+of credit, or a rate quote &mdash; those come from a licensed loan officer after a complete
+application, and everything is subject to credit approval and underwriting.</p>""")
+
+    godeeper = ""
+    if funnel:
+        fslug, ftitle, fblurb = funnel
+        if fslug in S.LOAN_MARKS:
+            card = S.loan_card(fslug, ftitle, S.esc(fblurb))
+        else:
+            card = (f'<a class="lcard" href="/loans/{fslug}" style="--accent:#8a6d1f">'
+                    f'<h3>{S.esc(ftitle)}</h3><p>{S.esc(fblurb)}</p>'
+                    f'<span class="go">Read more {ARROW}</span></a>')
+        godeeper = f"""<section class="alt"><div class="wrap">
+<p class="eyebrow"><span class="tick" aria-hidden="true"></span>Go deeper</p>
+<h2>The page built for exactly this.</h2>
+<div class="lgrid" style="max-width:560px">{card}</div>
+</div></section>"""
+
+    if embed:
+        cut = embed.get("after", 1)
+        rig = S.funnel_rig(
+            embed["program"], embed["mode"], embed["h2"], embed["sub"],
+            price=embed.get("price", (80000, 900000, 250000, 5000)),
+            down=embed.get("down", (0, 25, 5, 0.5)))
+        middle = f"""</div>
+</div></section>
+
+{rig}
+
+<section><div class="wrap">
+<div class="prose">"""
+        inner = "".join(blocks[:cut]) + middle + "".join(blocks[cut:]) + disclose
+        tail = S.funnel_yes(embed["program"], embed["mode"]) + godeeper
+        scripts = S.FUNNEL_SCRIPTS
+    else:
+        inner = "".join(blocks) + disclose
+        tail = godeeper + S.cta_band(
+            head="Want this run against your actual numbers?",
+            sub="Two minutes, no hard credit pull, and a real estimate on screen at the end.")
+        scripts = ""
 
     body = f"""{S.hero(
         eyebrow=tag,
@@ -1054,14 +1377,10 @@ def blog_post(slug, title, desc, date, dateline, lede, sections, tag="Guide"):
 <div class="prose">
 <p class="updated">Published {dateline} &middot; {S.SHORT}, Longview TX</p>
 {inner}
-<p class="disclose">General information only. Nothing here is a commitment to lend, an offer
-of credit, or a rate quote &mdash; those come from a licensed loan officer after a complete
-application, and everything is subject to credit approval and underwriting.</p>
 </div>
 </div></section>
 
-{S.cta_band(head="Want this run against your actual numbers?",
-            sub="Two minutes, no hard credit pull, and a real estimate on screen at the end.")}
+{tail}
 """
     return S.page(
         path=f"/blog/{slug}",
@@ -1070,6 +1389,7 @@ application, and everything is subject to credit approval and underwriting.</p>
         body=body,
         trail=[("/", "Home"), ("/blog", "Blog"), (f"/blog/{slug}", title)],
         extra_schema=schema,
+        scripts=scripts,
     )
 
 
