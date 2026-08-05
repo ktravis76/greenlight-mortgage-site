@@ -272,9 +272,9 @@ def affordability():
 
 {PRO_CTA}
 
-{S.cta_band(head="Want the real number?",
-            sub="A licensed loan officer can tell you what you actually qualify for. That "
-                "takes a conversation, and it starts with one call.")}
+{S.funnel_yes("affordability", "purchase", facts=False, goal="purchase",
+    h2="Want the real version of this number?",
+    sub="Thirty seconds. A licensed loan officer runs your actual numbers &mdash; credit, income, program &mdash; and calls once with real answers.")}
 """
     return S.page(
         path="/tools/affordability",
@@ -286,7 +286,7 @@ def affordability():
         trail=[("/", "Home"), ("/pros", "For professionals"),
                ("/tools/affordability", "Affordability")],
         faqs=faqs,
-        scripts='<script src="/protools.js" defer></script>',
+        scripts='<script src="/protools.js" defer></script>' + S.FUNNEL_SCRIPTS,
     )
 
 
@@ -354,10 +354,9 @@ def net_proceeds():
 
 {PRO_CTA}
 
-{S.cta_band(head="Buying next?",
-            sub="Find out what the proceeds actually buy you before you list.",
-            primary=("/tools/affordability", "Buyer affordability"),
-            secondary=("/contact", "Talk to someone"))}
+{S.funnel_yes("net-proceeds", "purchase", facts=False, goal="sell_and_buy",
+    h2="Selling, then buying? Line both up at once.",
+    sub="Thirty seconds. A licensed loan officer looks at the sale and the next purchase together, and calls once with real answers.")}
 """
     return S.page(
         path="/tools/net-proceeds",
@@ -368,7 +367,7 @@ def net_proceeds():
         body=body,
         trail=[("/", "Home"), ("/pros", "For professionals"),
                ("/tools/net-proceeds", "Net proceeds")],
-        scripts='<script src="/protools.js" defer></script>',
+        scripts='<script src="/protools.js" defer></script>' + S.FUNNEL_SCRIPTS,
     )
 
 
@@ -441,10 +440,9 @@ def rent_vs_buy():
 
 {PRO_CTA}
 
-{S.cta_band(head="If buying wins, find out what you qualify for.",
-            sub="And if it does not, we will tell you that too.",
-            primary=("/tools/affordability", "Buyer affordability"),
-            secondary=("/contact", "Talk to someone"))}
+{S.funnel_yes("rent-vs-buy", "purchase", facts=False, goal="purchase",
+    h2="If buying wins, find out what you qualify for.",
+    sub="Thirty seconds. No hard credit pull to start &mdash; a licensed loan officer runs your actual situation and calls once.")}
 """
     return S.page(
         path="/tools/rent-vs-buy",
@@ -455,7 +453,7 @@ def rent_vs_buy():
         body=body,
         trail=[("/", "Home"), ("/pros", "For professionals"),
                ("/tools/rent-vs-buy", "Rent vs buy")],
-        scripts='<script src="/protools.js" defer></script>',
+        scripts='<script src="/protools.js" defer></script>' + S.FUNNEL_SCRIPTS,
     )
 
 

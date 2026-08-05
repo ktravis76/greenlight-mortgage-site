@@ -89,6 +89,20 @@ yet; on the list.</p>
 <div class="cta"><a class="btn ghost" href="/contact">Tell us what would actually help</a></div>
 </div></section>
 
+<section class="alt"><div class="wrap">
+<p class="eyebrow"><span class="tick" aria-hidden="true"></span>Know your program already?</p>
+<h2>Every loan page has its own live estimator.</h2>
+<div class="progstrip">
+  <a href="/loans/va">VA</a>
+  <a href="/loans/va-irrrl">VA IRRRL</a>
+  <a href="/loans/fha">FHA</a>
+  <a href="/loans/conventional">Conventional</a>
+  <a href="/loans/usda">USDA</a>
+  <a href="/loans/jumbo">Jumbo</a>
+  <a href="/loans/refinance">Refinance</a>
+</div>
+</div></section>
+
 {S.cta_band()}
 """
     return S.page(
@@ -277,10 +291,9 @@ def calculator():
 </div>
 </div></section>
 
-{S.cta_band(head="Want this run against a real file?",
-            sub="The calculator models a rate you picked. A licensed loan officer can tell you "
-                "what is actually available to you — that takes an application, and it starts "
-                "with a conversation.")}
+{S.funnel_yes("calculator", "purchase", facts=False, goal="purchase",
+    h2="Want this run against your real file?",
+    sub="Thirty seconds. A licensed loan officer prices your actual situation &mdash; and tells you plainly if the answer is wait.")}
 """
     return S.page(
         path="/tools/calculator",
@@ -290,7 +303,7 @@ def calculator():
              "Equal Housing Opportunity.",
         body=body,
         trail=[("/", "Home"), ("/tools", "Tools"), ("/tools/calculator", "Calculator")],
-        scripts='<script src="/calculator.js" defer></script>',
+        scripts='<script src="/calculator.js" defer></script>' + S.FUNNEL_SCRIPTS,
     )
 
 

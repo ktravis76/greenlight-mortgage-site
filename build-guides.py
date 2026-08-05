@@ -194,6 +194,22 @@ def why_broker():
 <div class="faq">{faq_block(faqs)}</div>
 </div></section>
 
+<section class="alt"><div class="wrap">
+<p class="eyebrow"><span class="tick" aria-hidden="true"></span>Put it to work</p>
+<h2>Jump straight to your program.</h2>
+<p class="sub">Every one of these pages has a live estimator on it. Ten seconds of
+dial-dragging beats an hour of reading.</p>
+<div class="progstrip">
+  <a href="/loans/va">VA</a>
+  <a href="/loans/va-irrrl">VA IRRRL</a>
+  <a href="/loans/fha">FHA</a>
+  <a href="/loans/conventional">Conventional</a>
+  <a href="/loans/usda">USDA</a>
+  <a href="/loans/jumbo">Jumbo</a>
+  <a href="/loans/refinance">Refinance</a>
+</div>
+</div></section>
+
 {S.cta_band()}
 """
     return S.page(
@@ -434,7 +450,28 @@ ARTICLES = [
 ]
 
 
+# Each Learning Center article routes its sidebar CTA at the funnel page it
+# educates for — the internal-linking spine from content to conversion.
+ARTICLE_FUNNEL = {
+    "what-underwriting-looks-at": ("/loans", "Find your program",
+        "Now that the buckets make sense, see which program fits your file."),
+    "the-20-percent-myth": ("/loans/conventional", "See what's real: Conventional",
+        "Drag the down-payment dial yourself and watch what actually changes."),
+    "rate-versus-payment-versus-cost": ("/loans/refinance", "Run the break-even math",
+        "The live meter on our refinance page runs this exact test on your dials."),
+    "what-a-va-loan-is-worth": ("/loans/va", "See your VA numbers",
+        "Zero-down payment math, live — and the funding-fee question answered."),
+    "closing-costs-itemized": ("/loans", "Find your program",
+        "Costs differ by program. Start with the one that fits your situation."),
+    "credit-what-moves-the-needle": ("/loans/fha", "See where FHA draws the line",
+        "Rebuilding credit is exactly what FHA is for. See the payment math live."),
+}
+
+
 def article(a):
+    fun_href, fun_label, fun_blurb = ARTICLE_FUNNEL.get(
+        a["slug"], ("/loans", "Find your program",
+                    "Two minutes and a real number, with no credit inquiry."))
     inner = "".join(
         f"<h2>{S.esc(h)}</h2>" + "".join(f"<p>{S.esc(p)}</p>" for p in ps)
         for h, ps in a["sections"])
@@ -469,10 +506,9 @@ application, and everything is subject to credit approval and underwriting.</p>
 <div>
   <div class="estcard sticky">
     <h3 style="font-size:19px">Put this to work</h3>
-    <p class="sub" style="margin-top:8px;font-size:15px">Two minutes and a real number, with
-    no credit inquiry.</p>
+    <p class="sub" style="margin-top:8px;font-size:15px">{S.esc(fun_blurb)}</p>
     <div class="cta" style="margin-top:18px;flex-direction:column;align-items:stretch">
-      <a class="btn go" href="/tools/estimate">See what you could save</a>
+      <a class="btn go" href="{fun_href}" data-funnel-cta="learn_sidebar">{S.esc(fun_label)}</a>
       <a class="btn ghost" href="/tools/affordability">What can I afford?</a>
       <a class="btn ghost" href="/contact">Ask a question</a>
     </div>
