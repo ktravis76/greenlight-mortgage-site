@@ -38,6 +38,7 @@ PRIORITY = {
     "/tools/affordability": "0.8",
     "/tools/net-proceeds": "0.8",
     "/tools/rent-vs-buy": "0.7",
+    "/buy": "0.9",
     "/loans": "0.9",
     "/loans/va": "0.9",
     "/loans/va-irrrl": "0.9",

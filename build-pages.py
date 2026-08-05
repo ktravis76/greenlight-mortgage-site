@@ -148,7 +148,58 @@ def homepage():
 
     towns = "".join(f"<span>{t}</span>" for t in S.TOWNS)
 
+    # The two doors — first thing on the page, per KT. A BOLD question, an
+    # explicit pick-one instruction, and two visibly different paths with real
+    # buttons: refinance goes to the refi funnel; purchase opens with the
+    # veteran question and NEVER shares a destination with refinance.
+    doors = f"""<section class="doors" aria-label="What brings you here today">
+  <div class="doorswrap">
+    <p class="doorsq"><strong>What brings you here today?</strong>
+    <span>Pick the answer below &mdash; the two paths are completely different,
+    and picking right saves you time.</span></p>
+    <div class="doorsgrid">
+
+      <div class="door refi">
+        <span class="dnum">01</span>
+        <span class="dkick">I already own a home</span>
+        <span class="dtitle">Refinance</span>
+        <ul class="dlist">
+          <li>Lower the payment</li>
+          <li>Shorten the term</li>
+          <li>Drop mortgage insurance</li>
+          <li>Use my equity</li>
+        </ul>
+        <p class="dnote">Veteran with a VA loan? Ask about the
+        <a href="/loans/va-irrrl">VA IRRRL</a> &mdash; the streamline refinance
+        built for you.</p>
+        <a class="btn shiny lg dbtn" href="/loans/refinance" data-funnel-cta="door_refi">
+          Click here &mdash; see refinancing options &rarr;</a>
+      </div>
+
+      <div class="door buy">
+        <span class="dnum">02</span>
+        <span class="dkick">I&rsquo;m buying a home</span>
+        <span class="dtitle">Purchase</span>
+        <span class="dsub">A completely different path than refinancing &mdash;
+        and it starts with one question:</span>
+        <p class="dvetq">Are you a veteran or service member?</p>
+        <div class="dvet">
+          <a class="btn shiny lg dbtn" href="/loans/va" data-funnel-cta="door_va">
+            YES &mdash; use my VA benefit &rarr;</a>
+          <a class="btn onDark lg dbtn" href="/buy" data-funnel-cta="door_buy">
+            NO &mdash; show me my path &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+    <p class="doorsnote">Not sure yet? <a href="#estimator">Play with the dials
+    below</a> &mdash; estimate only, no hard credit pull, nobody asks for your email.</p>
+  </div>
+</section>"""
+
     body = f"""
+{doors}
+
 <div class="hero home"><div class="wrap">
 <div class="herogrid">
 <div>
@@ -346,6 +397,88 @@ the payment you have.</p>
         body=body,
         org=True,
         trail=[("/", "Home")],
+        scripts=S.FUNNEL_SCRIPTS,
+    )
+
+
+# ==========================================================================
+# /buy — the purchase gateway
+# ==========================================================================
+# The homepage purchase door's "NO — show me my path" lands here: a purchase
+# funnel path that is deliberately separate from anything refinance. One
+# veteran check at the top (belt and braces — some arrive here directly),
+# then situation cards into the right program funnel, then the purchase rig
+# and the YES walk-through for anyone still unsure.
+
+def buy_page():
+    situations = [
+        ("fha", "FHA",
+         "First house, thinner savings, or credit still healing. 3.5% down for "
+         "qualifying buyers &mdash; and the down payment can be a gift."),
+        ("conventional", "Conventional",
+         "Steady income, credit in decent shape. Often the lowest total cost "
+         "once you qualify &mdash; and the 20% rule is a myth."),
+        ("usda", "USDA",
+         "Buying just outside town? Zero down on eligible addresses, and more "
+         "of East Texas qualifies than people think."),
+        ("jumbo", "Jumbo",
+         "Above the conforming limit. Each lender writes its own rules, which "
+         "is exactly why we shop a network of them."),
+    ]
+    cards = "".join(
+        S.loan_card(slug, nav, blurb, cls="reveal") for slug, nav, blurb in situations)
+
+    body = f"""{S.hero(
+        eyebrow='<span data-fb-kicker>Buying a home &middot; East Texas</span>',
+        h1="Let&rsquo;s find <em>your</em> way in.",
+        lede="Buying is its own path &mdash; nothing here is about refinancing. One "
+             "question, one pick, and you're standing on the page built for exactly "
+             "your situation.",
+        variant="funnel",
+        trail=[("/", "Home"), (None, "Buy a home")])}
+
+<section class="dark"><div class="wrap">
+<p class="eyebrow"><span class="tick" aria-hidden="true"></span>First question</p>
+<h2>Are you a veteran or service member?</h2>
+<p class="sub">Or a surviving spouse. If yes, stop here &mdash; the VA loan is usually
+the strongest option on the table, and most eligible people never use it.</p>
+<div class="cta">
+  <a class="btn shiny lg" href="/loans/va" data-funnel-cta="buy_va">YES &mdash; use my VA benefit &rarr;</a>
+  <a class="btn onDark lg" href="#situations" data-funnel-cta="buy_notvet">No &mdash; keep going &darr;</a>
+</div>
+</div></section>
+
+<section id="situations"><div class="wrap">
+<p class="eyebrow"><span class="tick" aria-hidden="true"></span>Pick your situation</p>
+<h2>Which one sounds like you?</h2>
+<p class="sub">Every card opens a page with its own live estimator. Not sure? Skip
+ahead to the dials below and we'll sort the program out together.</p>
+<div class="lgrid">{cards}</div>
+</div></section>
+
+{S.funnel_rig("buy", "purchase",
+    "Not sure which? Start with the payment.",
+    "Dial in a price and a down payment &mdash; including zero &mdash; and see the "
+    "monthly shape of it. The program question is our job, not yours.")}
+
+{S.funnel_yes("buy", "purchase")}
+
+{S.cta_band(
+    head="Rather just talk it through?",
+    sub="Five minutes with a licensed loan officer beats an hour of reading. No hard "
+        "credit pull to start.",
+    primary=("tel:" + S.PHONE_HREF, "Call " + S.PHONE),
+    secondary=("/contact", "Send a question instead"))}
+"""
+    return S.page(
+        path="/buy",
+        title="Buy a Home in East Texas | Greenlight Mortgage — Longview, TX",
+        desc="Buying a home in Longview or East Texas? One question and one pick puts "
+             "you on the right loan path — VA, FHA, USDA, conventional or jumbo — with "
+             "a live payment estimator. Powered by Co/LAB Lending. Equal Housing "
+             "Opportunity.",
+        body=body,
+        trail=[("/", "Home"), ("/buy", "Buy a home")],
         scripts=S.FUNNEL_SCRIPTS,
     )
 
@@ -1844,6 +1977,7 @@ Fair Housing Act and the Equal Credit Opportunity Act.</p>
 def build():
     print("content pages")
     write("/", homepage())
+    write("/buy", buy_page())
     write("/about", about())
     write("/testimonials", testimonials())
     write("/reviews", reviews())
