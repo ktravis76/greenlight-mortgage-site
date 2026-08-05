@@ -279,8 +279,9 @@ def affordability():
     return S.page(
         path="/tools/affordability",
         title="Home Affordability Calculator | Longview, TX — Greenlight Mortgage",
-        desc="Work out what price home you can afford in Longview and East Texas. Free, no "
-             "credit check, nothing collected. Greenlight Mortgage. Equal Housing Opportunity.",
+        desc="Work out what price home you can afford in Longview and East Texas. Free, "
+             "nothing collected, and no credit inquiry of any kind. Greenlight Mortgage. "
+             "Equal Housing Opportunity.",
         body=body,
         trail=[("/", "Home"), ("/pros", "For professionals"),
                ("/tools/affordability", "Affordability")],
