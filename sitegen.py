@@ -842,6 +842,33 @@ FUNNEL = {
              "fee entirely. That one fact regularly flips a marginal file into a clear "
              "win. If you're rated, say so early."),
         ],
+        why=dict(
+            va=True,
+            h2="Why veterans actually do this.",
+            sub="An IRRRL is the VA saying: you already proved yourself on this loan "
+                "&mdash; so skip the obstacle course and keep more of your money. "
+                "Here's what that means in practice, and the one test every file has "
+                "to pass.",
+            ticks=[
+                ("Fast by design.",
+                 "Usually no appraisal and far less credit paperwork than a full "
+                 "refinance. Clean files have closed in as little as eight business "
+                 "days &mdash; every file sets its own pace, but &ldquo;streamline&rdquo; "
+                 "is the VA's word, not our marketing."),
+                ("The six-month box.",
+                 "Paid your VA loan on time for the last six months? That's the "
+                 "biggest qualification box, already checked. This program was built "
+                 "for exactly where you're standing."),
+                ("A rate swap, not a new adventure.",
+                 "Same house, same VA loan &mdash; just at a lower cost. No cash out, "
+                 "no equity games. The IRRRL exists for one reason: reducing what the "
+                 "loan costs you."),
+                ("The 36-month rule works for you.",
+                 "Federal requirement: the costs must pay for themselves within 36 "
+                 "months or the loan shouldn't be written. That's a consumer "
+                 "protection, and it's the first math we run &mdash; watch it work "
+                 "on the meter."),
+            ]),
         cta_head="Your statement has the exact numbers.",
         cta_sub="Send it over and a licensed loan officer runs the real math &mdash; "
                 "usually same day. No robots. No spam. One call.",
@@ -888,6 +915,26 @@ FUNNEL = {
              "in different places, which is exactly why we shop a network instead of "
              "asking one bank. Finding out costs nothing and starts with no hard pull."),
         ],
+        why=dict(
+            va=False,
+            h2="The only refinance math that matters.",
+            sub="A refinance is worth doing when what it saves you outruns what it "
+                "costs you &mdash; before you'd move. That's the whole test, and you "
+                "can watch it run on your own dials.",
+            ticks=[
+                ("Break-even is the whole game.",
+                 "Every refinance has costs. Divide them by the monthly saving and "
+                 "you get your break-even month. If you'll still own the house past "
+                 "that point, the math works. If not, don't do it &mdash; and we'll "
+                 "say exactly that."),
+                ("Your term is negotiable.",
+                 "Keep your remaining term, shorten it, or drop mortgage insurance "
+                 "without touching the clock. The lowest payment isn't automatically "
+                 "the win &mdash; we show you the total cost either way."),
+                ("A network beats a menu.",
+                 "We're brokers. The same file prices differently across lenders, "
+                 "and we shop it instead of quoting you one bank's answer."),
+            ]),
         cta_head="Your statement has the exact numbers.",
         cta_sub="Send it over and a licensed loan officer runs the real math &mdash; "
                 "usually same day. No robots. No spam. One call.",
@@ -1169,7 +1216,7 @@ def _funnel_hero(slug, f):
   <p class="eyebrow"><span class="tick" aria-hidden="true"></span><span data-fb-kicker>{f["kicker"]}</span></p>
   <h1>{f["hook"]}</h1>
   <p class="lede">{f["sub"]}</p>
-  <div class="cta"><a class="btn go lg" href="#estimator">See your number &darr;</a></div>
+  <div class="cta"><a class="btn go lg" href="#estimator">See your number <span class="bounce">&darr;</span></a></div>
 </div>
 <div>
   <div class="adhero-media">
@@ -1235,6 +1282,11 @@ def _funnel_rig(slug, f):
       <p class="fnote">{FUNNEL_FOOTNOTE}</p>
       <p class="fsample" data-sample-label></p>
       <span class="sr-only" role="status" aria-live="polite" data-out-live></span>
+      <div class="yesrow">
+        <p class="yesq">{"Do you want this saving?" if f["mode"] == "refi" else "Want to see your real number?"}</p>
+        <button type="button" class="btn-yes" data-yes-btn>{"YES &mdash; I want <span data-yes-amount>this</span>/mo back" if f["mode"] == "refi" else "YES &mdash; run my real numbers"} <span class="arrow">&rarr;</span></button>
+        <p class="yessmall">30 seconds. No credit inquiry at this step. One call from a licensed loan officer.</p>
+      </div>
     </div>
     <div class="fsliders">{sliders}
     </div>
@@ -1267,6 +1319,123 @@ def _funnel_towns(slug, f):
   <p class="fsample">Area names listed because homes there commonly qualify &mdash; USDA
   eligibility is set by exact address and current USDA maps, so nothing here is a
   determination. We check the actual property with you.</p>
+</div>
+</div></section>"""
+
+
+def _funnel_yes(slug, f):
+    """The YES moment's landing spot: a walk-through card that already knows
+    their dials. funnel.js keeps the hidden fields and recap chips synced with
+    the estimator, so what they played with is what the loan officer sees.
+    Posts through forms.js to the existing submit-lead Edge Function."""
+    refi = f["mode"] == "refi"
+    if refi:
+        facts = ('<span class="yfact">You pay<b data-yes-fact="pay">&mdash;</b></span>'
+                 '<span class="yfact">Your rate<b data-yes-fact="cur">&mdash;</b></span>'
+                 '<span class="yfact">Estimated saving<b data-yes-fact="saving">&mdash;</b></span>')
+        hidden = ('<input type="hidden" name="current_payment" value="">'
+                  '<input type="hidden" name="current_rate" value="">'
+                  '<input type="hidden" name="mortgage_balance" value="">'
+                  '<input type="hidden" name="estimated_monthly_savings" value="">'
+                  '<input type="hidden" name="goal" value="refinance">')
+        h2 = "Yes? Then let&rsquo;s make it real."
+        sub = ("Thirty seconds. Your dials ride along with it, a licensed loan officer "
+               "checks them against your actual loan, and you get one call &mdash; not a "
+               "call center.")
+        btn = 'YES &mdash; I want <span data-yes-amount>this</span>/mo back <span class="arrow">&rarr;</span>'
+        nxt = f"""<div class="yesnext">
+  <h3>That&rsquo;s a YES. Here&rsquo;s how to make it fast.</h3>
+  <p>A licensed loan officer picks this up and calls once &mdash; usually same day.
+  Two ways to speed it up while you're here:
+  <a href="#cta">send your statement now</a> (it has every number we need), or jump
+  straight into <a href="{LOS_APPLY}" rel="noopener">the full secure application</a>
+  if you already know you're in.</p>
+</div>"""
+    else:
+        facts = ('<span class="yfact">Home price<b data-yes-fact="price">&mdash;</b></span>'
+                 '<span class="yfact">Down payment<b data-yes-fact="down">&mdash;</b></span>'
+                 '<span class="yfact">Estimated payment<b data-yes-fact="pi">&mdash;</b></span>')
+        hidden = ('<input type="hidden" name="home_price" value="">'
+                  '<input type="hidden" name="down_payment_pct" value="">'
+                  '<input type="hidden" name="estimated_payment" value="">'
+                  '<input type="hidden" name="goal" value="purchase">')
+        h2 = "Like that number? Let&rsquo;s check it for real."
+        sub = ("Thirty seconds. Your dials ride along, and a licensed loan officer runs "
+               "your actual numbers &mdash; credit, income, program &mdash; and calls "
+               "once with real answers.")
+        btn = 'YES &mdash; run my real numbers <span class="arrow">&rarr;</span>'
+        nxt = f"""<div class="yesnext">
+  <h3>That&rsquo;s a YES. Here&rsquo;s what happens next.</h3>
+  <p>A licensed loan officer calls within one business day &mdash; once, not six times
+  in an hour. Want to move faster? Call <a href="tel:{PHONE_HREF}">{PHONE}</a> now, or
+  start <a href="{LOS_APPLY}" rel="noopener">the full secure application</a>.</p>
+</div>"""
+
+    return f"""<section class="yeswrap alt" id="yes"><div class="wrap">
+<p class="eyebrow" style="text-align:center;justify-content:center"><span class="tick" aria-hidden="true"></span>The next step</p>
+<h2 style="text-align:center;margin-inline:auto">{h2}</h2>
+<p class="sub" style="text-align:center;margin-inline:auto;max-width:52ch">{sub}</p>
+<div class="yescard">
+  <div class="yesbeats"><span>1 &middot; Your numbers ride along</span><span>2 &middot; 30 seconds of contact info</span><span>3 &middot; One call from a licensed loan officer</span></div>
+  <div class="yesfacts" aria-label="What you set on the estimator">{facts}</div>
+  <form data-yes-form data-glm-form="funnel_yes" data-glm-keep novalidate>
+    <input type="hidden" name="loan_type" value="{slug}">
+    {hidden}
+    <div class="yesfields">
+      <div class="frow">
+        <div class="field"><label for="y-name">Your name</label>
+          <input id="y-name" name="name" type="text" autocomplete="name" required maxlength="120">
+          <p class="err">Please enter your name.</p></div>
+        <div class="field"><label for="y-phone">Phone</label>
+          <input id="y-phone" name="phone" type="tel" autocomplete="tel" required maxlength="32">
+          <p class="err">Please enter a phone number.</p></div>
+      </div>
+      <div class="field"><label for="y-email">Email</label>
+        <input id="y-email" name="email" type="email" autocomplete="email" required maxlength="254">
+        <p class="err">Please enter a valid email.</p></div>
+      <div class="consent">
+        <input type="checkbox" id="y-tcpa" name="tcpa_consent" value="yes">
+        <label for="y-tcpa">{TCPA_TEXT}</label>
+      </div>
+      <button class="btn-yes" type="submit" data-funnel-cta="yes_submit">{btn}</button>
+      <p class="formstatus" role="status" aria-live="polite"></p>
+      <p class="disclose">Sending this is not an application for credit and is
+      <strong>not a commitment to lend</strong>. No credit inquiry happens at this step.
+      Your estimate is only an estimate &mdash; a licensed loan officer confirms real
+      figures after a complete application, subject to credit approval and underwriting.</p>
+    </div>
+    {nxt}
+  </form>
+</div>
+</div></section>"""
+
+
+def _funnel_why(slug, f):
+    """Refi pages: why the swap makes sense — benefit cards plus the live
+    36-month recoupment meter, fed by the estimator's dials."""
+    w = f.get("why")
+    if not w:
+        return ""
+    ticks = "".join(f"<li><strong>{t}</strong> {b}</li>" for t, b in w["ticks"])
+    va_attr = " data-va" if w.get("va") else ""
+    return f"""<section id="why"><div class="wrap">
+<p class="eyebrow"><span class="tick" aria-hidden="true"></span>Why this works</p>
+<h2>{w["h2"]}</h2>
+<p class="sub">{w["sub"]}</p>
+<div class="whygrid">
+<div><ul class="ticks">{ticks}</ul></div>
+<div>
+  <div class="recoupcard" data-recoup{va_attr}>
+    <h3>The 36-month test, live</h3>
+    <p class="rc-sub">Your dials, plus a sample cost allowance{" and the 0.5% VA funding fee" if w.get("va") else ""}.
+    Real costs come from a real loan estimate.</p>
+    <div class="recoupbar"><div class="fill"></div><span class="cap36" aria-hidden="true"></span></div>
+    <p class="recoupread">About <b data-recoup-months>&mdash;</b> months to break even
+    &mdash; the rule allows 36.</p>
+    <p class="recoupverdict" data-recoup-verdict aria-live="polite"></p>
+    <p class="fnote">{FUNNEL_FOOTNOTE}</p>
+  </div>
+</div>
 </div>
 </div></section>"""
 
@@ -1374,6 +1543,8 @@ def funnel_body(slug, faqs):
         _funnel_hero(slug, f),
         _funnel_rig(slug, f),
         _funnel_towns(slug, f),
+        _funnel_why(slug, f),
+        _funnel_yes(slug, f),
         _funnel_steps(f),
         _funnel_objections(f),
         _funnel_proof(),

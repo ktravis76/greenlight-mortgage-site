@@ -20,6 +20,12 @@ const GLM_SAMPLE_RATES = {
   // inferred from their payment and rate assuming this many years remain.
   ASSUMED_YEARS_LEFT: 27,
 
+  // Sample closing-cost allowance for the 36-month recoupment meter (title,
+  // recording, lender fees). The VA funding fee (0.5% of balance, waived at a
+  // 10%+ service-connected disability rating) is added on top where relevant.
+  // A sample for illustration — real costs come from a real loan estimate.
+  ASSUMED_REFI_COSTS: 3000,
+
   // The label that must appear beside the figure anywhere it is visible.
   LABEL: 'sample figure for illustration only — not today’s pricing, not an offer, and your actual rate will differ',
 };

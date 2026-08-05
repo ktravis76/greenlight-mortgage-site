@@ -202,6 +202,7 @@
         return {
           value: Math.max(0, saving),
           betterWhenHigher: true,
+          state: { pay: pmt, cur: cur, bal: bal, months: months, saving: Math.max(0, saving) },
           sub: saving > 0
             ? 'That’s ' + money0(saving * 12) + ' a year — ' + money0(saving * 360)
               + ' over 30 years if it held.'
@@ -217,9 +218,68 @@
       return {
         value: pi,
         betterWhenHigher: false,
+        state: { price: price, down: down, loan: loan, pi: pi },
         sub: money0(price) + ' home, ' + (down % 1 ? down.toFixed(1) : down) + '% down — a '
           + money0(loan) + ' loan, principal & interest only. Taxes and insurance are on top.',
       };
+    }
+
+    /* The YES flow and the recoupment meter both feed off estimator state,
+       so a visitor's dials follow them into the form and the 36-month test. */
+    var yesForm = document.querySelector('form[data-yes-form]');
+    var recoup = document.querySelector('[data-recoup]');
+
+    function fmtPct(v) { return v.toFixed(3).replace(/\.?0+$/, '') + '%'; }
+
+    function syncYes(res) {
+      var s = res.state;
+      // The shiny button carries their live number.
+      $all('[data-yes-amount]').forEach(function (el) {
+        el.textContent = money0(res.value);
+      });
+      // Recap chips: "you told us".
+      $all('[data-yes-fact]').forEach(function (el) {
+        var k = el.getAttribute('data-yes-fact');
+        if (k === 'pay' && s.pay != null) el.textContent = money0(s.pay) + '/mo';
+        if (k === 'cur' && s.cur != null) el.textContent = fmtPct(s.cur);
+        if (k === 'saving' && s.saving != null) el.textContent = money0(s.saving) + '/mo';
+        if (k === 'price' && s.price != null) el.textContent = money0(s.price);
+        if (k === 'down' && s.down != null) el.textContent = fmtPct(s.down);
+        if (k === 'pi' && s.pi != null) el.textContent = money0(s.pi) + '/mo';
+      });
+      // Hidden fields on the walk-through form — their dials, submitted with
+      // the lead so the loan officer calls already knowing the shape of it.
+      if (yesForm) {
+        var map = mode === 'refi'
+          ? { current_payment: Math.round(s.pay), current_rate: s.cur,
+              mortgage_balance: Math.round(s.bal), estimated_monthly_savings: Math.round(s.saving) }
+          : { home_price: Math.round(s.price), down_payment_pct: s.down,
+              estimated_payment: Math.round(s.pi) };
+        Object.keys(map).forEach(function (name) {
+          var input = yesForm.querySelector('input[name="' + name + '"]');
+          if (input) input.value = String(map[name]);
+        });
+      }
+      // The 36-month meter (refi only): sample costs vs monthly saving.
+      if (recoup && mode === 'refi') {
+        var fee = s.bal * 0.005;                       // VA funding fee, sample
+        var costs = (RATES.ASSUMED_REFI_COSTS || 3000) + (recoup.hasAttribute('data-va') ? fee : 0);
+        var bar = recoup.querySelector('.recoupbar');
+        var months = s.saving > 0 ? costs / s.saving : Infinity;
+        var readB = recoup.querySelector('[data-recoup-months]');
+        var verdict = recoup.querySelector('[data-recoup-verdict]');
+        if (bar) {
+          var fill = bar.querySelector('.fill');
+          var pct = months === Infinity ? 100 : Math.min(100, (months / 36) * 100);
+          if (fill) fill.style.width = pct + '%';
+          bar.classList.toggle('over', !(months <= 36));
+        }
+        if (readB) readB.textContent = months === Infinity ? '—'
+          : (months < 1 ? '<1' : String(Math.ceil(months)));
+        if (verdict) verdict.textContent = months <= 36
+          ? 'On these dials, that clears the VA’s 36-month rule — the math makes sense to run for real.'
+          : 'On these dials it doesn’t clear 36 months — and a loan that doesn’t shouldn’t be written. Different numbers, different answer.';
+      }
     }
 
     function render(animate) {
@@ -228,6 +288,7 @@
       best = res.betterWhenHigher ? Math.max(best, res.value) : (best === -Infinity ? res.value : Math.min(best, res.value));
       counter(res.value, animate && improved);
       if (sub) sub.textContent = res.sub;
+      syncYes(res);
       // Announce to assistive tech once the dust settles, not every frame.
       if (live) {
         clearTimeout(liveTimer);
@@ -251,6 +312,31 @@
       render(true);
     });
     if (balDetails) balDetails.addEventListener('toggle', function () { render(true); });
+
+    // The YES moment: the shiny button under the number takes them — and
+    // their dials — straight to the walk-through form.
+    $all('[data-yes-btn]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        track('funnel_cta', { slug: slug, cta: 'yes_click', page: location.pathname });
+        pixel('trackCustom', 'EstimatorUsed', { content_name: slug, step: 'yes' });
+        var target = document.getElementById('yes');
+        if (!target) return;
+        target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+        var first = target.querySelector('input[type="text"],input[type="tel"],input[type="email"]');
+        if (first) setTimeout(function () { first.focus({ preventScroll: true }); }, reduced ? 0 : 550);
+      });
+    });
+
+    // When the walk-through form actually sends (forms.js dispatches
+    // glm:sent only on confirmed success), swap the fields for the
+    // what-happens-next block. Never on failure — forms.js already shows
+    // the phone number, and a fake handoff loses the lead silently.
+    if (yesForm) {
+      yesForm.addEventListener('glm:sent', function () {
+        yesForm.classList.add('yes-done');
+        track('funnel_cta', { slug: slug, cta: 'yes_submitted', page: location.pathname });
+      });
+    }
 
     render(false);
   }

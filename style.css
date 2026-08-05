@@ -1004,10 +1004,12 @@ table tr.total th,table tr.total td{border-top:2px solid var(--line-2);
 /* ================= THE FUNNEL PAGES — /loans/* as lead-ad landers ==========
    Facebook lead-ad traffic lands here having ALREADY given contact details on
    Facebook's form. So: no form up top, a slider rig they want to touch within
-   the first scroll, and exactly ONE next action at the bottom. Palette reuses
-   the .doors forest gradient; the big number is the same signal green as the
-   lamp. ~90% of this traffic is phones — mobile is the design, desktop is the
-   adaptation.                                                               */
+   the first scroll, and one shiny YES the moment the number lands. ~90% of
+   this traffic is phones — mobile is the design, desktop is the adaptation.
+
+   Color logic, per KT: the hero and the Big Button band stay deep forest, but
+   the estimator section sits on warm sand so the dark result card — and the
+   signal-green number on it — pops instead of blending into more green.     */
 
 /* --- funnel hero: dark forest, serif hook, media slot for Kenneth --------- */
 .hero.funnel{
@@ -1024,13 +1026,15 @@ table tr.total th,table tr.total td{border-top:2px solid var(--line-2);
 .hero.funnel .crumb,.hero.funnel .crumb a{color:rgba(233,244,237,.55)}
 .hero.funnel .crumb a:hover{color:var(--go)}
 .hero.funnel .eyebrow{color:var(--go)}
+.hero.funnel .cta .btn .bounce{display:inline-block;animation:nudge 1.6s ease-in-out infinite}
+@keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
 .funnelgrid{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(30px,4vw,64px);
   align-items:center}
 @media(max-width:880px){.funnelgrid{grid-template-columns:1fr;gap:22px}}
 
-/* Kenneth's per-program video slot. Ships as a branded placeholder; drop the
-   real video in and the frame is already right. Kept short on phones so the
-   slider rig stays within the first scroll.                                 */
+/* Kenneth's per-program video slot. Ships with the existing intro video;
+   swap the source when the per-program cut exists. Kept short on phones so
+   the slider rig stays within the first scroll.                             */
 .adhero-media{
   position:relative;border-radius:var(--r-lg);overflow:hidden;
   background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
@@ -1039,28 +1043,24 @@ table tr.total th,table tr.total td{border-top:2px solid var(--line-2);
   box-shadow:0 24px 60px -30px rgba(0,0,0,.8);
 }
 .adhero-media video,.adhero-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.adhero-media .slot{display:flex;flex-direction:column;align-items:center;gap:10px;
-  color:rgba(233,244,237,.6);font-size:13px;text-align:center;padding:18px}
-.adhero-media .slot .mark{width:44px;height:44px;color:var(--go);opacity:.9}
-@media(max-width:880px){.adhero-media{aspect-ratio:21/8}
-  .adhero-media .slot .mark{width:32px;height:32px}}
+@media(max-width:880px){.adhero-media{aspect-ratio:21/8}}
 
-/* --- the slider rig ------------------------------------------------------- */
+/* --- the slider rig: warm sand field, dark number card -------------------- */
 .frig-wrap{
-  background:linear-gradient(178deg,var(--forest-2),var(--forest-3));
+  background:linear-gradient(180deg,var(--paper-2),var(--sand));
   padding-block:clamp(26px,3.4vw,52px) clamp(34px,4vw,60px);
-  border-bottom:1px solid rgba(255,255,255,.08);
+  border-bottom:1px solid var(--line-2);
   position:relative;overflow:hidden;
 }
 .frig-wrap::before{
   content:"";position:absolute;inset:auto -20% -60% -20%;height:480px;
-  background:radial-gradient(circle,rgba(22,196,106,.13),transparent 65%);
+  background:radial-gradient(circle,rgba(22,196,106,.1),transparent 65%);
   pointer-events:none;
 }
 .frig{position:relative}
-.frig .eyebrow{color:var(--go)}
-.frig h2{color:#fff}
-.frig .sub{color:rgba(233,244,237,.72)}
+.frig .eyebrow{color:var(--g)}
+.frig h2{color:var(--forest)}
+.frig .sub{color:var(--ink-2)}
 
 .frig-live{display:grid;grid-template-columns:1fr 1fr;gap:clamp(22px,3vw,44px);
   margin-top:clamp(22px,3vw,36px);align-items:start}
@@ -1071,10 +1071,10 @@ table tr.total th,table tr.total td{border-top:2px solid var(--line-2);
 .fsliders{display:flex;flex-direction:column;gap:clamp(16px,2.2vw,26px)}
 .fslider .flabel{display:flex;justify-content:space-between;align-items:baseline;
   gap:12px;margin-bottom:2px}
-.fslider .flabel label{font-size:14.5px;font-weight:650;color:rgba(233,244,237,.85)}
+.fslider .flabel label{font-size:14.5px;font-weight:650;color:var(--ink)}
 .fslider .flabel output{font-family:var(--serif);font-size:clamp(20px,2.6vw,26px);
-  font-weight:600;color:#fff;letter-spacing:-.02em;white-space:nowrap}
-.fslider .fhint{font-size:12.5px;color:rgba(233,244,237,.5);margin-top:-2px}
+  font-weight:600;color:var(--forest);letter-spacing:-.02em;white-space:nowrap}
+.fslider .fhint{font-size:12.5px;color:var(--mut);margin-top:-2px}
 
 .fslider input[type="range"]{
   -webkit-appearance:none;appearance:none;
@@ -1084,90 +1084,193 @@ table tr.total th,table tr.total td{border-top:2px solid var(--line-2);
 /* WebKit (iPhone Safari is the primary target) */
 .fslider input[type="range"]::-webkit-slider-runnable-track{
   height:12px;border-radius:999px;
-  background:linear-gradient(90deg,var(--go) var(--fill,50%),rgba(255,255,255,.16) var(--fill,50%));
-  box-shadow:inset 0 1px 2px rgba(0,0,0,.35);
+  background:linear-gradient(90deg,var(--g) var(--fill,50%),rgba(16,28,21,.15) var(--fill,50%));
+  box-shadow:inset 0 1px 2px rgba(16,28,21,.14);
 }
 .fslider input[type="range"]::-webkit-slider-thumb{
   -webkit-appearance:none;appearance:none;
   width:44px;height:44px;border-radius:50%;margin-top:-16px;
   background:radial-gradient(circle at 35% 32%,#3fe08e,var(--go) 58%,#0e9a52);
   border:3px solid #fff;
-  box-shadow:0 3px 10px rgba(0,0,0,.45),0 0 0 0 rgba(22,196,106,.35);
+  box-shadow:0 3px 10px rgba(16,28,21,.35),0 0 0 0 rgba(22,196,106,.35);
   transition:box-shadow .18s var(--ease);
 }
 .fslider input[type="range"]:active::-webkit-slider-thumb,
 .fslider input[type="range"]:focus-visible::-webkit-slider-thumb{
-  box-shadow:0 3px 10px rgba(0,0,0,.45),0 0 0 12px rgba(22,196,106,.22),0 0 24px 4px rgba(22,196,106,.45);
+  box-shadow:0 3px 10px rgba(16,28,21,.35),0 0 0 12px rgba(22,196,106,.25),0 0 24px 4px rgba(22,196,106,.5);
 }
 /* Firefox */
 .fslider input[type="range"]::-moz-range-track{
-  height:12px;border-radius:999px;background:rgba(255,255,255,.16);
+  height:12px;border-radius:999px;background:rgba(16,28,21,.15);
 }
 .fslider input[type="range"]::-moz-range-progress{
-  height:12px;border-radius:999px;background:var(--go);
+  height:12px;border-radius:999px;background:var(--g);
 }
 .fslider input[type="range"]::-moz-range-thumb{
   width:44px;height:44px;border-radius:50%;
   background:radial-gradient(circle at 35% 32%,#3fe08e,var(--go) 58%,#0e9a52);
   border:3px solid #fff;
-  box-shadow:0 3px 10px rgba(0,0,0,.45);
+  box-shadow:0 3px 10px rgba(16,28,21,.35);
   transition:box-shadow .18s var(--ease);
 }
 .fslider input[type="range"]:active::-moz-range-thumb{
-  box-shadow:0 3px 10px rgba(0,0,0,.45),0 0 0 12px rgba(22,196,106,.22),0 0 24px 4px rgba(22,196,106,.45);
+  box-shadow:0 3px 10px rgba(16,28,21,.35),0 0 0 12px rgba(22,196,106,.25),0 0 24px 4px rgba(22,196,106,.5);
 }
 
 /* Optional balance reveal on refi pages */
-.fbal{border:1px solid rgba(255,255,255,.14);border-radius:var(--r);
-  background:rgba(255,255,255,.04)}
+.fbal{border:1px solid var(--line-2);border-radius:var(--r);background:var(--card)}
 .fbal summary{list-style:none;cursor:pointer;padding:13px 16px;font-size:14px;
-  font-weight:650;color:rgba(233,244,237,.8);display:flex;align-items:center;gap:9px}
+  font-weight:650;color:var(--ink-2);display:flex;align-items:center;gap:9px}
 .fbal summary::-webkit-details-marker{display:none}
-.fbal summary::before{content:"+";font-weight:700;color:var(--go);font-size:17px;line-height:1}
-.fbal[open] summary::before{content:"–"}
+.fbal summary::before{content:"+";font-weight:700;color:var(--g);font-size:17px;line-height:1}
+.fbal[open] summary::before{content:"\2013"}
 .fbal .fslider{padding:2px 16px 14px}
 
-/* The number. Huge, serif, signal green, counts as they drag. */
+/* The number. A dark forest card on the sand field, so the signal-green
+   figure pops instead of blending into a green page. */
 .fresult{
-  background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.13);
+  background:linear-gradient(150deg,var(--forest),var(--forest-2));
+  border:1px solid rgba(255,255,255,.08);
   border-radius:var(--r-lg);padding:clamp(22px,3vw,34px);text-align:center;
-  position:relative;overflow:hidden;
+  position:relative;overflow:hidden;box-shadow:var(--shadow-lg);
 }
 .fresult::before{
   content:"";position:absolute;inset:-30% -30% auto;height:200px;
-  background:radial-gradient(circle,rgba(22,196,106,.14),transparent 68%);
+  background:radial-gradient(circle,rgba(22,196,106,.16),transparent 68%);
   pointer-events:none;
 }
 .fcap{font-size:12.5px;font-weight:750;letter-spacing:.14em;text-transform:uppercase;
-  color:rgba(233,244,237,.6)}
+  color:#a9c6b7}
 .fnum{
   font-family:var(--serif);font-weight:600;letter-spacing:-.03em;line-height:1;
   font-size:clamp(56px,15vw,96px);color:var(--go);
   margin-top:10px;font-variant-numeric:tabular-nums;
-  text-shadow:0 0 34px rgba(22,196,106,.3);
+  text-shadow:0 0 34px rgba(22,196,106,.35);
 }
 .fnum.pulse{animation:fpulse .55s var(--ease)}
 @keyframes fpulse{
   0%{transform:scale(1)}
-  35%{transform:scale(1.05);text-shadow:0 0 48px rgba(22,196,106,.65)}
+  35%{transform:scale(1.05);text-shadow:0 0 48px rgba(22,196,106,.7)}
   100%{transform:scale(1)}
 }
-.fsub{font-size:14.5px;color:rgba(233,244,237,.78);margin-top:12px;min-height:2.6em}
-.fnote{
-  font-size:12.5px;line-height:1.5;color:rgba(233,244,237,.72);
-  margin-top:16px;padding-top:12px;border-top:1px solid rgba(255,255,255,.12);
-}
-.fsample{font-size:12px;color:rgba(233,244,237,.55);margin-top:8px}
+.fsub{font-size:14.5px;color:rgba(233,244,237,.8);margin-top:12px;min-height:2.6em}
+.fnote{font-size:12.5px;line-height:1.5;color:var(--mut);margin-top:16px}
+.fresult .fnote{color:rgba(233,244,237,.74);
+  padding-top:12px;border-top:1px solid rgba(255,255,255,.12)}
+.fsample{font-size:12px;color:var(--mut);margin-top:8px}
+.fresult .fsample{color:rgba(233,244,237,.55)}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);
   white-space:nowrap}
+
+/* --- the YES moment -------------------------------------------------------
+   Directly under the number: one question, one shiny button. The label
+   carries the live figure, so the click is about THEIR number. */
+.yesrow{margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.12)}
+.yesq{font-family:var(--serif);font-size:clamp(19px,2.4vw,23px);color:#fff;
+  letter-spacing:-.015em}
+.btn-yes{
+  display:inline-block;text-align:center;
+  width:100%;max-width:440px;margin-top:14px;padding:18px 24px;
+  border-radius:14px;font-size:clamp(16px,2.2vw,18.5px);font-weight:800;
+  color:#04241a;cursor:pointer;position:relative;isolation:isolate;
+  background:linear-gradient(100deg,#16c46a 0%,#3fe08e 25%,#0fa457 50%,#16c46a 75%,#3fe08e 100%);
+  background-size:250% 100%;
+  box-shadow:0 10px 30px -10px rgba(22,196,106,.65),0 0 0 0 rgba(22,196,106,.4);
+  animation:yes-sheen 3s linear infinite,yes-ring 2.4s ease-out infinite;
+  transition:transform .16s var(--ease);
+}
+.btn-yes:hover{transform:translateY(-2px) scale(1.015)}
+.btn-yes:active{transform:translateY(0) scale(.99)}
+.btn-yes .arrow{display:inline-block;margin-left:8px;animation:yes-arrow 1.2s ease-in-out infinite}
+@keyframes yes-sheen{to{background-position:250% 0}}
+@keyframes yes-ring{
+  0%{box-shadow:0 10px 30px -10px rgba(22,196,106,.65),0 0 0 0 rgba(22,196,106,.45)}
+  70%{box-shadow:0 10px 30px -10px rgba(22,196,106,.65),0 0 0 16px rgba(22,196,106,0)}
+  100%{box-shadow:0 10px 30px -10px rgba(22,196,106,.65),0 0 0 0 rgba(22,196,106,0)}
+}
+@keyframes yes-arrow{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+.yessmall{font-size:12px;color:rgba(233,244,237,.55);margin-top:10px}
+
+/* --- the walk-through form (#yes) ----------------------------------------- */
+.yeswrap{padding-block:clamp(44px,5vw,72px)}
+.yescard{
+  max-width:760px;margin:34px auto 0;background:var(--card);
+  border:1px solid var(--line);border-radius:var(--r-lg);
+  box-shadow:var(--shadow-lg);padding:clamp(24px,3.4vw,40px);
+}
+.yesbeats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.yesbeats span{font-size:12.5px;font-weight:750;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--g);background:var(--go-soft);
+  border:1px solid rgba(22,196,106,.3);border-radius:999px;padding:6px 13px}
+.yesfacts{display:flex;flex-wrap:wrap;gap:10px;margin:2px 0 20px}
+.yesfacts .yfact{background:var(--paper-2);border:1px solid var(--line);
+  border-radius:10px;padding:9px 14px;font-size:14px;color:var(--ink-2)}
+.yesfacts .yfact b{font-family:var(--serif);font-size:16.5px;color:var(--forest);
+  font-weight:600;margin-left:6px}
+.yescard .frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:620px){.yescard .frow{grid-template-columns:1fr}}
+.yescard input[type="text"],.yescard input[type="tel"],.yescard input[type="email"]{
+  width:100%;padding:14px 15px;border-radius:10px;font-size:16px;
+  background:#fff;border:1.5px solid var(--line-2);color:var(--ink);
+}
+.yescard input:focus-visible{outline:2.5px solid var(--go);outline-offset:1px}
+.yescard .field{margin-bottom:2px}
+.yescard .field label{display:block;font-size:13.5px;font-weight:650;
+  color:var(--ink-2);margin-bottom:6px}
+.yescard .field .err{display:none;font-size:12.5px;color:#c0392b;margin-top:5px}
+.yescard .field.bad .err{display:block}
+.yescard .field.bad input{border-color:#c0392b}
+.yescard .consent{display:flex;gap:10px;align-items:flex-start;margin-top:16px;
+  font-size:12px;line-height:1.55;color:var(--mut)}
+.yescard .consent input{margin-top:3px;flex:none;width:17px;height:17px;accent-color:var(--g)}
+.yescard .btn-yes{max-width:none;margin-top:18px;
+  box-shadow:0 10px 30px -12px rgba(22,196,106,.55)}
+.yescard .disclose{margin-top:16px}
+.yesnext{display:none;margin-top:22px;background:var(--paper-2);
+  border:1px solid var(--line);border-left:3px solid var(--go);
+  border-radius:var(--r);padding:20px 22px}
+.yesnext h3{font-size:18px;margin-bottom:8px}
+.yesnext p{font-size:15px;color:var(--ink-2)}
+.yesnext a{color:var(--g);font-weight:700;border-bottom:1px solid rgba(15,122,77,.35)}
+form.yes-done .yesfields{display:none}
+form.yes-done .yesnext{display:block}
+
+/* --- why it works: benefits + the 36-month meter (refi) ------------------- */
+.whygrid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,56px);
+  align-items:start;margin-top:34px}
+@media(max-width:880px){.whygrid{grid-template-columns:1fr;gap:30px}}
+.recoupcard{background:var(--card);border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:clamp(22px,3vw,32px);box-shadow:var(--shadow)}
+.recoupcard h3{font-size:19px}
+.recoupcard .rc-sub{font-size:14px;color:var(--mut);margin-top:6px}
+.recoupbar{position:relative;height:16px;border-radius:999px;
+  background:rgba(16,28,21,.1);margin-top:22px;overflow:visible}
+.recoupbar .fill{position:absolute;inset:0 auto 0 0;width:0%;border-radius:999px;
+  background:linear-gradient(90deg,var(--go),var(--g));
+  transition:width .45s var(--ease),background .3s;
+  box-shadow:0 0 14px rgba(22,196,106,.4)}
+.recoupbar.over .fill{background:linear-gradient(90deg,#e0a03f,#c07a2b);
+  box-shadow:0 0 14px rgba(224,160,63,.4)}
+.recoupbar .cap36{position:absolute;top:-7px;bottom:-7px;right:0;width:3px;
+  border-radius:2px;background:var(--forest)}
+.recoupbar .cap36::after{content:"36 mo";position:absolute;top:-24px;right:-4px;
+  font-size:11.5px;font-weight:750;color:var(--forest);letter-spacing:.04em;
+  white-space:nowrap}
+.recoupread{margin-top:26px;font-size:15px;color:var(--ink-2)}
+.recoupread b{font-family:var(--serif);font-size:clamp(26px,3.4vw,34px);
+  font-weight:600;color:var(--g);letter-spacing:-.02em}
+.recoupbar.over+.recoupread b{color:#b26a1b}
+.recoupverdict{margin-top:10px;font-size:14px;font-weight:700;color:var(--g)}
+.recoupbar.over~.recoupverdict{color:#b26a1b}
 
 /* no-JS: hide the dead rig, show a static CTA block instead */
 html:not(.js) .frig-live{display:none}
 html.js .frig-fallback{display:none}
 .frig.rig-failed .frig-live{display:none}
 .frig.rig-failed .frig-fallback{display:block}
-.frig-fallback{margin-top:26px;text-align:center;color:rgba(233,244,237,.8)}
+.frig-fallback{margin-top:26px;text-align:center;color:var(--ink-2)}
 .frig-fallback .btn{margin-top:16px}
+html:not(.js) .yesrow{display:none}
 
 /* --- three steps with micro-CTAs ------------------------------------------ */
 .fsteps .step p{max-width:56ch}
@@ -1179,23 +1282,23 @@ html.js .frig-fallback{display:none}
 .microcta:hover{color:var(--g-dark);border-bottom-color:currentColor}
 .microcta svg{width:13px;height:9px}
 
-/* --- USDA town picker ------------------------------------------------------ */
+/* --- USDA town picker (sits on the sand rig field) ------------------------- */
 .townchips{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
 .townchips button{
   padding:11px 18px;border-radius:999px;font-size:14.5px;font-weight:650;
-  background:rgba(255,255,255,.06);color:rgba(233,244,237,.85);
-  border:1px solid rgba(255,255,255,.18);cursor:pointer;
+  background:var(--card);color:var(--ink-2);
+  border:1px solid var(--line-2);cursor:pointer;
   transition:background .18s var(--ease),border-color .18s,color .18s;
   min-height:44px;
 }
-.townchips button:hover{border-color:rgba(22,196,106,.55)}
+.townchips button:hover{border-color:var(--g);color:var(--g)}
 .townchips button[aria-pressed="true"]{
   background:var(--go);border-color:var(--go);color:#04241a}
-.townout{margin-top:16px;font-size:15px;color:rgba(233,244,237,.85);
-  background:rgba(22,196,106,.1);border:1px solid rgba(22,196,106,.3);
+.townout{margin-top:16px;font-size:15px;color:var(--ink);
+  background:var(--go-soft);border:1px solid rgba(15,122,77,.28);
   border-radius:var(--r);padding:14px 16px;min-height:1em}
 .townout.pop{animation:fpulse .5s var(--ease)}
-.townout strong{color:var(--go)}
+.townout strong{color:var(--g)}
 
 /* --- the Big Button band --------------------------------------------------- */
 .bigband .ctaband{padding-block:clamp(44px,5vw,72px)}
@@ -1224,6 +1327,8 @@ html.js .frig-fallback{display:none}
 .fupstatus.ok{color:var(--go)}
 .fupstatus.err{color:#ffb3a7}
 .fupload.done .fuppick{display:none}
+/* the statement upload is JS-driven; without JS the noscript line takes over */
+html:not(.js) .fupload{display:none}
 
 /* callback form in the purchase big button band */
 .fcallback{max-width:560px;margin:22px auto 0;text-align:left}
@@ -1241,15 +1346,15 @@ html.js .frig-fallback{display:none}
 .fcallback .btn{width:100%;margin-top:14px;justify-content:center}
 .fcallback .formstatus{text-align:center}
 
-@media(prefers-reduced-motion:reduce){
-  .fnum.pulse,.townout.pop{animation:none}
-  .fslider input[type="range"]::-webkit-slider-thumb{transition:none}
-}
-
 /* funnel proof section runs on paper, so the trust marks need ink, not white */
 .fproof-trust{margin-top:38px;padding-top:30px;border-top:1px solid var(--line)}
 .fproof-trust .trust strong{color:var(--forest)}
 .fproof-trust .trust small{color:var(--mut)}
 .fproof-trust .trust .mark{color:var(--g)}
-/* the statement upload is JS-driven; without JS the noscript line takes over */
-html:not(.js) .fupload{display:none}
+
+@media(prefers-reduced-motion:reduce){
+  .fnum.pulse,.townout.pop{animation:none}
+  .btn-yes,.btn-yes .arrow,.hero.funnel .cta .btn .bounce{animation:none}
+  .recoupbar .fill{transition:none}
+  .fslider input[type="range"]::-webkit-slider-thumb{transition:none}
+}
