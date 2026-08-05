@@ -771,3 +771,624 @@ def hero(eyebrow, h1, lede, ctas=None, trail=None, variant=""):
 <p class="lede">{lede}</p>
 {btns}
 </div></div>"""
+
+
+# =============================================================================
+# THE FUNNEL — /loans/* as Facebook lead-ad destinations
+# =============================================================================
+# Visitors arrive from a Facebook Lead Ad having ALREADY given name/phone/email
+# on Facebook's native form. So these pages never open with a lead-capture
+# form. The job is: confirm the click was smart, put a live estimator in their
+# hands within one scroll, and drive exactly ONE next action.
+#
+#   Refi pages (va-irrrl, refinance)  ->  send your mortgage statement
+#   Purchase pages (the other five)   ->  call / request a callback
+#
+# All chrome, math and analytics live in shared files: /assets/funnel.js,
+# /assets/rates.js (the ONLY place a sample rate exists), and the funnel
+# section of style.css. Pages stay generated — never hand-fork one.
+#
+# Compliance lines that hold on every funnel page:
+#   - "quote" never appears as something we offer; estimates only
+#   - no rate figure in copy — funnel.js injects the sample from rates.js,
+#     labeled a sample, so the number lives in exactly one file
+#   - the estimate footnote sits directly under every rendered number
+#   - VA pages keep the 36-month recoupment / net tangible benefit language
+#   - no countdown timers, no scarcity, no "guaranteed", ever
+
+FUNNEL = {
+    # ------------------------------------------------------------- refi pages
+    "va-irrrl": dict(
+        mode="refi",
+        kicker="VA IRRRL &middot; Streamline refinance",
+        hook="The refinance so streamlined the VA made it a word: <em>IRRRL</em>.",
+        sub="Interest Rate Reduction Refinance Loan. Built for veterans already in a "
+            "VA loan. Usually no appraisal, far less paperwork, one purpose: a lower "
+            "payment. Thirty seconds on the dials below tells you if it's worth a real look.",
+        rig_h2="Drag the dials. Watch the number.",
+        rig_sub="Set them to what you pay now. The green number is what a streamline "
+                "could put back in your pocket each month &mdash; an estimate, not a promise. "
+                "And the VA rule applies here first: the refinance has to produce a real "
+                "net tangible benefit and recoup its costs within 36 months, or it "
+                "shouldn't be written at all.",
+        steps=[
+            ("Send your statement",
+             "It already has every number that matters &mdash; balance, rate, payment. "
+             "No forms. No interview. One upload.",
+             ("#cta", "Send it now")),
+            ("We run the real math",
+             "A licensed loan officer prices your actual file &mdash; usually same day. "
+             "If it doesn't clear the VA's 36-month recoupment test, the answer is no, "
+             "and we'll be the ones to say it.",
+             ("tel:__PHONE__", "Rather talk first? Call us")),
+            ("You decide",
+             "Your current loan and the new one, side by side, in plain English. "
+             "If the math doesn't work, we leave you alone. Options win &mdash; "
+             "including the option of doing nothing.",
+             ("#cta", "Send my statement")),
+        ],
+        objections=[
+            ("&ldquo;I hate paperwork.&rdquo;",
+             "So does everybody. An IRRRL is the least-paperwork loan in the business: "
+             "usually no appraisal, usually no new certificate of eligibility. Your "
+             "statement does most of the talking."),
+            ("&ldquo;I get refi junk mail every week.&rdquo;",
+             "Those letters aren't us. The VA polices this loan hard: it must produce a "
+             "real net tangible benefit and its costs must come back within 36 months "
+             "&mdash; or it can't be written. That rule protects you. We apply it before "
+             "anything else."),
+            ("The 10% detail nobody asks about",
+             "A service-connected disability rating of 10% or more waives the VA funding "
+             "fee entirely. That one fact regularly flips a marginal file into a clear "
+             "win. If you're rated, say so early."),
+        ],
+        cta_head="Your statement has the exact numbers.",
+        cta_sub="Send it over and a licensed loan officer runs the real math &mdash; "
+                "usually same day. No robots. No spam. One call.",
+        cta_label="Send my statement",
+    ),
+
+    "refinance": dict(
+        mode="refi",
+        kicker="Refinance &middot; Longview, TX",
+        hook="Your rate isn't a <em>life sentence</em>.",
+        sub="You signed at whatever the market was doing that week. Markets move. "
+            "Stop guessing whether yours is still the right number &mdash; the dials "
+            "below take thirty seconds.",
+        rig_h2="What are you paying that you don't have to?",
+        rig_sub="Set the dials to your current loan. The green number is the monthly "
+                "difference a refinance could make &mdash; an estimate to start a real "
+                "conversation, not the end of one.",
+        steps=[
+            ("Send your statement",
+             "Balance, rate, payment &mdash; it's all on page one. One upload beats "
+             "twenty form fields.",
+             ("#cta", "Send it now")),
+            ("We shop it",
+             "We're brokers. Your file goes to a network of lenders, not one bank's "
+             "menu, and a licensed loan officer brings back what's actually available.",
+             ("tel:__PHONE__", "Questions first? Call us")),
+            ("You decide",
+             "Sometimes the math says refinance. Sometimes it says stay put &mdash; "
+             "and if it does, we'll tell you that for free. The math matters more "
+             "than the deal.",
+             ("#cta", "Send my statement")),
+        ],
+        objections=[
+            ("&ldquo;Refinancing costs money.&rdquo;",
+             "It does &mdash; and it's only worth it if the savings pay those costs back "
+             "before you'd move. That break-even math is the first thing we run, and if "
+             "it doesn't clear, we say so."),
+            ("&ldquo;I don't want to restart 30 years.&rdquo;",
+             "Then don't. A refinance can keep your remaining term, shorten it, or drop "
+             "mortgage insurance without touching the clock. The lowest payment isn't "
+             "always the win &mdash; we show you both numbers."),
+            ("&ldquo;My credit's taken a hit since I bought.&rdquo;",
+             "Maybe it matters, maybe it doesn't &mdash; different lenders draw the line "
+             "in different places, which is exactly why we shop a network instead of "
+             "asking one bank. Finding out costs nothing and starts with no hard pull."),
+        ],
+        cta_head="Your statement has the exact numbers.",
+        cta_sub="Send it over and a licensed loan officer runs the real math &mdash; "
+                "usually same day. No robots. No spam. One call.",
+        cta_label="Send my statement",
+    ),
+
+    # --------------------------------------------------------- purchase pages
+    "va": dict(
+        mode="purchase",
+        kicker="VA loans &middot; Longview, TX",
+        hook="You earned this benefit. <em>Most veterans never use it.</em>",
+        sub="No down payment in many cases. No monthly mortgage insurance. That's not "
+            "a promo &mdash; it's your benefit, and it's usually the strongest option "
+            "on the table for anyone eligible.",
+        price=(80000, 900000, 250000, 5000),
+        down=(0, 25, 0, 0.5),
+        rig_h2="See what a VA payment looks like.",
+        rig_sub="Start the down payment dial at zero &mdash; that's the point of the "
+                "benefit. The number below is principal and interest on a sample figure, "
+                "so you have somewhere real to start.",
+        steps=[
+            ("Play with the dials",
+             "Get a feel for what East Texas prices turn into as a monthly payment "
+             "with nothing down. No mortgage insurance is the quiet superpower here.",
+             ("#estimator", "Back to the dials")),
+            ("Talk to a human",
+             "Five minutes with a licensed loan officer &mdash; and a veteran-owned "
+             "team that runs VA files every week. We check your entitlement and what "
+             "it's actually worth. No hard credit pull to start.",
+             ("tel:__PHONE__", "Call 903-331-0892")),
+            ("We handle the VA part",
+             "Appraisal logistics, seller conversations, the funding-fee math "
+             "&mdash; including whether a disability rating waives it for you. "
+             "You house-hunt. We carry the file.",
+             ("#cta", "Let's run my real numbers")),
+        ],
+        objections=[
+            ("&ldquo;I heard VA loans are hard to close.&rdquo;",
+             "Outdated. A VA loan closes on the same calendar as any other when the "
+             "lender knows the program &mdash; and we close them every week. Seller "
+             "hesitation is a communication problem, and handling it is our job, not "
+             "yours."),
+            ("&ldquo;I don't have anything saved.&rdquo;",
+             "In many cases you don't need a down payment at all. Closing costs are a "
+             "separate, smaller conversation &mdash; and there are ways to handle those "
+             "too. Don't rule yourself out from your couch."),
+            ("&ldquo;I'm not even sure I'm eligible.&rdquo;",
+             "Veterans, active duty, Guard, Reserve, and many surviving spouses. "
+             "Entitlement can often be restored or reused &mdash; even if you've used "
+             "it before. Checking takes minutes and costs nothing."),
+        ],
+        cta_head="Let's find out what your benefit is worth.",
+        cta_sub="One call with a licensed loan officer. Straight answers about "
+                "eligibility, the funding fee, and your real numbers &mdash; no hard "
+                "credit pull to start.",
+        cta_label="Let&rsquo;s run my real numbers",
+    ),
+
+    "fha": dict(
+        mode="purchase",
+        kicker="FHA loans &middot; Longview, TX",
+        hook="Your credit doesn't have to be perfect. <em>That's the whole point of FHA.</em>",
+        sub="Built for real people with real credit histories. Lower down payment, "
+            "more forgiving guidelines, and the most common first step into a first "
+            "house in East Texas.",
+        price=(80000, 900000, 220000, 5000),
+        down=(3.5, 25, 3.5, 0.5),
+        rig_h2="See what an FHA payment looks like.",
+        rig_sub="The down payment dial starts at 3.5% &mdash; FHA's floor for "
+                "qualifying buyers. The number below is principal and interest on a "
+                "sample figure, so you have somewhere real to start.",
+        steps=[
+            ("Play with the dials",
+             "That house you keep driving past &mdash; put its price on the dial and "
+             "see what it turns into monthly. Knowing beats wondering.",
+             ("#estimator", "Back to the dials")),
+            ("Talk to a human",
+             "A licensed loan officer looks at your actual situation &mdash; credit, "
+             "income, the gift from your folks &mdash; and tells you where you stand. "
+             "No hard credit pull to start.",
+             ("tel:__PHONE__", "Call 903-331-0892")),
+            ("Get a real plan",
+             "Ready now? We move. Six months out? You leave with a punch list that "
+             "gets you there. Either answer is a win.",
+             ("#cta", "Let's run my real numbers")),
+        ],
+        objections=[
+            ("&ldquo;My credit isn't good enough.&rdquo;",
+             "Says who? FHA guidelines are more forgiving than conventional, and "
+             "different lenders draw different lines on top of them. One lender's no "
+             "is not the answer &mdash; it's one data point. We shop a network."),
+            ("&ldquo;I can't save a down payment.&rdquo;",
+             "FHA starts at 3.5% down for qualifying buyers &mdash; and it can come "
+             "from an eligible gift. On a lot of East Texas homes that's less than "
+             "people burn on rent deposits and moving twice."),
+            ("&ldquo;I got turned down once already.&rdquo;",
+             "Then you talked to one lender with one rulebook. Files that get declined "
+             "at a bank get written somewhere else every single week. That's the whole "
+             "reason brokers exist."),
+        ],
+        cta_head="Stop guessing about your credit.",
+        cta_sub="Five minutes with a licensed loan officer tells you where you actually "
+                "stand &mdash; and what to fix if the answer is &ldquo;not yet.&rdquo; "
+                "No hard credit pull to start.",
+        cta_label="Let&rsquo;s run my real numbers",
+    ),
+
+    "conventional": dict(
+        mode="purchase",
+        kicker="Conventional loans &middot; Longview, TX",
+        hook="The 20% down rule is a myth. <em>Let's talk about what's real.</em>",
+        sub="Twenty percent was never the price of admission &mdash; it's just where "
+            "one insurance cost falls away. Qualifying first-time buyers see programs "
+            "starting far lower. The math matters more than the folklore.",
+        price=(80000, 900000, 280000, 5000),
+        down=(3, 30, 5, 0.5),
+        rig_h2="See the payment at YOUR down payment.",
+        rig_sub="Drag the down payment dial and watch what actually changes. The "
+                "number below is principal and interest on a sample figure &mdash; "
+                "somewhere real to start.",
+        steps=[
+            ("Play with the dials",
+             "Compare 5% down against 20% and look at the real monthly difference. "
+             "Most people are surprised how small the gap is &mdash; and how many "
+             "years of saving it doesn't justify.",
+             ("#estimator", "Back to the dials")),
+            ("Talk to a human",
+             "A licensed loan officer prices your actual file &mdash; credit, income, "
+             "property &mdash; and lays the options side by side. No hard credit pull "
+             "to start.",
+             ("tel:__PHONE__", "Call 903-331-0892")),
+            ("Pick your lane",
+             "Sometimes conventional wins. Sometimes FHA genuinely beats it. We're "
+             "brokers &mdash; we don't care which one you pick, only that it's the "
+             "right one.",
+             ("#cta", "Let's run my real numbers")),
+        ],
+        objections=[
+            ("&ldquo;I need 20% down, right?&rdquo;",
+             "No. That number is where private mortgage insurance falls away on a "
+             "conventional loan &mdash; not the cost of entry. Qualifying first-time "
+             "buyers can see programs starting at 3%. Waiting years to hit 20% has "
+             "its own price tag: rent."),
+            ("&ldquo;I don't want to pay PMI forever.&rdquo;",
+             "On conventional loans you don't. PMI comes off once you've built enough "
+             "equity &mdash; unlike FHA, where it usually rides for the life of the "
+             "loan. That difference is exactly why this program exists."),
+            ("&ldquo;My income is complicated.&rdquo;",
+             "Self-employed, commission, two jobs &mdash; complicated isn't a no, it's "
+             "a documentation question. And when one lender's box doesn't fit, we have "
+             "a network of others. Options win."),
+        ],
+        cta_head="Find out what down payment actually makes sense.",
+        cta_sub="Five minutes with a licensed loan officer. Real numbers on your real "
+                "situation &mdash; not folklore. No hard credit pull to start.",
+        cta_label="Let&rsquo;s run my real numbers",
+    ),
+
+    "usda": dict(
+        mode="purchase",
+        kicker="USDA loans &middot; East Texas",
+        hook="Zero down &mdash; and more of East Texas qualifies <em>than you think</em>.",
+        sub="The most overlooked loan in the region. If the address is eligible and "
+            "your household income fits, the down payment is zero. Not low. Zero.",
+        price=(80000, 900000, 200000, 5000),
+        down=(0, 20, 0, 0.5),
+        rig_h2="See what zero-down actually costs monthly.",
+        rig_sub="Leave the down payment dial on zero &mdash; that's the program. The "
+                "number below is principal and interest on a sample figure, so you "
+                "have somewhere real to start.",
+        towns=["Gilmer", "Hallsville", "White Oak", "Diana", "Ore City", "Jefferson"],
+        towns_h2="Is your town on the map?",
+        towns_sub="Tap the area you're looking in. These are East Texas communities "
+                  "where homes regularly qualify &mdash; but USDA runs on the exact "
+                  "address, so the real check is a two-minute conversation, not a "
+                  "guess.",
+        steps=[
+            ("Check your town",
+             "USDA eligibility is drawn by address, not by county &mdash; and the map "
+             "covers far more of East Texas than people assume. Don't rule yourself "
+             "out from your couch.",
+             ("#towns", "Tap your town")),
+            ("Talk to a human",
+             "Two things have to line up: the property and your household income. A "
+             "licensed loan officer checks both against the current limits in minutes. "
+             "No hard credit pull to start.",
+             ("tel:__PHONE__", "Call 903-331-0892")),
+            ("Buy the house, keep the savings",
+             "Zero down doesn't mean zero planning &mdash; closing costs still exist. "
+             "But it changes what's possible right now, this year, not five years of "
+             "saving from now.",
+             ("#cta", "Let's run my real numbers")),
+        ],
+        objections=[
+            ("&ldquo;I'm too close to town to qualify.&rdquo;",
+             "People assume that constantly, and they're wrong constantly. Eligibility "
+             "is drawn address by address, and communities just outside Longview "
+             "qualify all the time. Check before you assume."),
+            ("&ldquo;I don't earn enough &mdash; or too much.&rdquo;",
+             "USDA has household income limits set by area and family size, revised "
+             "periodically. The only way to know is to check yours against the current "
+             "figures &mdash; which takes us about two minutes."),
+            ("&ldquo;Zero down sounds too good to be true.&rdquo;",
+             "It's a federal rural-development program that's been running for decades "
+             "&mdash; one of exactly two zero-down loans in America, and the other one "
+             "requires military service. The catch is simply that the address and your "
+             "income both have to fit."),
+        ],
+        cta_head="Two minutes settles it.",
+        cta_sub="Give us the address and we'll check the map and the income limits "
+                "with you. If USDA fits, it's zero down. If not, we'll tell you what "
+                "does fit. No hard credit pull to start.",
+        cta_label="Let&rsquo;s run my real numbers",
+    ),
+
+    "jumbo": dict(
+        mode="purchase",
+        kicker="Jumbo loans &middot; Longview, TX",
+        hook="Big loan? The bank gave you one answer. <em>We ask a whole network.</em>",
+        sub="Above the conforming limit, every lender writes its own rules &mdash; "
+            "which means the spread between one answer and the best answer is wider "
+            "here than anywhere else in lending. This is where a broker earns it.",
+        price=(800000, 3000000, 1100000, 25000),
+        down=(10, 40, 10, 1),
+        rig_h2="Size the payment before you size the house.",
+        rig_sub="Dial in the price range you're actually shopping. The number below "
+                "is principal and interest on a sample figure &mdash; jumbo pricing "
+                "varies more between lenders than any other product, which is exactly "
+                "the point.",
+        steps=[
+            ("Play with the dials",
+             "Get the monthly shape of the purchase before you fall for a property. "
+             "At this size, structure decisions move real money.",
+             ("#estimator", "Back to the dials")),
+            ("Talk to a human",
+             "A licensed loan officer maps your file &mdash; income structure, assets, "
+             "reserves &mdash; against a network of jumbo lenders with genuinely "
+             "different appetites. No hard credit pull to start.",
+             ("tel:__PHONE__", "Call 903-331-0892")),
+            ("We run the competition",
+             "One file, shopped across lenders that actually want it. You see the "
+             "options side by side and pick. That's it. That's the pitch.",
+             ("#cta", "Let's run my real numbers")),
+        ],
+        objections=[
+            ("&ldquo;My bank already said no.&rdquo;",
+             "One bank, one rulebook, one no. Jumbo guidelines vary enormously between "
+             "lenders &mdash; the same file gets declined at one desk and written at "
+             "another every week. A no is a data point, not a verdict."),
+            ("&ldquo;I'm self-employed &mdash; my income looks weird on paper.&rdquo;",
+             "In jumbo lending, complex income is normal, not a red flag. It means "
+             "more documentation, not a worse outcome &mdash; and knowing which lender "
+             "reads your kind of file well is precisely the job."),
+            ("&ldquo;I'll need 20% down and a vault of cash.&rdquo;",
+             "Requirements vary more on jumbo than on any other loan &mdash; down "
+             "payment, reserves, all of it. That variation is the reason to shop it "
+             "instead of accepting the first answer."),
+        ],
+        cta_head="Make the lenders compete for it.",
+        cta_sub="One conversation with a licensed loan officer, one file, a network "
+                "of answers. No hard credit pull to start.",
+        cta_label="Let&rsquo;s run my real numbers",
+    ),
+}
+
+# The one-line footnote that sits directly under every rendered number.
+FUNNEL_FOOTNOTE = ("*Estimate only &mdash; not a quote, offer, or approval. Subject to "
+                   "credit approval and underwriting. Your actual rate and payment will "
+                   "differ.")
+
+
+def _funnel_hero(slug, f):
+    """Hook hero: dark forest, serif hook, Kenneth's media slot. The kicker
+    carries data-fb-kicker so funnel.js can swap it for ?src=fb traffic."""
+    return f"""<div class="hero funnel"><div class="wrap">
+<nav class="crumb" aria-label="Breadcrumb"><a href="/">Home</a> <span>/</span> <a href="/loans">Loan options</a> <span>/</span> <span>{esc(f["kicker"].split("&middot;")[0].strip())}</span></nav>
+<div class="funnelgrid">
+<div>
+  <p class="eyebrow"><span class="tick" aria-hidden="true"></span><span data-fb-kicker>{f["kicker"]}</span></p>
+  <h1>{f["hook"]}</h1>
+  <p class="lede">{f["sub"]}</p>
+  <div class="cta"><a class="btn go lg" href="#estimator">See your number &darr;</a></div>
+</div>
+<div>
+  <div class="adhero-media">
+    <video controls preload="none" playsinline
+           poster="/assets/from-old-site/kenneth-travis-headshot.png">
+      <source src="/assets/from-old-site/kt-video.mp4" type="video/mp4">
+      Your browser cannot play this video.
+    </video>
+  </div>
+  <p class="vidcap" style="color:rgba(233,244,237,.6)">Kenneth Travis &middot; President &amp; CEO &middot; Loan Originator NMLS #{NMLS_KT}</p>
+</div>
+</div>
+</div></div>"""
+
+
+def _funnel_rig(slug, f):
+    """The centerpiece. Static markup; /assets/funnel.js wires the behavior.
+    With JS off (or broken) CSS swaps in the .frig-fallback block instead."""
+    if f["mode"] == "refi":
+        cap = "Estimated monthly savings"
+        sliders = f"""
+      <div class="fslider">
+        <div class="flabel"><label for="f-pay">Your current monthly payment (P&amp;I)</label><output data-for="pay" for="f-pay">$1,850</output></div>
+        <input type="range" id="f-pay" data-var="pay" data-fmt="money" min="500" max="4000" step="25" value="1850" aria-label="Your current monthly principal and interest payment, dollars">
+        <p class="fhint">Principal &amp; interest &mdash; the part before taxes and insurance.</p>
+      </div>
+      <div class="fslider">
+        <div class="flabel"><label for="f-cur">Your current rate</label><output data-for="cur" for="f-cur">6.875%</output></div>
+        <input type="range" id="f-cur" data-var="cur" data-fmt="pct" min="3" max="9" step="0.125" value="6.875" aria-label="Your current interest rate, percent">
+        <p class="fhint">It's on page one of your statement.</p>
+      </div>
+      <details class="fbal" data-balance>
+        <summary>Know your balance? Dial it in for a tighter estimate</summary>
+        <div class="fslider">
+          <div class="flabel"><label for="f-bal">Loan balance</label><output data-for="bal" for="f-bal">$250,000</output></div>
+          <input type="range" id="f-bal" data-var="bal" data-fmt="money" min="50000" max="800000" step="5000" value="250000" aria-label="Your current loan balance, dollars">
+        </div>
+      </details>"""
+    else:
+        pmin, pmax, pval, pstep = f["price"]
+        dmin, dmax, dval, dstep = f["down"]
+        cap = "Estimated monthly payment (P&amp;I)"
+        sliders = f"""
+      <div class="fslider">
+        <div class="flabel"><label for="f-price">Home price</label><output data-for="price" for="f-price">${pval:,}</output></div>
+        <input type="range" id="f-price" data-var="price" data-fmt="money" min="{pmin}" max="{pmax}" step="{pstep}" value="{pval}" aria-label="Home price, dollars">
+      </div>
+      <div class="fslider">
+        <div class="flabel"><label for="f-down">Down payment</label><output data-for="down" for="f-down">{dval:g}%</output></div>
+        <input type="range" id="f-down" data-var="down" data-fmt="pct" min="{dmin}" max="{dmax}" step="{dstep}" value="{dval}" aria-label="Down payment, percent of price">
+      </div>"""
+
+    return f"""<section class="frig-wrap" id="estimator"><div class="wrap">
+<div class="frig" data-funnel data-mode="{f["mode"]}" data-slug="{slug}">
+  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>The estimator</p>
+  <h2>{f["rig_h2"]}</h2>
+  <p class="sub">{f["rig_sub"]}</p>
+  <div class="frig-live">
+    <div class="fresult">
+      <p class="fcap">{cap}</p>
+      <p class="fnum" data-out>&mdash;</p>
+      <p class="fsub" data-out-sub></p>
+      <p class="fnote">{FUNNEL_FOOTNOTE}</p>
+      <p class="fsample" data-sample-label></p>
+      <span class="sr-only" role="status" aria-live="polite" data-out-live></span>
+    </div>
+    <div class="fsliders">{sliders}
+    </div>
+  </div>
+  <div class="frig-fallback">
+    <p>The interactive estimator needs JavaScript &mdash; but the people don't.
+    A licensed loan officer can run your real numbers on one call.</p>
+    <a class="btn go" href="tel:{PHONE_HREF}">Call {PHONE}</a>
+    <p class="fnote" style="max-width:52ch;margin-inline:auto">{FUNNEL_FOOTNOTE}</p>
+  </div>
+</div>
+</div></section>"""
+
+
+def _funnel_towns(slug, f):
+    """USDA only: static list of known-eligible East Texas area names.
+    Deliberately not an eligibility API — the real check is by exact address."""
+    if not f.get("towns"):
+        return ""
+    chips = "".join(
+        f'<button type="button" data-town="{esc(t)}" aria-pressed="false">{esc(t)}</button>'
+        for t in f["towns"])
+    return f"""<section class="frig-wrap" id="towns"><div class="wrap">
+<div class="frig">
+  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>The map</p>
+  <h2>{f["towns_h2"]}</h2>
+  <p class="sub">{f["towns_sub"]}</p>
+  <div class="townchips" data-town-picker>{chips}</div>
+  <p class="townout" data-town-out aria-live="polite">Tap a town to see where it stands.</p>
+  <p class="fsample">Area names listed because homes there commonly qualify &mdash; USDA
+  eligibility is set by exact address and current USDA maps, so nothing here is a
+  determination. We check the actual property with you.</p>
+</div>
+</div></section>"""
+
+
+def _funnel_steps(f):
+    steps = "".join(
+        f"""<div class="step"><h3>{s[0]}</h3><p>{s[1]}</p>
+<a class="microcta" href="{s[2][0].replace("__PHONE__", PHONE_HREF)}"{' data-funnel-cta="step_call"' if s[2][0].startswith("tel:") else ""}>{s[2][1]} {ARROW}</a></div>"""
+        for s in f["steps"])
+    return f"""<section><div class="wrap">
+<p class="eyebrow"><span class="tick" aria-hidden="true"></span>How this works</p>
+<h2>Three steps. No fluff.</h2>
+<div class="steps fsteps">{steps}</div>
+</div></section>"""
+
+
+def _funnel_objections(f):
+    cards = "".join(
+        f'<div class="card reveal"><span class="num">0{i+1}</span><h3>{o[0]}</h3><p>{o[1]}</p></div>'
+        for i, o in enumerate(f["objections"]))
+    return f"""<section class="alt"><div class="wrap">
+<p class="eyebrow"><span class="tick" aria-hidden="true"></span>The honest part</p>
+<h2>What's actually stopping you?</h2>
+<div class="grid g3">{cards}</div>
+</div></section>"""
+
+
+def _funnel_proof():
+    """Two verified reviews + the trust marks. Verified only — a funnel page is
+    the last place to lean on wording we have not re-checked at its source."""
+    quotes = "".join(review_card(r, cls="reveal") for r in REVIEWS[:2])
+    return f"""<section><div class="wrap">
+<p class="eyebrow"><span class="tick" aria-hidden="true"></span>East Texas talks</p>
+<h2>People we've already walked home.</h2>
+<div class="grid g2">{quotes}</div>
+<div class="trustrow fproof-trust">
+  <div class="trust">{MARK_EHO}<span><strong>Equal Housing Opportunity</strong></span></div>
+  <div class="trust">{MARK_NMLS}<span><strong>NMLS #{NMLS_CO}</strong><small>Kenneth Travis, NMLS #{NMLS_KT}</small></span></div>
+  <div class="trust">{MARK_LANTERN}<span><strong>{POWERED}</strong></span></div>
+</div>
+</div></section>"""
+
+
+def _funnel_bigband(slug, f):
+    """The Big Button. ONE action: refi pages take the statement right here;
+    purchase pages put a phone number and a callback form behind one button."""
+    if f["mode"] == "refi":
+        action = f"""
+<div class="fupload" data-statement-upload>
+  <label class="fuppick">
+    <input type="file" accept="application/pdf,image/jpeg,image/png,image/heic,image/webp">
+    <strong>Choose your statement</strong> &mdash; a PDF from your servicer, or a photo of page one
+    <span data-upload-picked></span>
+  </label>
+  <button type="button" class="btn go xl" data-upload-btn data-big-cta
+          data-short-label="Send my statement" data-funnel-cta="statement_send">{f["cta_label"]} &rarr;</button>
+  <p class="fupstatus" data-upload-status role="status" aria-live="polite"></p>
+  <p class="bandnote">Sent over an encrypted connection and visible only to our licensed
+  team. Sending a statement starts a conversation &mdash; it is not an application for
+  credit and <strong>not a commitment to lend</strong>.</p>
+</div>
+<noscript><p class="bandalt">The upload needs JavaScript &mdash; call
+<a href="tel:{PHONE_HREF}">{PHONE}</a> or start at <a href="/apply">glmtg.com/apply</a> instead.</p></noscript>
+<p class="bandalt">Rather talk first? Call <a href="tel:{PHONE_HREF}" data-funnel-cta="band_call">{PHONE}</a>.</p>"""
+    else:
+        action = f"""
+<a class="btn go xl" href="tel:{PHONE_HREF}" data-big-cta
+   data-short-label="Let&rsquo;s run my real numbers" data-funnel-cta="call">{f["cta_label"]} &rarr;</a>
+<p class="bandalt">Or have us call you &mdash; one call, no spam:</p>
+<form class="fcallback" data-glm-form="funnel_callback" novalidate>
+  <input type="hidden" name="loan_type" value="{slug}">
+  <div class="frow">
+    <div class="field"><label class="sr-only" for="cb-name">Your name</label>
+      <input id="cb-name" name="name" type="text" autocomplete="name" placeholder="Your name" required maxlength="120"></div>
+    <div class="field"><label class="sr-only" for="cb-phone">Phone number</label>
+      <input id="cb-phone" name="phone" type="tel" autocomplete="tel" placeholder="Phone number" required maxlength="32"></div>
+  </div>
+  <div class="consent">
+    <input type="checkbox" id="cb-tcpa" name="tcpa_consent" value="yes">
+    <label for="cb-tcpa">{TCPA_TEXT}</label>
+  </div>
+  <button class="btn onDark" type="submit" data-funnel-cta="callback_submit">Request a callback</button>
+  <p class="formstatus" role="status" aria-live="polite"></p>
+</form>"""
+
+    return f"""<section class="band-wrap bigband" id="cta"><div class="wrap"><div class="ctaband">
+<span class="signal" aria-hidden="true"><i></i><i></i><i></i></span>
+<h2>{f["cta_head"]}</h2>
+<p>{f["cta_sub"]}</p>
+{action}
+<p class="bandnote">Not a commitment to lend. Subject to credit approval and underwriting.
+Only a licensed loan officer can confirm your rate, payment, or eligibility, after a
+complete application.</p>
+</div></div></section>"""
+
+
+def funnel_body(slug, faqs):
+    """Assemble a complete funnel page body: hook hero, slider rig, three
+    steps, objection cards, proof, the Big Button, and the page's FAQ."""
+    f = FUNNEL[slug]
+    faq_html = "".join(
+        f'<details><summary>{esc(q)}</summary><div class="a"><p>{esc(a)}</p></div></details>'
+        for q, a in faqs)
+    return "".join([
+        _funnel_hero(slug, f),
+        _funnel_rig(slug, f),
+        _funnel_towns(slug, f),
+        _funnel_steps(f),
+        _funnel_objections(f),
+        _funnel_proof(),
+        _funnel_bigband(slug, f),
+        f"""<section id="faq"><div class="wrap">
+<p class="eyebrow"><span class="tick" aria-hidden="true"></span>Questions</p>
+<h2>Straight answers</h2>
+<div class="faq">{faq_html}</div>
+</div></section>""",
+    ])
+
+
+# Scripts every funnel page loads (beyond the base chrome). forms.js handles
+# the purchase callback form; harmless on refi pages, so it ships everywhere
+# for one less thing to vary.
+FUNNEL_SCRIPTS = ('<script src="/forms.js" defer></script>'
+                  '<script src="/assets/rates.js" defer></script>'
+                  '<script src="/assets/funnel.js" defer></script>')

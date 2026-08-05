@@ -54,6 +54,11 @@ def faq_block(faqs):
 # ==========================================================================
 
 def va_irrrl():
+    """Now a funnel page — the flagship Facebook lead-ad destination. Structure
+    and copy come from S.FUNNEL['va-irrrl']; the FAQs below carry the detailed
+    education (recoupment, escrow refund, the disability-rating waiver). The
+    deep-dive screener this page used to embed lives on at
+    /tools/va-refi-screener for staff use."""
     faqs = [
         ("What is an IRRRL?",
          "The VA Interest Rate Reduction Refinance Loan — a streamline refinance for veterans "
@@ -83,99 +88,17 @@ def va_irrrl():
          "refinance, which is a different loan with a full appraisal and full underwriting."),
     ]
 
-    body = f"""{S.hero(
-        eyebrow="VA IRRRL &middot; Streamline refinance",
-        h1="You served. This is the one built for you.",
-        lede="The VA streamline refinance is the fastest, cheapest refinance in the business "
-             "&mdash; if your file recoups the cost in 36 months. Work out whether yours "
-             "does, right here, before you talk to anybody.",
-        ctas=[("#screener", "Run the numbers", "go"),
-              ("/contact", "Talk to a person", "ghost")],
-        trail=[("/", "Home"), ("/loans", "Loan options"), (None, "VA IRRRL")])}
-
-<section id="screener"><div class="wrap">
-<p class="eyebrow"><span class="tick" aria-hidden="true"></span>The screener</p>
-<h2>Does your file clear the 36-month test?</h2>
-<p class="sub">Nothing is collected and nothing leaves your browser. Change the disability
-answer and watch what happens &mdash; that is the part most veterans have never been shown.</p>
-
-<div class="split even" style="margin-top:34px">
-<div><div class="estcard">
-  <h3 style="font-size:20px">Your current VA loan</h3>
-  <form id="irrrl" novalidate style="margin-top:18px">
-    {fld("ir-balance", "Current balance", prefix="$", placeholder="250,000")}
-    {fld("ir-rate", "Rate you pay now", suffix="%", placeholder="7.25")}
-    {sel("ir-left", "Years left on the loan", ["27", "25", "20", "15", "10"])}
-    {fld("ir-new", "New rate to model", suffix="%", placeholder="Enter a rate",
-         help_="A figure <strong>you</strong> choose. We never pre-fill one &mdash; only a "
-               "licensed loan officer can quote you a rate.")}
-    {sel("ir-disability", "Service-connected disability rating?",
-         ["No, or not rated", "Yes, 10% or higher"],
-         help_="10% or higher waives the VA funding fee entirely. This is the biggest single "
-               "lever on the whole calculation.")}
-    {fld("ir-costs", "Other closing costs", value="3000", prefix="$",
-         help_="Title, recording, and lender fees. A working allowance until you have a real "
-               "estimate.")}
-  </form>
-</div></div>
-<div>
-  <div class="result" id="ir-out"><p class="cap">Fill in your balance and rates to begin.</p></div>
-  <div id="ir-detail" style="margin-top:18px"></div>
-</div>
-</div>
-</div></section>
-
-<section class="dark"><div class="wrap">
-<div class="split">
-<div>
-  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>The honest part</p>
-  <h2>Sometimes the answer is no.</h2>
-  <p class="sub">VA sets the 36-month recoupment rule precisely because streamline refinances
-  are easy to sell and easy to abuse. If the costs do not come back inside three years, the
-  loan should not be written, and a lender who tells you otherwise is not doing you a
-  favor.</p>
-  <p class="sub">The screener applies that test the same way an underwriter will. If your
-  file fails it, you will see that here first, for free, instead of finding out after
-  somebody has pulled your credit.</p>
-</div>
-<div>
-  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>What makes an IRRRL quick</p>
-  <ul class="ticks">
-    <li>Usually no new appraisal</li>
-    <li>Usually no new certificate of eligibility</li>
-    <li>Far less documentation than a full refinance</li>
-    <li>Funding fee of 0.5% &mdash; waived entirely at a 10%+ rating</li>
-    <li>Costs can normally be financed into the loan</li>
-  </ul>
-  <p class="disclose">Program features are set by VA and by the lender, and can change.
-  Nothing here is a commitment to lend. Subject to credit approval and underwriting.</p>
-</div>
-</div>
-</div></section>
-
-<section><div class="wrap">
-<p class="eyebrow"><span class="tick" aria-hidden="true"></span>Questions</p>
-<h2>Straight answers</h2>
-<div class="faq">{faq_block(faqs)}</div>
-</div></section>
-
-{S.cta_band(
-    head="Rated at 10% or more?",
-    sub="Then your funding fee is waived, and the math changes materially. Two minutes to see "
-        "what that actually looks like on your loan.",
-    primary=("/tools/estimate", "See what you could save"),
-    secondary=("/contact", "Talk to a person"))}
-"""
     return S.page(
         path="/loans/va-irrrl",
         title="VA IRRRL Streamline Refinance | Longview, TX — Greenlight Mortgage",
-        desc="VA IRRRL streamline refinance for East Texas veterans. Check the 36-month "
-             "recoupment test yourself, and see what a 10% disability rating does to the "
-             "funding fee. Greenlight Mortgage, Longview. Equal Housing Opportunity.",
-        body=body,
+        desc="VA IRRRL streamline refinance for East Texas veterans. See what a streamline "
+             "could change monthly, what a 10% disability rating does to the funding fee, "
+             "and the 36-month test every file must pass. Greenlight Mortgage, Longview. "
+             "Equal Housing Opportunity.",
+        body=S.funnel_body("va-irrrl", faqs),
         trail=[("/", "Home"), ("/loans", "Loan options"), ("/loans/va-irrrl", "VA IRRRL")],
         faqs=faqs,
-        scripts='<script src="/protools.js" defer></script>',
+        scripts=S.FUNNEL_SCRIPTS,
     )
 
 
