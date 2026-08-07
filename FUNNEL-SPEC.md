@@ -88,3 +88,21 @@ webinar bro. kt-voice patterns: "The math matters." "Stop guessing." "No fluff."
   `funnel_slide`, `funnel_cta`. Meta Pixel: do NOT fire `Lead` here (they already converted
   on Facebook) — fire `ViewContent` + custom `EstimatorUsed`.
 - Verify every internal link before calling it done. Mobile first — this traffic is ~90% phones.
+
+
+## WALKTHROUGH FEEDBACK FROM RYAN (required - overrides anything above that conflicts)
+
+Ryan clicked the full path: doors > /start/refi quiz > VA IRRRL page. Fix these:
+
+1. NO SCROLL-ONLY BUTTONS. "Run the numbers" scrolled two inches. A button that only scrolls is a wasted button. MERGE the hero and the estimator into ONE continuous opening: hook headline then the sliders/screener immediately beneath, visible in the first viewport on desktop, one thumb-flick on mobile. Kill the intermediate CTA.
+
+2. 2. CTA WORDING. Not "Talk to a person" (reads like a phone call is required) and NEVER "Get a quote" (compliance). Use "Talk to a real person" with subtext "Call or text 903-331-0892 - or have us reach out." Two tap options behind it: tel: link + "have us call you" mini-form (name prefilled if from router params).
+  
+   3. 3. THE MONEY BUTTON. After the estimator shows a number they like, the very next element is: "I like these numbers - let's make them real". Clicking it carries the estimator inputs + router answers forward (URL params into the existing apply/intake flow, and write them to the Supabase lead row) so nobody re-types anything. This is the primary conversion action on every funnel page.
+     
+      4. 4. 36-MONTH TEST PLACEMENT (VA IRRRL). Don't bury it - it merges into the estimator block as part of "your numbers", not a separate section further down.
+        
+         5. ## PHASE NEXT (do NOT build tonight - separate project): borrower portal
+        
+         6. Login > see application status, current loan stage, who has the file, and message the team. Foundation already exists in Supabase (profiles, allowed_staff, mortgage_statement_uploads, leads). Auth: email OTP/magic-link for borrowers (no passwords to forget); staff can use passwords. Requires the RLS policy audit FIRST - no borrower data behind auth until policies are verified. Tracked in the platform architecture doc in Notion (Phase 2-3).
+         7. 
