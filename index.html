@@ -86,47 +86,61 @@ src="https://www.facebook.com/tr?id=828760880613908&ev=PageView&noscript=1"/></n
 </header>
 <main id="main">
 
-<!-- ============ THE TWO DOORS — refi or purchase ============ -->
 <section class="doors" aria-label="What brings you here today">
   <div class="doorswrap">
-    <p class="doorsq">What brings you here today?</p>
+    <p class="doorsq"><strong>What brings you here today?</strong>
+    <span>Pick the answer below &mdash; the two paths are completely different,
+    and picking right saves you time.</span></p>
     <div class="doorsgrid">
 
-      <a class="door refi" href="/start/refi">
+      <div class="door refi">
         <span class="dnum">01</span>
         <span class="dkick">I already own a home</span>
         <span class="dtitle">Refinance</span>
-        <span class="dsub">Lower the payment, shorten the term, drop mortgage insurance, or use the equity. Veterans &mdash; ask about the VA IRRRL.</span>
-        <span class="dgo">See refinance options
-          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 6l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-      </a>
+        <ul class="dlist">
+          <li>Lower the payment</li>
+          <li>Shorten the term</li>
+          <li>Drop mortgage insurance</li>
+          <li>Use my equity</li>
+        </ul>
+        <p class="dnote">Veteran with a VA loan? Ask about the
+        <a href="/loans/va-irrrl">VA IRRRL</a> &mdash; the streamline refinance
+        built for you.</p>
+        <a class="dgo dbtn" href="/start/refi" data-funnel-cta="door_refi">
+          Click here &mdash; see refinancing options &rarr;</a>
+      </div>
 
-      <a class="door buy" href="/start/buy">
+      <div class="door buy">
         <span class="dnum">02</span>
         <span class="dkick">I&rsquo;m buying a home</span>
         <span class="dtitle">Purchase</span>
-        <span class="dsub">First house or fifth. VA, FHA, USDA, Conventional and Jumbo &mdash; we shop the network and bring back the real options.</span>
-        <span class="dgo">See loan options
-          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 6l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-      </a>
+        <span class="dsub">A completely different path than refinancing &mdash;
+        and it starts with one question:</span>
+        <p class="dvetq">Are you a veteran or service member?</p>
+        <div class="dvet">
+          <a class="dgo dbtn" href="/loans/va?from=door&amp;mil=yes" data-funnel-cta="door_va">
+            YES &mdash; use my VA benefit &rarr;</a>
+          <a class="btn onDark lg dbtn" href="/start/buy" data-funnel-cta="door_buy">
+            NO &mdash; find my path (3 quick taps) &rarr;</a>
+        </div>
+      </div>
 
     </div>
-    <p class="doorsnote">Not sure yet? <a href="/tools/estimate">Run the numbers first</a> &mdash; estimate only, no hard credit pull.</p>
+    <p class="doorsnote">Not sure yet? <a href="#estimator">Play with the dials
+    below</a> &mdash; estimate only, no hard credit pull, nobody asks for your email.</p>
   </div>
 </section>
 
 <div class="hero home"><div class="wrap">
 <div class="herogrid">
 <div>
-  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>Longview, Texas &middot; Licensed in five states</p>
+  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>Longview, Texas &middot; Licensed in four states</p>
   <h1>A mortgage broker, <span class="rule">not a bank.</span></h1>
   <p class="lede">A bank can only sell you what the bank has. We shop a network of lenders,
   bring back the real options, and tell you which one actually costs you less &mdash;
   including when the answer is to do nothing.</p>
   <div class="cta">
-    <a class="btn go lg" href="/tools/estimate">See what you could save</a>
+    <a class="btn go lg" href="#estimator" data-big-cta data-short-label="See your number">See what you could save &darr;</a>
     <a class="btn ghost lg" href="/about">Meet the team</a>
   </div>
   <div class="heroproof">
@@ -149,6 +163,114 @@ src="https://www.facebook.com/tr?id=828760880613908&ev=PageView&noscript=1"/></n
 </div>
 </div>
 </div></div>
+
+<section class="frig-wrap" id="estimator"><div class="wrap">
+<div class="frig" data-funnel data-dual data-mode="refi" data-slug="home">
+  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>The estimator</p>
+  <h2>Drag the dials. Watch the number.</h2>
+  <p class="sub">Pick your lane, set the dials, and get a real starting number in about
+  ten seconds &mdash; an estimate, not a promise, and nobody asks for your email first.</p>
+  <div class="ftabs" role="group" aria-label="What are you here to do?">
+    <button type="button" data-mode-tab="refi" aria-pressed="true">I own &mdash; lower my payment</button>
+    <button type="button" data-mode-tab="purchase" aria-pressed="false">I'm buying &mdash; size my payment</button>
+  </div>
+  <div class="frig-live">
+    <div class="fresult">
+      <p class="fcap"><span data-mode-only="refi">Estimated monthly savings</span><span data-mode-only="purchase" hidden>Estimated monthly payment (P&amp;I)</span></p>
+      <p class="fnum" data-out>&mdash;</p>
+      <p class="fsub" data-out-sub></p>
+      <p class="fnote">*Estimate only &mdash; not a quote, offer, or approval. Subject to credit approval and underwriting. Your actual rate and payment will differ.</p>
+      <p class="fsample" data-sample-label></p>
+      <span class="sr-only" role="status" aria-live="polite" data-out-live></span>
+      <div class="yesrow">
+        <p class="yesq">Want your real number?</p>
+        <button type="button" class="btn-yes" data-yes-btn>YES &mdash; run my real numbers <span class="arrow">&rarr;</span></button>
+        <p class="yessmall">30 seconds. No credit inquiry at this step. One call from a licensed loan officer.</p>
+      </div>
+    </div>
+    <div class="fsliders" data-mode-only="refi">
+      <div class="fslider">
+        <div class="flabel"><label for="h-pay">Your current monthly payment (P&amp;I)</label><output data-for="pay" for="h-pay">$1,850</output></div>
+        <input type="range" id="h-pay" data-var="pay" data-fmt="money" min="500" max="4000" step="25" value="1850" aria-label="Your current monthly principal and interest payment, dollars">
+        <p class="fhint">Principal &amp; interest &mdash; the part before taxes and insurance.</p>
+      </div>
+      <div class="fslider">
+        <div class="flabel"><label for="h-cur">Your current rate</label><output data-for="cur" for="h-cur">6.875%</output></div>
+        <input type="range" id="h-cur" data-var="cur" data-fmt="pct" min="3" max="9" step="0.125" value="6.875" aria-label="Your current interest rate, percent">
+        <p class="fhint">It's on page one of your statement.</p>
+      </div>
+      <details class="fbal" data-balance>
+        <summary>Know your balance? Dial it in for a tighter estimate</summary>
+        <div class="fslider">
+          <div class="flabel"><label for="h-bal">Loan balance</label><output data-for="bal" for="h-bal">$250,000</output></div>
+          <input type="range" id="h-bal" data-var="bal" data-fmt="money" min="50000" max="800000" step="5000" value="250000" aria-label="Your current loan balance, dollars">
+        </div>
+      </details>
+    </div>
+    <div class="fsliders" data-mode-only="purchase" hidden>
+      <div class="fslider">
+        <div class="flabel"><label for="h-price">Home price</label><output data-for="price" for="h-price">$250,000</output></div>
+        <input type="range" id="h-price" data-var="price" data-fmt="money" min="80000" max="900000" step="5000" value="250000" aria-label="Home price, dollars">
+      </div>
+      <div class="fslider">
+        <div class="flabel"><label for="h-down">Down payment</label><output data-for="down" for="h-down">5%</output></div>
+        <input type="range" id="h-down" data-var="down" data-fmt="pct" min="0" max="30" step="0.5" value="5" aria-label="Down payment, percent of price">
+        <p class="fhint">Zero is real on VA and USDA. The 20% rule is a myth.</p>
+      </div>
+    </div>
+  </div>
+  <div class="frig-fallback">
+    <p>The interactive estimator needs JavaScript &mdash; but the people don't.
+    A licensed loan officer can run your real numbers on one call.</p>
+    <a class="btn go" href="tel:9033310892">Call 903-331-0892</a>
+    <p class="fnote" style="max-width:52ch;margin-inline:auto">*Estimate only &mdash; not a quote, offer, or approval. Subject to credit approval and underwriting. Your actual rate and payment will differ.</p>
+  </div>
+</div>
+</div></section>
+
+<section class="yeswrap alt" id="yes"><div class="wrap">
+<p class="eyebrow" style="text-align:center;justify-content:center"><span class="tick" aria-hidden="true"></span>The next step</p>
+<h2 style="text-align:center;margin-inline:auto">Yes? Then let&rsquo;s make it real.</h2>
+<p class="sub" style="text-align:center;margin-inline:auto;max-width:52ch">Thirty seconds. Your dials ride along with it, a licensed loan officer checks them against your actual loan, and you get one call &mdash; not a call center.</p>
+<div class="yescard">
+  <div class="yesbeats"><span>1 &middot; Your numbers ride along</span><span>2 &middot; 30 seconds of contact info</span><span>3 &middot; One call from a licensed loan officer</span></div>
+  <div class="yesfacts" aria-label="What you set on the estimator"><span class="yfact" data-mode-only="refi">You pay<b data-yes-fact="pay">&mdash;</b></span><span class="yfact" data-mode-only="refi">Your rate<b data-yes-fact="cur">&mdash;</b></span><span class="yfact" data-mode-only="refi">Estimated saving<b data-yes-fact="saving">&mdash;</b></span><span class="yfact" data-mode-only="purchase">Home price<b data-yes-fact="price">&mdash;</b></span><span class="yfact" data-mode-only="purchase">Down payment<b data-yes-fact="down">&mdash;</b></span><span class="yfact" data-mode-only="purchase">Estimated payment<b data-yes-fact="pi">&mdash;</b></span></div>
+  <form data-yes-form data-glm-form="funnel_yes" data-glm-keep novalidate>
+    <input type="hidden" name="loan_type" value="home">
+    <input type="hidden" name="current_payment" value=""><input type="hidden" name="current_rate" value=""><input type="hidden" name="mortgage_balance" value=""><input type="hidden" name="estimated_monthly_savings" value=""><input type="hidden" name="home_price" value=""><input type="hidden" name="down_payment_pct" value=""><input type="hidden" name="estimated_payment" value=""><input type="hidden" name="goal" value="refinance">
+    <div class="yesfields">
+      <div class="frow">
+        <div class="field"><label for="y-name">Your name</label>
+          <input id="y-name" name="name" type="text" autocomplete="name" required maxlength="120">
+          <p class="err">Please enter your name.</p></div>
+        <div class="field"><label for="y-phone">Phone</label>
+          <input id="y-phone" name="phone" type="tel" autocomplete="tel" required maxlength="32">
+          <p class="err">Please enter a phone number.</p></div>
+      </div>
+      <div class="field"><label for="y-email">Email</label>
+        <input id="y-email" name="email" type="email" autocomplete="email" required maxlength="254">
+        <p class="err">Please enter a valid email.</p></div>
+      <div class="consent">
+        <input type="checkbox" id="y-tcpa" name="tcpa_consent" value="yes">
+        <label for="y-tcpa">I agree that Greenlight Mortgage, LLC (NMLS #2426021) and its loan officers may contact me at the phone number I provided, including by autodialed or pre-recorded calls and by text message, about my mortgage inquiry. Message and data rates may apply. <strong>Consent is not a condition of obtaining a loan or any other service.</strong> I can opt out at any time by replying STOP to a text, asking the caller to remove me, or emailing us &mdash; see our <a href="/privacy">Privacy Policy</a>.</label>
+      </div>
+      <button class="btn-yes" type="submit" data-funnel-cta="yes_submit">I like these numbers &mdash; let&rsquo;s make them real <span class="arrow">&rarr;</span></button>
+      <p class="formstatus" role="status" aria-live="polite"></p>
+      <p class="disclose">Sending this is not an application for credit and is
+      <strong>not a commitment to lend</strong>. No credit inquiry happens at this step.
+      Your estimate is only an estimate &mdash; a licensed loan officer confirms real
+      figures after a complete application, subject to credit approval and underwriting.</p>
+    </div>
+    <div class="yesnext">
+  <h3>That&rsquo;s a YES. Here&rsquo;s how to make it fast.</h3>
+  <p>A licensed loan officer picks this up and calls once &mdash; usually same day.
+  Want to speed it up? Call <a href="tel:9033310892">903-331-0892</a> now, or jump
+  straight into <a href="https://greenlight.my1003app.com/233918/register" rel="noopener" data-carry>the full secure application</a>
+  if you already know you're in.</p>
+</div>
+  </form>
+</div>
+</div></section>
 
 <div class="wrap"><div class="tiles"><a class="tile" href="/loans"><span class="ti"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M16 4.5v23" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M6.5 8.5h15l3.5 3.5-3.5 3.5h-15z" fill="currentColor" opacity=".15"/><path d="M6.5 8.5h15l3.5 3.5-3.5 3.5h-15z" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M25.5 18h-15L7 21.5 10.5 25h15z" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M12 27.5h8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span><h3>Explore loan options</h3><p>Conventional, FHA, VA, USDA, jumbo and refinance — what each one actually costs you.</p><span class="go">Open <svg viewBox="0 0 14 9" aria-hidden="true"><path d="M9.2.8 13 4.5 9.2 8.2M13 4.5H1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a><a class="tile" href="/tools/calculator"><span class="ti"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M4.5 25.5V6.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M4.5 25.5h23" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M8 25.5c6-1 9-3.5 11-8s3.5-7.5 7.5-9v17z" fill="currentColor" opacity=".15"/><path d="M8 22.5c6-1 9-3.5 11-8s3.5-7.5 7.5-9" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="26.5" cy="5.5" r="2" fill="currentColor"/></svg></span><h3>Mortgage calculator</h3><p>Payment breakdown, full amortization, and what an extra $100 a month really does.</p><span class="go">Open <svg viewBox="0 0 14 9" aria-hidden="true"><path d="M9.2.8 13 4.5 9.2 8.2M13 4.5H1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a><a class="tile" href="/tools/home-value"><span class="ti"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M5 15 16 6l11 9v12H5z" fill="currentColor" opacity=".15"/><path d="M3 16.5 16 5.5l13 11" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M6 14.5V27h20V14.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M12.5 27v-7.5h7V27" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M20.5 11.5h4.5V16" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span><h3>Check my home value</h3><p>A local estimate on your address, prepared by someone who works this market.</p><span class="go">Open <svg viewBox="0 0 14 9" aria-hidden="true"><path d="M9.2.8 13 4.5 9.2 8.2M13 4.5H1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a><a class="tile" href="/testimonials"><span class="ti"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M4.5 8.5A2.5 2.5 0 0 1 7 6h18a2.5 2.5 0 0 1 2.5 2.5v11A2.5 2.5 0 0 1 25 22h-9.5L9 27v-5H7a2.5 2.5 0 0 1-2.5-2.5z" fill="currentColor" opacity=".15"/><path d="M4.5 8.5A2.5 2.5 0 0 1 7 6h18a2.5 2.5 0 0 1 2.5 2.5v11A2.5 2.5 0 0 1 25 22h-9.5L9 27v-5H7a2.5 2.5 0 0 1-2.5-2.5z" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M12 10.5c-1.8 0-3 1.2-3 2.9 0 1.5 1 2.6 2.4 2.6.4 0 .8-.1 1-.2-.3 1.1-1.2 2-2.3 2.4M20.5 10.5c-1.8 0-3 1.2-3 2.9 0 1.5 1 2.6 2.4 2.6.4 0 .8-.1 1-.2-.3 1.1-1.2 2-2.3 2.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span><h3>Client testimonials</h3><p>Real clients, in their own words, with the source shown on every one.</p><span class="go">Open <svg viewBox="0 0 14 9" aria-hidden="true"><path d="M9.2.8 13 4.5 9.2 8.2M13 4.5H1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a></div></div>
 
@@ -236,7 +358,7 @@ the payment you have.</p>
 </div>
 <div class="reveal">
   <div class="callout" style="margin-top:0">
-    <h3>Licensed in five states</h3>
+    <h3>Licensed in four states</h3>
     <p>Texas, Louisiana, North Dakota and Alabama. If you are moving out of the area &mdash; or into it &mdash; we may
     still be able to help.</p>
   </div>
@@ -290,7 +412,7 @@ the payment you have.</p>
 <div>
   <p class="places"><span>Longview</span><span>Gilmer</span><span>Kilgore</span><span>Hallsville</span><span>White Oak</span><span>Tyler</span><span>Marshall</span><span>Jefferson</span></p>
   <p class="districts">Including the Spring Hill ISD, Pine Tree ISD, Hallsville ISD communities &mdash; and we lend
-  in five states, so a move out of the area does not have to mean a new lender.</p>
+  in four states, so a move out of the area does not have to mean a new lender.</p>
 </div>
 </div>
 </div></section>
@@ -301,7 +423,7 @@ the payment you have.</p>
 <p>Answer a few questions and see an estimate on screen. No hard credit pull to begin, and a licensed loan officer follows up within one business day — once, not six times.</p>
 <div class="cta">
 <a class="btn go" href="/tools/estimate">See what you could save</a>
-<a class="btn onDark" href="/contact">Talk to a person</a>
+<a class="btn onDark" href="/contact">Talk to a real person</a>
 </div>
 <p class="bandnote">Not a commitment to lend. Subject to credit approval and underwriting.</p>
 </div></div></section>
@@ -338,7 +460,7 @@ nmlsconsumeraccess.org.</small></span></div>
 <path d="M12 30.5h16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
 <path d="M17 32.6h6v2.4h-6z" fill="currentColor"/>
 </svg>
-<span><strong>Powered by Co/LAB Lending</strong><small>Licensed in five states:
+<span><strong>Powered by Co/LAB Lending</strong><small>Licensed in four states:
 Texas, Louisiana, North Dakota and Alabama.</small></span></div>
 </div></div></div>
 <footer><div class="wrap">
@@ -381,7 +503,7 @@ Texas, Louisiana, North Dakota and Alabama.</small></span></div>
 
 <div class="legal">
 <p><strong>Greenlight Mortgage, LLC</strong> is a licensed Mortgage Broker in the state of Texas.
-Licensed in five states &mdash; Texas 2426021 &middot; Louisiana 2426021 &middot; North Dakota ML104832 &middot; Michigan (license # pending) &middot; Alabama 23417.
+Licensed in four states &mdash; Texas 2426021 &middot; Louisiana 2426021 &middot; North Dakota ML104832 &middot; Alabama 23417.
 4523 Judson Rd, Longview, TX 75605 &middot; 903-331-0892.</p>
 
 <p>You will see two NMLS numbers on this site, and both are correct. <strong>#2426021</strong> licenses the company, Greenlight Mortgage, LLC. <strong>#233918</strong> licenses Kenneth Travis personally as a loan originator. Federal law licenses the business and the individual separately, so a broker will always have both. You can look either of them up at <a href="https://www.nmlsconsumeraccess.org">nmlsconsumeraccess.org</a>.</p>
@@ -409,6 +531,6 @@ Equal Credit Opportunity Act. Equal Housing Opportunity.</p>
 <script src="/config.js" defer></script>
 <script src="/site.js" defer></script>
 <script src="/partner.js" defer></script>
-
+<script src="/forms.js" defer></script><script src="/assets/rates.js" defer></script><script src="/assets/funnel.js" defer></script>
 </body>
 </html>

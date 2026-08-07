@@ -17,6 +17,19 @@
 
 <link rel="preconnect" href="https://athovwknbwbbqworsbrm.supabase.co">
 <script>document.documentElement.className+=" js"</script>
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '828760880613908');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=828760880613908&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel -->
 <link rel="stylesheet" href="/style.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.glmtg.com/"},{"@type":"ListItem","position":2,"name":"Loan options","item":"https://www.glmtg.com/loans"},{"@type":"ListItem","position":3,"name":"USDA","item":"https://www.glmtg.com/loans/usda"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does my area qualify?","acceptedAnswer":{"@type":"Answer","text":"More of East Texas than most people expect. It's determined by specific address, not by city or county, so check the actual property."}},{"@type":"Question","name":"What are the income limits?","acceptedAnswer":{"@type":"Answer","text":"They're set by household size and area, and they're revised periodically. We'll check yours against the current figures."}},{"@type":"Question","name":"Is it really zero down?","acceptedAnswer":{"@type":"Answer","text":"On eligible properties, yes. There are still closing costs, which is a separate conversation."}}]}</script>
@@ -72,58 +85,191 @@
 </div>
 </header>
 <main id="main">
-<div class="hero "><div class="wrap">
-<nav class="crumb" aria-label="Breadcrumb"><a href="/">Home</a> <span>/</span> <a href="/loans">Loan options</a> <span>/</span> <span>USDA</span></nav>
-<p class="eyebrow"><span class="tick" aria-hidden="true"></span>USDA loans &middot; Longview, TX</p>
-<h1>USDA loans</h1>
-<p class="lede">The most overlooked program in East Texas. Zero down payment on eligible properties — and far more of the area around Longview qualifies than people assume.</p>
-<div class="cta"><a class="btn go" href="/tools/estimate">See what you could save</a><a class="btn ghost" href="/contact">Talk to a person</a></div>
-</div></div>
-
-<section><div class="wrap">
-<div class="split">
-<div class="reveal">
-  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>Who this is for</p>
-  <h2>Is this you?</h2>
-  <ul class="ticks"><li>Buyers looking just outside Longview city limits</li><li>Anyone buying in Gilmer, Hallsville, White Oak, Diana, Ore City and similar</li><li>Households within the income limits for the area</li><li>Buyers with nothing saved for a down payment</li></ul>
-</div>
-<div class="reveal">
-  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>The honest part</p>
-  <h2>Where it can bite</h2>
-  <p class="sub">Two things have to line up: the property address and your household income. If either misses, USDA is off the table — so it&#x27;s worth checking the address early rather than falling in love with a house first.</p>
-  <div class="callout">
-    <h3>We will tell you when it is not worth it.</h3>
-    <p>We are brokers, not a single bank with one menu to sell. If a different program
-    serves you better &mdash; or if doing nothing serves you better &mdash; that is the
-    answer you will get.</p>
+<div class="hero funnel slim"><div class="wrap">
+<nav class="crumb" aria-label="Breadcrumb"><a href="/">Home</a> <span>/</span> <a href="/loans">Loan options</a> <span>/</span> <span>USDA loans</span></nav>
+<p class="eyebrow"><span class="tick" aria-hidden="true"></span><span data-fb-kicker>USDA loans &middot; East Texas</span></p>
+<h1>Zero down &mdash; and more of East Texas qualifies <em>than you think</em>.</h1>
+<p class="lede">The most overlooked loan in the region. If the address is eligible and your household income fits, the down payment is zero. Not low. Zero.</p>
+</div></div><section class="frig-wrap" id="estimator"><div class="wrap">
+<div class="frig" data-funnel data-mode="purchase" data-slug="usda">
+  <h2 class="sr-only">See what zero-down actually costs monthly.</h2>
+  <p class="riglead">Leave the down payment dial on zero &mdash; that's the program. The number below is principal and interest on a sample figure, so you have somewhere real to start.</p>
+  <div class="frig-live">
+    <div class="fresult">
+      <p class="fcap">Estimated monthly payment (P&amp;I)</p>
+      <p class="fnum" data-out>&mdash;</p>
+      <p class="fsub" data-out-sub></p>
+      <p class="fnote">*Estimate only &mdash; not a quote, offer, or approval. Subject to credit approval and underwriting. Your actual rate and payment will differ.</p>
+      <p class="fsample" data-sample-label></p>
+      <span class="sr-only" role="status" aria-live="polite" data-out-live></span>
+      <div class="yesrow">
+        <p class="yesq">Like these numbers?</p>
+        <button type="button" class="btn-yes" data-yes-btn>I like these numbers &mdash; let&rsquo;s make them real <span class="arrow">&rarr;</span></button>
+        <p class="yessmall">Your dials come with you &mdash; nobody re-types anything. No credit inquiry at this step.</p>
+      </div>
+    </div>
+    <div class="fsliders">
+      <div class="fslider">
+        <div class="flabel"><label for="f-price">Home price</label><output data-for="price" for="f-price">$200,000</output></div>
+        <input type="range" id="f-price" data-var="price" data-fmt="money" min="80000" max="900000" step="5000" value="200000" aria-label="Home price, dollars">
+      </div>
+      <div class="fslider">
+        <div class="flabel"><label for="f-down">Down payment</label><output data-for="down" for="f-down">0%</output></div>
+        <input type="range" id="f-down" data-var="down" data-fmt="pct" min="0" max="20" step="0.5" value="0" aria-label="Down payment, percent of price">
+      </div>
+    </div>
+  </div>
+  <div class="frig-fallback">
+    <p>The interactive estimator needs JavaScript &mdash; but the people don't.
+    A licensed loan officer can run your real numbers on one call.</p>
+    <a class="btn go" href="tel:9033310892">Call 903-331-0892</a>
+    <p class="fnote" style="max-width:52ch;margin-inline:auto">*Estimate only &mdash; not a quote, offer, or approval. Subject to credit approval and underwriting. Your actual rate and payment will differ.</p>
   </div>
 </div>
+</div></section><section class="frig-wrap" id="towns"><div class="wrap">
+<div class="frig">
+  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>The map</p>
+  <h2>Is your town on the map?</h2>
+  <p class="sub">Tap the area you're looking in. These are East Texas communities where homes regularly qualify &mdash; but USDA runs on the exact address, so the real check is a two-minute conversation, not a guess.</p>
+  <div class="townchips" data-town-picker><button type="button" data-town="Gilmer" aria-pressed="false">Gilmer</button><button type="button" data-town="Hallsville" aria-pressed="false">Hallsville</button><button type="button" data-town="White Oak" aria-pressed="false">White Oak</button><button type="button" data-town="Diana" aria-pressed="false">Diana</button><button type="button" data-town="Ore City" aria-pressed="false">Ore City</button><button type="button" data-town="Jefferson" aria-pressed="false">Jefferson</button></div>
+  <p class="townout" data-town-out aria-live="polite">Tap a town to see where it stands.</p>
+  <p class="fsample">Area names listed because homes there commonly qualify &mdash; USDA
+  eligibility is set by exact address and current USDA maps, so nothing here is a
+  determination. We check the actual property with you.</p>
 </div>
-</div></section>
+</div></section><section class="yeswrap alt" id="yes"><div class="wrap">
+<p class="eyebrow" style="text-align:center;justify-content:center"><span class="tick" aria-hidden="true"></span>The next step</p>
+<h2 style="text-align:center;margin-inline:auto">Like that number? Let&rsquo;s check it for real.</h2>
+<p class="sub" style="text-align:center;margin-inline:auto;max-width:52ch">Thirty seconds. Your numbers ride along, and a licensed loan officer runs your actual situation &mdash; credit, income, program &mdash; and calls once with real answers.</p>
+<div class="yescard">
+  <div class="yesbeats"><span>1 &middot; Your numbers ride along</span><span>2 &middot; 30 seconds of contact info</span><span>3 &middot; One call from a licensed loan officer</span></div>
+  <div class="yesfacts" aria-label="What you set on the estimator"><span class="yfact">Home price<b data-yes-fact="price">&mdash;</b></span><span class="yfact">Down payment<b data-yes-fact="down">&mdash;</b></span><span class="yfact">Estimated payment<b data-yes-fact="pi">&mdash;</b></span></div>
+  <form data-yes-form data-glm-form="funnel_yes" data-glm-keep novalidate>
+    <input type="hidden" name="loan_type" value="usda">
+    <input type="hidden" name="home_price" value=""><input type="hidden" name="down_payment_pct" value=""><input type="hidden" name="estimated_payment" value=""><input type="hidden" name="goal" value="purchase">
+    <div class="yesfields">
+      <div class="frow">
+        <div class="field"><label for="y-name">Your name</label>
+          <input id="y-name" name="name" type="text" autocomplete="name" required maxlength="120">
+          <p class="err">Please enter your name.</p></div>
+        <div class="field"><label for="y-phone">Phone</label>
+          <input id="y-phone" name="phone" type="tel" autocomplete="tel" required maxlength="32">
+          <p class="err">Please enter a phone number.</p></div>
+      </div>
+      <div class="field"><label for="y-email">Email</label>
+        <input id="y-email" name="email" type="email" autocomplete="email" required maxlength="254">
+        <p class="err">Please enter a valid email.</p></div>
+      <div class="consent">
+        <input type="checkbox" id="y-tcpa" name="tcpa_consent" value="yes">
+        <label for="y-tcpa">I agree that Greenlight Mortgage, LLC (NMLS #2426021) and its loan officers may contact me at the phone number I provided, including by autodialed or pre-recorded calls and by text message, about my mortgage inquiry. Message and data rates may apply. <strong>Consent is not a condition of obtaining a loan or any other service.</strong> I can opt out at any time by replying STOP to a text, asking the caller to remove me, or emailing us &mdash; see our <a href="/privacy">Privacy Policy</a>.</label>
+      </div>
+      <button class="btn-yes" type="submit" data-funnel-cta="yes_submit">I like these numbers &mdash; let&rsquo;s make them real <span class="arrow">&rarr;</span></button>
+      <p class="formstatus" role="status" aria-live="polite"></p>
+      <p class="disclose">Sending this is not an application for credit and is
+      <strong>not a commitment to lend</strong>. No credit inquiry happens at this step.
+      Your estimate is only an estimate &mdash; a licensed loan officer confirms real
+      figures after a complete application, subject to credit approval and underwriting.</p>
+    </div>
+    <div class="yesnext">
+  <h3>That&rsquo;s a YES. Here&rsquo;s what happens next.</h3>
+  <p>A licensed loan officer calls within one business day &mdash; once, not six times
+  in an hour. Want to move faster? Call <a href="tel:9033310892">903-331-0892</a> now, or
+  start <a href="https://greenlight.my1003app.com/233918/register" rel="noopener" data-carry>the full secure application</a>.</p>
+</div>
+  </form>
+</div>
+</div></section><section><div class="wrap">
+<p class="eyebrow"><span class="tick" aria-hidden="true"></span>How this works</p>
+<h2>Three steps. No fluff.</h2>
+<div class="steps fsteps"><div class="step"><h3>Check your town</h3><p>USDA eligibility is drawn by address, not by county &mdash; and the map covers far more of East Texas than people assume. Don't rule yourself out from your couch.</p>
+<a class="microcta" href="#towns">Tap your town <svg viewBox="0 0 14 9" aria-hidden="true"><path d="M9.2.8 13 4.5 9.2 8.2M13 4.5H1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div><div class="step"><h3>Talk to a human</h3><p>Two things have to line up: the property and your household income. A licensed loan officer checks both against the current limits in minutes. No hard credit pull to start.</p>
+<a class="microcta" href="tel:9033310892" data-funnel-cta="step_call">Call 903-331-0892 <svg viewBox="0 0 14 9" aria-hidden="true"><path d="M9.2.8 13 4.5 9.2 8.2M13 4.5H1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div><div class="step"><h3>Buy the house, keep the savings</h3><p>Zero down doesn't mean zero planning &mdash; closing costs still exist. But it changes what's possible right now, this year, not five years of saving from now.</p>
+<a class="microcta" href="#cta">Let's run my real numbers <svg viewBox="0 0 14 9" aria-hidden="true"><path d="M9.2.8 13 4.5 9.2 8.2M13 4.5H1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></div>
+</div></section><section class="alt"><div class="wrap">
+<p class="eyebrow"><span class="tick" aria-hidden="true"></span>The honest part</p>
+<h2>What's actually stopping you?</h2>
+<div class="grid g3"><div class="card reveal"><span class="num">01</span><h3>&ldquo;I'm too close to town to qualify.&rdquo;</h3><p>People assume that constantly, and they're wrong constantly. Eligibility is drawn address by address, and communities just outside Longview qualify all the time. Check before you assume.</p></div><div class="card reveal"><span class="num">02</span><h3>&ldquo;I don't earn enough &mdash; or too much.&rdquo;</h3><p>USDA has household income limits set by area and family size, revised periodically. The only way to know is to check yours against the current figures &mdash; which takes us about two minutes.</p></div><div class="card reveal"><span class="num">03</span><h3>&ldquo;Zero down sounds too good to be true.&rdquo;</h3><p>It's a federal rural-development program that's been running for decades &mdash; one of exactly two zero-down loans in America, and the other one requires military service. The catch is simply that the address and your income both have to fit.</p></div></div>
+</div></section><section><div class="wrap">
+<p class="eyebrow"><span class="tick" aria-hidden="true"></span>East Texas talks</p>
+<h2>People we've already walked home.</h2>
+<div class="grid g3 proofgrid">
+<div>
+  <div class="vidframe">
+    <video controls preload="none" playsinline
+           poster="/assets/from-old-site/kenneth-travis-headshot.png">
+      <source src="/assets/from-old-site/kt-video.mp4" type="video/mp4">
+      Your browser cannot play this video.
+    </video>
+  </div>
+  <p class="vidcap">Kenneth Travis &middot; President &amp; CEO &middot;
+  Loan Originator NMLS #233918</p>
+</div>
+<figure class="quote reveal"><blockquote>From pre-approval right through to closing on my home the Kenneth Travis team at Greenlight Mortgage did a great job. All the staff were extremely friendly, helpful and knowledgeable. The whole process was very smooth and helped remove a lot of potential stress. I would definitely use them again.</blockquote><figcaption><span class="who">Brent &middot; Longview, TX</span><time datetime="2021-10-01">1 October 2021</time><a class="prov ok" href="https://www.kennethtravis.com/review/a-great-lender-knowledgeable-and-friendly/" rel="nofollow noopener" target="_blank">Verified on kennethtravis.com &nearr;</a></figcaption></figure><figure class="quote reveal"><blockquote>The Kenneth Travis Team was wonderful to work with they made the whole process run smooth. Candice and Anna made sure we stayed informed throughout the whole process and helped whenever and wherever along the way. I would recommend this group to everyone! Thank Ya&#x27;ll So Much!!</blockquote><figcaption><span class="who">Maxwell &middot; Jefferson, TX</span><time datetime="2021-10-01">1 October 2021</time><a class="prov ok" href="https://www.kennethtravis.com/review/maxwell/" rel="nofollow noopener" target="_blank">Verified on kennethtravis.com &nearr;</a></figcaption></figure></div>
+<div class="trustrow fproof-trust">
+  <div class="trust"><svg class="mark" viewBox="0 0 40 40" role="img" aria-label="Equal Housing Opportunity">
+<path d="M20 5 3.5 18.2h4.2V35h24.6V18.2h4.2z" fill="currentColor" opacity=".14"/>
+<path d="M20 5 3.5 18.2h4.2V35h24.6V18.2h4.2z" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linejoin="round"/>
+<rect x="14" y="21.5" width="12" height="2.7" rx="1.35" fill="currentColor"/>
+<rect x="14" y="27" width="12" height="2.7" rx="1.35" fill="currentColor"/>
+</svg><span><strong>Equal Housing Opportunity</strong></span></div>
+  <div class="trust"><svg class="mark" viewBox="0 0 40 40" role="img" aria-label="NMLS Consumer Access">
+<circle cx="20" cy="20" r="15.6" fill="none" stroke="currentColor" stroke-width="2.1"/>
+<path d="M20 11.4 27 15v5.2c0 4.4-2.9 7.6-7 8.8-4.1-1.2-7-4.4-7-8.8V15z"
+      fill="currentColor" opacity=".16"/>
+<path d="M20 11.4 27 15v5.2c0 4.4-2.9 7.6-7 8.8-4.1-1.2-7-4.4-7-8.8V15z"
+      fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+<path d="m16.9 20.2 2.3 2.3 4.1-4.3" fill="none" stroke="currentColor"
+      stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+</svg><span><strong>NMLS #2426021</strong><small>Kenneth Travis, NMLS #233918</small></span></div>
+  <div class="trust"><svg class="mark" viewBox="0 0 40 40" role="img" aria-label="Greenlight">
+<path d="M20 2.5v2.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+<path d="M20 5.2 27.8 12H12.2z" fill="currentColor"/>
+<path d="M14 13.5h12l1.6 15.2H12.4z" fill="currentColor" opacity=".22"/>
+<path d="M14 13.5h12l1.6 15.2H12.4z" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linejoin="round"/>
+<path d="M20 13.5v15.2M13.2 21h13.6" stroke="currentColor" stroke-width="1.3" opacity=".55"/>
+<path d="M12 30.5h16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+<path d="M17 32.6h6v2.4h-6z" fill="currentColor"/>
+</svg><span><strong>Powered by Co/LAB Lending</strong></span></div>
+</div>
+</div></section><section class="band-wrap bigband" id="cta"><div class="wrap"><div class="ctaband">
+<span class="signal" aria-hidden="true"><i></i><i></i><i></i></span>
+<h2>Two minutes settles it.</h2>
+<p>Give us the address and we'll check the map and the income limits with you. If USDA fits, it's zero down. If not, we'll tell you what does fit. No hard credit pull to start.</p>
 
-<section class="dark"><div class="wrap">
-<p class="eyebrow"><span class="tick" aria-hidden="true"></span>What matters</p>
-<h2>The parts worth knowing</h2>
-<div class="grid g2"><div class="card reveal"><h3>Zero down payment</h3><p>On eligible properties. One of only two zero-down programs, and the other one requires military service.</p></div><div class="card reveal"><h3>The map is bigger than you think</h3><p>People rule themselves out assuming they&#x27;re too close to town. Check the address before you assume.</p></div><div class="card reveal"><h3>Income limits apply</h3><p>It&#x27;s tied to household income for the area, so it isn&#x27;t for everyone.</p></div><div class="card reveal"><h3>Property has to qualify too</h3><p>Both you and the house have to be eligible.</p></div></div>
-</div></section>
-
-<section><div class="wrap">
+<a class="btn go xl" href="tel:9033310892" data-big-cta
+   data-short-label="Let&rsquo;s run my real numbers" data-funnel-cta="call">Let&rsquo;s run my real numbers &rarr;</a>
+<div class="talkrow">
+<p class="bandalt"><strong>Talk to a real person.</strong>
+Call or text <a href="tel:9033310892" data-funnel-cta="band_call">903-331-0892</a>
+&mdash; or have us reach out.</p>
+<details class="reachout">
+  <summary data-funnel-cta="reachout_open">Have us reach out</summary>
+  <form class="fcallback" data-glm-form="funnel_callback" novalidate>
+    <input type="hidden" name="loan_type" value="usda">
+    <div class="frow">
+      <div class="field"><label class="sr-only" for="cb-name">Your name</label>
+        <input id="cb-name" name="name" type="text" autocomplete="name" placeholder="Your name" required maxlength="120"></div>
+      <div class="field"><label class="sr-only" for="cb-phone">Phone number</label>
+        <input id="cb-phone" name="phone" type="tel" autocomplete="tel" placeholder="Phone number" required maxlength="32"></div>
+    </div>
+    <div class="consent">
+      <input type="checkbox" id="cb-tcpa" name="tcpa_consent" value="yes">
+      <label for="cb-tcpa">I agree that Greenlight Mortgage, LLC (NMLS #2426021) and its loan officers may contact me at the phone number I provided, including by autodialed or pre-recorded calls and by text message, about my mortgage inquiry. Message and data rates may apply. <strong>Consent is not a condition of obtaining a loan or any other service.</strong> I can opt out at any time by replying STOP to a text, asking the caller to remove me, or emailing us &mdash; see our <a href="/privacy">Privacy Policy</a>.</label>
+    </div>
+    <button class="btn onDark" type="submit" data-funnel-cta="callback_submit">Have us reach out</button>
+    <p class="formstatus" role="status" aria-live="polite"></p>
+  </form>
+</details>
+</div>
+<p class="bandnote">Not a commitment to lend. Subject to credit approval and underwriting.
+Only a licensed loan officer can confirm your rate, payment, or eligibility, after a
+complete application.</p>
+</div></div></section><section id="faq"><div class="wrap">
 <p class="eyebrow"><span class="tick" aria-hidden="true"></span>Questions</p>
 <h2>Straight answers</h2>
 <div class="faq"><details><summary>Does my area qualify?</summary><div class="a"><p>More of East Texas than most people expect. It&#x27;s determined by specific address, not by city or county, so check the actual property.</p></div></details><details><summary>What are the income limits?</summary><div class="a"><p>They&#x27;re set by household size and area, and they&#x27;re revised periodically. We&#x27;ll check yours against the current figures.</p></div></details><details><summary>Is it really zero down?</summary><div class="a"><p>On eligible properties, yes. There are still closing costs, which is a separate conversation.</p></div></details></div>
 </div></section>
-
-<section class="band-wrap"><div class="wrap"><div class="ctaband">
-<span class="signal" aria-hidden="true"><i></i><i></i><i></i></span>
-<h2>Find out where you stand on a USDA loan.</h2>
-<p>Answer a few questions and see an estimate in about two minutes. No hard credit pull to begin, and a licensed loan officer follows up within one business day.</p>
-<div class="cta">
-<a class="btn go" href="/tools/estimate">See what you could save</a>
-<a class="btn onDark" href="/contact">Talk to a person</a>
-</div>
-<p class="bandnote">Not a commitment to lend. Subject to credit approval and underwriting.</p>
-</div></div></section>
-
 </main>
 <div class="trustbar"><div class="wrap"><div class="trustrow">
 <div class="trust"><svg class="mark" viewBox="0 0 40 40" role="img" aria-label="Equal Housing Opportunity">
@@ -156,7 +302,7 @@ nmlsconsumeraccess.org.</small></span></div>
 <path d="M12 30.5h16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
 <path d="M17 32.6h6v2.4h-6z" fill="currentColor"/>
 </svg>
-<span><strong>Powered by Co/LAB Lending</strong><small>Licensed in five states:
+<span><strong>Powered by Co/LAB Lending</strong><small>Licensed in four states:
 Texas, Louisiana, North Dakota and Alabama.</small></span></div>
 </div></div></div>
 <footer><div class="wrap">
@@ -199,7 +345,7 @@ Texas, Louisiana, North Dakota and Alabama.</small></span></div>
 
 <div class="legal">
 <p><strong>Greenlight Mortgage, LLC</strong> is a licensed Mortgage Broker in the state of Texas.
-Licensed in five states &mdash; Texas 2426021 &middot; Louisiana 2426021 &middot; North Dakota ML104832 &middot; Michigan (license # pending) &middot; Alabama 23417.
+Licensed in four states &mdash; Texas 2426021 &middot; Louisiana 2426021 &middot; North Dakota ML104832 &middot; Alabama 23417.
 4523 Judson Rd, Longview, TX 75605 &middot; 903-331-0892.</p>
 
 <p>You will see two NMLS numbers on this site, and both are correct. <strong>#2426021</strong> licenses the company, Greenlight Mortgage, LLC. <strong>#233918</strong> licenses Kenneth Travis personally as a loan originator. Federal law licenses the business and the individual separately, so a broker will always have both. You can look either of them up at <a href="https://www.nmlsconsumeraccess.org">nmlsconsumeraccess.org</a>.</p>
@@ -227,6 +373,6 @@ Equal Credit Opportunity Act. Equal Housing Opportunity.</p>
 <script src="/config.js" defer></script>
 <script src="/site.js" defer></script>
 <script src="/partner.js" defer></script>
-
+<script src="/forms.js" defer></script><script src="/assets/rates.js" defer></script><script src="/assets/funnel.js" defer></script>
 </body>
 </html>

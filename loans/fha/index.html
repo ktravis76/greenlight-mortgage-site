@@ -17,6 +17,19 @@
 
 <link rel="preconnect" href="https://athovwknbwbbqworsbrm.supabase.co">
 <script>document.documentElement.className+=" js"</script>
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '828760880613908');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=828760880613908&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel -->
 <link rel="stylesheet" href="/style.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.glmtg.com/"},{"@type":"ListItem","position":2,"name":"Loan options","item":"https://www.glmtg.com/loans"},{"@type":"ListItem","position":3,"name":"FHA","item":"https://www.glmtg.com/loans/fha"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What credit score do I need?","acceptedAnswer":{"@type":"Answer","text":"FHA's guidelines are more flexible than conventional, but individual lenders apply their own overlays. Being told no by one lender doesn't mean the answer is no."}},{"@type":"Question","name":"Does FHA mortgage insurance ever come off?","acceptedAnswer":{"@type":"Answer","text":"On most current FHA loans it remains for the life of the loan. The common path off it is refinancing later."}},{"@type":"Question","name":"Can I use FHA for a fixer-upper?","acceptedAnswer":{"@type":"Answer","text":"There are renovation options. Worth asking about specifically."}}]}</script>
@@ -72,58 +85,180 @@
 </div>
 </header>
 <main id="main">
-<div class="hero "><div class="wrap">
-<nav class="crumb" aria-label="Breadcrumb"><a href="/">Home</a> <span>/</span> <a href="/loans">Loan options</a> <span>/</span> <span>FHA</span></nav>
-<p class="eyebrow"><span class="tick" aria-hidden="true"></span>FHA loans &middot; Longview, TX</p>
-<h1>FHA loans</h1>
-<p class="lede">Built for people the conventional box doesn&#x27;t fit. Lower down payment, more forgiving credit requirements, and the most common first step into a first house.</p>
-<div class="cta"><a class="btn go" href="/tools/estimate">See what you could save</a><a class="btn ghost" href="/contact">Talk to a person</a></div>
-</div></div>
-
-<section><div class="wrap">
-<div class="split">
-<div class="reveal">
-  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>Who this is for</p>
-  <h2>Is this you?</h2>
-  <ul class="ticks"><li>First-time buyers</li><li>Anyone rebuilding credit after a rough stretch</li><li>Buyers with a smaller down payment saved</li><li>People who&#x27;ve been turned down for a conventional loan</li></ul>
-</div>
-<div class="reveal">
-  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>The honest part</p>
-  <h2>Where it can bite</h2>
-  <p class="sub">FHA carries mortgage insurance, and on most loans today it stays for the life of the loan rather than dropping off. That&#x27;s the real tradeoff. Many people refinance out of FHA later once credit and equity improve — a legitimate strategy, but plan for it going in.</p>
-  <div class="callout">
-    <h3>We will tell you when it is not worth it.</h3>
-    <p>We are brokers, not a single bank with one menu to sell. If a different program
-    serves you better &mdash; or if doing nothing serves you better &mdash; that is the
-    answer you will get.</p>
+<div class="hero funnel slim"><div class="wrap">
+<nav class="crumb" aria-label="Breadcrumb"><a href="/">Home</a> <span>/</span> <a href="/loans">Loan options</a> <span>/</span> <span>FHA loans</span></nav>
+<p class="eyebrow"><span class="tick" aria-hidden="true"></span><span data-fb-kicker>FHA loans &middot; Longview, TX</span></p>
+<h1>Your credit doesn't have to be perfect. <em>That's the whole point of FHA.</em></h1>
+<p class="lede">Built for real people with real credit histories. Lower down payment, more forgiving guidelines, and the most common first step into a first house in East Texas.</p>
+</div></div><section class="frig-wrap" id="estimator"><div class="wrap">
+<div class="frig" data-funnel data-mode="purchase" data-slug="fha">
+  <h2 class="sr-only">See what an FHA payment looks like.</h2>
+  <p class="riglead">The down payment dial starts at 3.5% &mdash; FHA's floor for qualifying buyers. The number below is principal and interest on a sample figure, so you have somewhere real to start.</p>
+  <div class="frig-live">
+    <div class="fresult">
+      <p class="fcap">Estimated monthly payment (P&amp;I)</p>
+      <p class="fnum" data-out>&mdash;</p>
+      <p class="fsub" data-out-sub></p>
+      <p class="fnote">*Estimate only &mdash; not a quote, offer, or approval. Subject to credit approval and underwriting. Your actual rate and payment will differ.</p>
+      <p class="fsample" data-sample-label></p>
+      <span class="sr-only" role="status" aria-live="polite" data-out-live></span>
+      <div class="yesrow">
+        <p class="yesq">Like these numbers?</p>
+        <button type="button" class="btn-yes" data-yes-btn>I like these numbers &mdash; let&rsquo;s make them real <span class="arrow">&rarr;</span></button>
+        <p class="yessmall">Your dials come with you &mdash; nobody re-types anything. No credit inquiry at this step.</p>
+      </div>
+    </div>
+    <div class="fsliders">
+      <div class="fslider">
+        <div class="flabel"><label for="f-price">Home price</label><output data-for="price" for="f-price">$220,000</output></div>
+        <input type="range" id="f-price" data-var="price" data-fmt="money" min="80000" max="900000" step="5000" value="220000" aria-label="Home price, dollars">
+      </div>
+      <div class="fslider">
+        <div class="flabel"><label for="f-down">Down payment</label><output data-for="down" for="f-down">3.5%</output></div>
+        <input type="range" id="f-down" data-var="down" data-fmt="pct" min="3.5" max="25" step="0.5" value="3.5" aria-label="Down payment, percent of price">
+      </div>
+    </div>
+  </div>
+  <div class="frig-fallback">
+    <p>The interactive estimator needs JavaScript &mdash; but the people don't.
+    A licensed loan officer can run your real numbers on one call.</p>
+    <a class="btn go" href="tel:9033310892">Call 903-331-0892</a>
+    <p class="fnote" style="max-width:52ch;margin-inline:auto">*Estimate only &mdash; not a quote, offer, or approval. Subject to credit approval and underwriting. Your actual rate and payment will differ.</p>
   </div>
 </div>
+</div></section><section class="yeswrap alt" id="yes"><div class="wrap">
+<p class="eyebrow" style="text-align:center;justify-content:center"><span class="tick" aria-hidden="true"></span>The next step</p>
+<h2 style="text-align:center;margin-inline:auto">Like that number? Let&rsquo;s check it for real.</h2>
+<p class="sub" style="text-align:center;margin-inline:auto;max-width:52ch">Thirty seconds. Your numbers ride along, and a licensed loan officer runs your actual situation &mdash; credit, income, program &mdash; and calls once with real answers.</p>
+<div class="yescard">
+  <div class="yesbeats"><span>1 &middot; Your numbers ride along</span><span>2 &middot; 30 seconds of contact info</span><span>3 &middot; One call from a licensed loan officer</span></div>
+  <div class="yesfacts" aria-label="What you set on the estimator"><span class="yfact">Home price<b data-yes-fact="price">&mdash;</b></span><span class="yfact">Down payment<b data-yes-fact="down">&mdash;</b></span><span class="yfact">Estimated payment<b data-yes-fact="pi">&mdash;</b></span></div>
+  <form data-yes-form data-glm-form="funnel_yes" data-glm-keep novalidate>
+    <input type="hidden" name="loan_type" value="fha">
+    <input type="hidden" name="home_price" value=""><input type="hidden" name="down_payment_pct" value=""><input type="hidden" name="estimated_payment" value=""><input type="hidden" name="goal" value="purchase">
+    <div class="yesfields">
+      <div class="frow">
+        <div class="field"><label for="y-name">Your name</label>
+          <input id="y-name" name="name" type="text" autocomplete="name" required maxlength="120">
+          <p class="err">Please enter your name.</p></div>
+        <div class="field"><label for="y-phone">Phone</label>
+          <input id="y-phone" name="phone" type="tel" autocomplete="tel" required maxlength="32">
+          <p class="err">Please enter a phone number.</p></div>
+      </div>
+      <div class="field"><label for="y-email">Email</label>
+        <input id="y-email" name="email" type="email" autocomplete="email" required maxlength="254">
+        <p class="err">Please enter a valid email.</p></div>
+      <div class="consent">
+        <input type="checkbox" id="y-tcpa" name="tcpa_consent" value="yes">
+        <label for="y-tcpa">I agree that Greenlight Mortgage, LLC (NMLS #2426021) and its loan officers may contact me at the phone number I provided, including by autodialed or pre-recorded calls and by text message, about my mortgage inquiry. Message and data rates may apply. <strong>Consent is not a condition of obtaining a loan or any other service.</strong> I can opt out at any time by replying STOP to a text, asking the caller to remove me, or emailing us &mdash; see our <a href="/privacy">Privacy Policy</a>.</label>
+      </div>
+      <button class="btn-yes" type="submit" data-funnel-cta="yes_submit">I like these numbers &mdash; let&rsquo;s make them real <span class="arrow">&rarr;</span></button>
+      <p class="formstatus" role="status" aria-live="polite"></p>
+      <p class="disclose">Sending this is not an application for credit and is
+      <strong>not a commitment to lend</strong>. No credit inquiry happens at this step.
+      Your estimate is only an estimate &mdash; a licensed loan officer confirms real
+      figures after a complete application, subject to credit approval and underwriting.</p>
+    </div>
+    <div class="yesnext">
+  <h3>That&rsquo;s a YES. Here&rsquo;s what happens next.</h3>
+  <p>A licensed loan officer calls within one business day &mdash; once, not six times
+  in an hour. Want to move faster? Call <a href="tel:9033310892">903-331-0892</a> now, or
+  start <a href="https://greenlight.my1003app.com/233918/register" rel="noopener" data-carry>the full secure application</a>.</p>
 </div>
-</div></section>
+  </form>
+</div>
+</div></section><section><div class="wrap">
+<p class="eyebrow"><span class="tick" aria-hidden="true"></span>How this works</p>
+<h2>Three steps. No fluff.</h2>
+<div class="steps fsteps"><div class="step"><h3>Play with the dials</h3><p>That house you keep driving past &mdash; put its price on the dial and see what it turns into monthly. Knowing beats wondering.</p>
+<a class="microcta" href="#estimator">Back to the dials <svg viewBox="0 0 14 9" aria-hidden="true"><path d="M9.2.8 13 4.5 9.2 8.2M13 4.5H1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div><div class="step"><h3>Talk to a human</h3><p>A licensed loan officer looks at your actual situation &mdash; credit, income, the gift from your folks &mdash; and tells you where you stand. No hard credit pull to start.</p>
+<a class="microcta" href="tel:9033310892" data-funnel-cta="step_call">Call 903-331-0892 <svg viewBox="0 0 14 9" aria-hidden="true"><path d="M9.2.8 13 4.5 9.2 8.2M13 4.5H1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div><div class="step"><h3>Get a real plan</h3><p>Ready now? We move. Six months out? You leave with a punch list that gets you there. Either answer is a win.</p>
+<a class="microcta" href="#cta">Let's run my real numbers <svg viewBox="0 0 14 9" aria-hidden="true"><path d="M9.2.8 13 4.5 9.2 8.2M13 4.5H1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></div>
+</div></section><section class="alt"><div class="wrap">
+<p class="eyebrow"><span class="tick" aria-hidden="true"></span>The honest part</p>
+<h2>What's actually stopping you?</h2>
+<div class="grid g3"><div class="card reveal"><span class="num">01</span><h3>&ldquo;My credit isn't good enough.&rdquo;</h3><p>Says who? FHA guidelines are more forgiving than conventional, and different lenders draw different lines on top of them. One lender's no is not the answer &mdash; it's one data point. We shop a network.</p></div><div class="card reveal"><span class="num">02</span><h3>&ldquo;I can't save a down payment.&rdquo;</h3><p>FHA starts at 3.5% down for qualifying buyers &mdash; and it can come from an eligible gift. On a lot of East Texas homes that's less than people burn on rent deposits and moving twice.</p></div><div class="card reveal"><span class="num">03</span><h3>&ldquo;I got turned down once already.&rdquo;</h3><p>Then you talked to one lender with one rulebook. Files that get declined at a bank get written somewhere else every single week. That's the whole reason brokers exist.</p></div></div>
+</div></section><section><div class="wrap">
+<p class="eyebrow"><span class="tick" aria-hidden="true"></span>East Texas talks</p>
+<h2>People we've already walked home.</h2>
+<div class="grid g3 proofgrid">
+<div>
+  <div class="vidframe">
+    <video controls preload="none" playsinline
+           poster="/assets/from-old-site/kenneth-travis-headshot.png">
+      <source src="/assets/from-old-site/kt-video.mp4" type="video/mp4">
+      Your browser cannot play this video.
+    </video>
+  </div>
+  <p class="vidcap">Kenneth Travis &middot; President &amp; CEO &middot;
+  Loan Originator NMLS #233918</p>
+</div>
+<figure class="quote reveal"><blockquote>From pre-approval right through to closing on my home the Kenneth Travis team at Greenlight Mortgage did a great job. All the staff were extremely friendly, helpful and knowledgeable. The whole process was very smooth and helped remove a lot of potential stress. I would definitely use them again.</blockquote><figcaption><span class="who">Brent &middot; Longview, TX</span><time datetime="2021-10-01">1 October 2021</time><a class="prov ok" href="https://www.kennethtravis.com/review/a-great-lender-knowledgeable-and-friendly/" rel="nofollow noopener" target="_blank">Verified on kennethtravis.com &nearr;</a></figcaption></figure><figure class="quote reveal"><blockquote>The Kenneth Travis Team was wonderful to work with they made the whole process run smooth. Candice and Anna made sure we stayed informed throughout the whole process and helped whenever and wherever along the way. I would recommend this group to everyone! Thank Ya&#x27;ll So Much!!</blockquote><figcaption><span class="who">Maxwell &middot; Jefferson, TX</span><time datetime="2021-10-01">1 October 2021</time><a class="prov ok" href="https://www.kennethtravis.com/review/maxwell/" rel="nofollow noopener" target="_blank">Verified on kennethtravis.com &nearr;</a></figcaption></figure></div>
+<div class="trustrow fproof-trust">
+  <div class="trust"><svg class="mark" viewBox="0 0 40 40" role="img" aria-label="Equal Housing Opportunity">
+<path d="M20 5 3.5 18.2h4.2V35h24.6V18.2h4.2z" fill="currentColor" opacity=".14"/>
+<path d="M20 5 3.5 18.2h4.2V35h24.6V18.2h4.2z" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linejoin="round"/>
+<rect x="14" y="21.5" width="12" height="2.7" rx="1.35" fill="currentColor"/>
+<rect x="14" y="27" width="12" height="2.7" rx="1.35" fill="currentColor"/>
+</svg><span><strong>Equal Housing Opportunity</strong></span></div>
+  <div class="trust"><svg class="mark" viewBox="0 0 40 40" role="img" aria-label="NMLS Consumer Access">
+<circle cx="20" cy="20" r="15.6" fill="none" stroke="currentColor" stroke-width="2.1"/>
+<path d="M20 11.4 27 15v5.2c0 4.4-2.9 7.6-7 8.8-4.1-1.2-7-4.4-7-8.8V15z"
+      fill="currentColor" opacity=".16"/>
+<path d="M20 11.4 27 15v5.2c0 4.4-2.9 7.6-7 8.8-4.1-1.2-7-4.4-7-8.8V15z"
+      fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+<path d="m16.9 20.2 2.3 2.3 4.1-4.3" fill="none" stroke="currentColor"
+      stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+</svg><span><strong>NMLS #2426021</strong><small>Kenneth Travis, NMLS #233918</small></span></div>
+  <div class="trust"><svg class="mark" viewBox="0 0 40 40" role="img" aria-label="Greenlight">
+<path d="M20 2.5v2.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+<path d="M20 5.2 27.8 12H12.2z" fill="currentColor"/>
+<path d="M14 13.5h12l1.6 15.2H12.4z" fill="currentColor" opacity=".22"/>
+<path d="M14 13.5h12l1.6 15.2H12.4z" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linejoin="round"/>
+<path d="M20 13.5v15.2M13.2 21h13.6" stroke="currentColor" stroke-width="1.3" opacity=".55"/>
+<path d="M12 30.5h16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+<path d="M17 32.6h6v2.4h-6z" fill="currentColor"/>
+</svg><span><strong>Powered by Co/LAB Lending</strong></span></div>
+</div>
+</div></section><section class="band-wrap bigband" id="cta"><div class="wrap"><div class="ctaband">
+<span class="signal" aria-hidden="true"><i></i><i></i><i></i></span>
+<h2>Stop guessing about your credit.</h2>
+<p>Five minutes with a licensed loan officer tells you where you actually stand &mdash; and what to fix if the answer is &ldquo;not yet.&rdquo; No hard credit pull to start.</p>
 
-<section class="dark"><div class="wrap">
-<p class="eyebrow"><span class="tick" aria-hidden="true"></span>What matters</p>
-<h2>The parts worth knowing</h2>
-<div class="grid g2"><div class="card reveal"><h3>Low down payment</h3><p>3.5% down for qualifying borrowers.</p></div><div class="card reveal"><h3>Credit flexibility</h3><p>FHA guidelines are more forgiving than conventional. Note that individual lenders add their own overlays on top.</p></div><div class="card reveal"><h3>Gift funds allowed</h3><p>The down payment can come from an eligible gift.</p></div><div class="card reveal"><h3>Assumable</h3><p>In some cases a future buyer can take over your FHA loan — which can matter a great deal in a higher-rate market.</p></div></div>
-</div></section>
-
-<section><div class="wrap">
+<a class="btn go xl" href="tel:9033310892" data-big-cta
+   data-short-label="Let&rsquo;s run my real numbers" data-funnel-cta="call">Let&rsquo;s run my real numbers &rarr;</a>
+<div class="talkrow">
+<p class="bandalt"><strong>Talk to a real person.</strong>
+Call or text <a href="tel:9033310892" data-funnel-cta="band_call">903-331-0892</a>
+&mdash; or have us reach out.</p>
+<details class="reachout">
+  <summary data-funnel-cta="reachout_open">Have us reach out</summary>
+  <form class="fcallback" data-glm-form="funnel_callback" novalidate>
+    <input type="hidden" name="loan_type" value="fha">
+    <div class="frow">
+      <div class="field"><label class="sr-only" for="cb-name">Your name</label>
+        <input id="cb-name" name="name" type="text" autocomplete="name" placeholder="Your name" required maxlength="120"></div>
+      <div class="field"><label class="sr-only" for="cb-phone">Phone number</label>
+        <input id="cb-phone" name="phone" type="tel" autocomplete="tel" placeholder="Phone number" required maxlength="32"></div>
+    </div>
+    <div class="consent">
+      <input type="checkbox" id="cb-tcpa" name="tcpa_consent" value="yes">
+      <label for="cb-tcpa">I agree that Greenlight Mortgage, LLC (NMLS #2426021) and its loan officers may contact me at the phone number I provided, including by autodialed or pre-recorded calls and by text message, about my mortgage inquiry. Message and data rates may apply. <strong>Consent is not a condition of obtaining a loan or any other service.</strong> I can opt out at any time by replying STOP to a text, asking the caller to remove me, or emailing us &mdash; see our <a href="/privacy">Privacy Policy</a>.</label>
+    </div>
+    <button class="btn onDark" type="submit" data-funnel-cta="callback_submit">Have us reach out</button>
+    <p class="formstatus" role="status" aria-live="polite"></p>
+  </form>
+</details>
+</div>
+<p class="bandnote">Not a commitment to lend. Subject to credit approval and underwriting.
+Only a licensed loan officer can confirm your rate, payment, or eligibility, after a
+complete application.</p>
+</div></div></section><section id="faq"><div class="wrap">
 <p class="eyebrow"><span class="tick" aria-hidden="true"></span>Questions</p>
 <h2>Straight answers</h2>
 <div class="faq"><details><summary>What credit score do I need?</summary><div class="a"><p>FHA&#x27;s guidelines are more flexible than conventional, but individual lenders apply their own overlays. Being told no by one lender doesn&#x27;t mean the answer is no.</p></div></details><details><summary>Does FHA mortgage insurance ever come off?</summary><div class="a"><p>On most current FHA loans it remains for the life of the loan. The common path off it is refinancing later.</p></div></details><details><summary>Can I use FHA for a fixer-upper?</summary><div class="a"><p>There are renovation options. Worth asking about specifically.</p></div></details></div>
 </div></section>
-
-<section class="band-wrap"><div class="wrap"><div class="ctaband">
-<span class="signal" aria-hidden="true"><i></i><i></i><i></i></span>
-<h2>Find out where you stand on a FHA loan.</h2>
-<p>Answer a few questions and see an estimate in about two minutes. No hard credit pull to begin, and a licensed loan officer follows up within one business day.</p>
-<div class="cta">
-<a class="btn go" href="/tools/estimate">See what you could save</a>
-<a class="btn onDark" href="/contact">Talk to a person</a>
-</div>
-<p class="bandnote">Not a commitment to lend. Subject to credit approval and underwriting.</p>
-</div></div></section>
-
 </main>
 <div class="trustbar"><div class="wrap"><div class="trustrow">
 <div class="trust"><svg class="mark" viewBox="0 0 40 40" role="img" aria-label="Equal Housing Opportunity">
@@ -156,7 +291,7 @@ nmlsconsumeraccess.org.</small></span></div>
 <path d="M12 30.5h16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
 <path d="M17 32.6h6v2.4h-6z" fill="currentColor"/>
 </svg>
-<span><strong>Powered by Co/LAB Lending</strong><small>Licensed in five states:
+<span><strong>Powered by Co/LAB Lending</strong><small>Licensed in four states:
 Texas, Louisiana, North Dakota and Alabama.</small></span></div>
 </div></div></div>
 <footer><div class="wrap">
@@ -199,7 +334,7 @@ Texas, Louisiana, North Dakota and Alabama.</small></span></div>
 
 <div class="legal">
 <p><strong>Greenlight Mortgage, LLC</strong> is a licensed Mortgage Broker in the state of Texas.
-Licensed in five states &mdash; Texas 2426021 &middot; Louisiana 2426021 &middot; North Dakota ML104832 &middot; Michigan (license # pending) &middot; Alabama 23417.
+Licensed in four states &mdash; Texas 2426021 &middot; Louisiana 2426021 &middot; North Dakota ML104832 &middot; Alabama 23417.
 4523 Judson Rd, Longview, TX 75605 &middot; 903-331-0892.</p>
 
 <p>You will see two NMLS numbers on this site, and both are correct. <strong>#2426021</strong> licenses the company, Greenlight Mortgage, LLC. <strong>#233918</strong> licenses Kenneth Travis personally as a loan originator. Federal law licenses the business and the individual separately, so a broker will always have both. You can look either of them up at <a href="https://www.nmlsconsumeraccess.org">nmlsconsumeraccess.org</a>.</p>
@@ -227,6 +362,6 @@ Equal Credit Opportunity Act. Equal Housing Opportunity.</p>
 <script src="/config.js" defer></script>
 <script src="/site.js" defer></script>
 <script src="/partner.js" defer></script>
-
+<script src="/forms.js" defer></script><script src="/assets/rates.js" defer></script><script src="/assets/funnel.js" defer></script>
 </body>
 </html>

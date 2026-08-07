@@ -106,82 +106,31 @@ LOANS = [
 ]
 
 # ---------------------------------------------------------------------------
-# Rendering. Chrome, compliance, and schema all come from site.py so the
-# license block cannot drift between these pages and the rest of the site.
+# Rendering. Every program page is now a funnel page — structure and copy come
+# from S.FUNNEL (see the funnel section of sitegen.py); the FAQs above carry
+# the per-program education and stay on the page. Chrome, compliance, and
+# schema all come from sitegen so the license block cannot drift.
+#
+# The `who`/`facts`/`catch` content in the LOANS dicts above is retained as
+# the source of the FAQ/objection copy and for any future non-funnel use —
+# the dicts are the record of what we say about each program.
 
 ARROW = ('<svg viewBox="0 0 14 9" aria-hidden="true"><path d="M9.2.8 13 4.5 9.2 8.2M13 4.5H1"'
          ' fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"'
          ' stroke-linejoin="round"/></svg>')
 
 
-def loan_body(l):
-    who = "".join(f"<li>{S.esc(w)}</li>" for w in l["who"])
-    facts = "".join(
-        f'<div class="card reveal"><h3>{S.esc(k)}</h3><p>{S.esc(v)}</p></div>'
-        for k, v in l["facts"])
-    faqs = "".join(
-        f'<details><summary>{S.esc(q)}</summary><div class="a"><p>{S.esc(a)}</p></div></details>'
-        for q, a in l["faqs"])
-
-    return f"""{S.hero(
-        eyebrow=f'{S.esc(l["nav"])} loans &middot; Longview, TX',
-        h1=S.esc(l["h1"]),
-        lede=S.esc(l["lede"]),
-        ctas=[("/tools/estimate", "See what you could save", "go"),
-              ("/contact", "Talk to a person", "ghost")],
-        trail=[("/", "Home"), ("/loans", "Loan options"), (None, l["nav"])])}
-
-<section><div class="wrap">
-<div class="split">
-<div class="reveal">
-  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>Who this is for</p>
-  <h2>Is this you?</h2>
-  <ul class="ticks">{who}</ul>
-</div>
-<div class="reveal">
-  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>The honest part</p>
-  <h2>Where it can bite</h2>
-  <p class="sub">{S.esc(l["catch"])}</p>
-  <div class="callout">
-    <h3>We will tell you when it is not worth it.</h3>
-    <p>We are brokers, not a single bank with one menu to sell. If a different program
-    serves you better &mdash; or if doing nothing serves you better &mdash; that is the
-    answer you will get.</p>
-  </div>
-</div>
-</div>
-</div></section>
-
-<section class="dark"><div class="wrap">
-<p class="eyebrow"><span class="tick" aria-hidden="true"></span>What matters</p>
-<h2>The parts worth knowing</h2>
-<div class="grid g2">{facts}</div>
-</div></section>
-
-<section><div class="wrap">
-<p class="eyebrow"><span class="tick" aria-hidden="true"></span>Questions</p>
-<h2>Straight answers</h2>
-<div class="faq">{faqs}</div>
-</div></section>
-
-{S.cta_band(
-    head=f'Find out where you stand on a {l["nav"]} loan.',
-    sub="Answer a few questions and see an estimate in about two minutes. No hard credit "
-        "pull to begin, and a licensed loan officer follows up within one business day.")}
-"""
-
-
 def build():
     print("loan pages")
     for l in LOANS:
-        body = loan_body(l)
         out = S.page(
             path=f'/loans/{l["slug"]}',
             title=l["title"],
             desc=l["desc"],
-            body=body,
+            body=S.funnel_body(l["slug"], l["faqs"]),
             trail=[("/", "Home"), ("/loans", "Loan options"), (f'/loans/{l["slug"]}', l["nav"])],
             faqs=l["faqs"],
+            scripts=S.FUNNEL_SCRIPTS,
         )
         os.makedirs(f'loans/{l["slug"]}', exist_ok=True)
         with open(f'loans/{l["slug"]}/index.html', "w") as f:
@@ -223,7 +172,7 @@ def build():
              "the payment you have. There is usually a path &mdash; and we shop a network of "
              "lenders to find it instead of selling you one bank&rsquo;s menu.",
         ctas=[("/tools/estimate", "See what you could save", "go"),
-              ("/contact", "Talk to a person", "ghost")],
+              ("/contact", "Talk to a real person", "ghost")],
         trail=[("/", "Home"), (None, "Loan options")])}
 
 <section><div class="wrap">

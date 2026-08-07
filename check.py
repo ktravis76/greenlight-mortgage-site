@@ -27,11 +27,17 @@ SKIP_DIRS = {".git", "assets", "supabase", "db", "__pycache__", "node_modules"}
 RED = "\033[31m"; YEL = "\033[33m"; GRN = "\033[32m"; DIM = "\033[2m"; OFF = "\033[0m"
 
 
+# Google's ownership-verification stub. Its entire required content is one
+# line of text — it cannot carry the site chrome or disclosures, is never
+# linked from anywhere, and only Google's crawler ever requests it by name.
+VERIFICATION_STUBS = {"google26b82daaa6442b49.html"}
+
+
 def pages():
     for root, dirs, files in os.walk(HERE):
         dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
         for fn in files:
-            if fn.endswith(".html"):
+            if fn.endswith(".html") and fn not in VERIFICATION_STUBS:
                 yield os.path.join(root, fn)
 
 
@@ -253,7 +259,12 @@ def check_compliance():
 # because KT found a page that did not and reasonably concluded the site was
 # broken. Only the internal screener is exempt, and it is exempt on purpose.
 
-CHROME_EXEMPT = {"/tools/va-refi-screener"}
+# The /start router quizzes are deliberate full-screen interstitials — a
+# focused three-tap flow with a logo link home and an explicit "skip" exit.
+# They stay noindexed and carry the full compliance line in their fine print
+# (the REQUIRED disclosure scan still applies to them); only the site
+# header/footer chrome is waived.
+CHROME_EXEMPT = {"/tools/va-refi-screener", "/start/refi", "/start/buy"}
 
 
 def check_chrome():
