@@ -494,7 +494,7 @@ nmlsconsumeraccess.org.</small></span></div>
 def cta_band(head="Let's find out where you stand.",
              sub="A short conversation, a straight answer either way, and no hard credit pull to begin.",
              primary=("/tools/estimate", "See what you could save"),
-             secondary=("/contact", "Talk to a person")):
+             secondary=("/contact", "Talk to a real person")):
     return f"""<section class="band-wrap"><div class="wrap"><div class="ctaband">
 <span class="signal" aria-hidden="true"><i></i><i></i><i></i></span>
 <h2>{esc(head)}</h2>
@@ -1207,28 +1207,16 @@ FUNNEL_FOOTNOTE = ("*Estimate only &mdash; not a quote, offer, or approval. Subj
 
 
 def _funnel_hero(slug, f):
-    """Hook hero: dark forest, serif hook, Kenneth's media slot. The kicker
-    carries data-fb-kicker so funnel.js can swap it for ?src=fb traffic."""
-    return f"""<div class="hero funnel"><div class="wrap">
+    """The hook, compressed. Per Ryan's walkthrough: the hero and the
+    estimator are ONE continuous opening — hook headline, then the sliders
+    immediately beneath, in the first viewport. No intermediate CTA, no
+    scroll-only button, and Kenneth's video moves down to the proof section.
+    The kicker carries data-fb-kicker so funnel.js can swap it for ?src=fb."""
+    return f"""<div class="hero funnel slim"><div class="wrap">
 <nav class="crumb" aria-label="Breadcrumb"><a href="/">Home</a> <span>/</span> <a href="/loans">Loan options</a> <span>/</span> <span>{esc(f["kicker"].split("&middot;")[0].strip())}</span></nav>
-<div class="funnelgrid">
-<div>
-  <p class="eyebrow"><span class="tick" aria-hidden="true"></span><span data-fb-kicker>{f["kicker"]}</span></p>
-  <h1>{f["hook"]}</h1>
-  <p class="lede">{f["sub"]}</p>
-  <div class="cta"><a class="btn go lg" href="#estimator">See your number <span class="bounce">&darr;</span></a></div>
-</div>
-<div>
-  <div class="adhero-media">
-    <video controls preload="none" playsinline
-           poster="/assets/from-old-site/kenneth-travis-headshot.png">
-      <source src="/assets/from-old-site/kt-video.mp4" type="video/mp4">
-      Your browser cannot play this video.
-    </video>
-  </div>
-  <p class="vidcap" style="color:rgba(233,244,237,.6)">Kenneth Travis &middot; President &amp; CEO &middot; Loan Originator NMLS #{NMLS_KT}</p>
-</div>
-</div>
+<p class="eyebrow"><span class="tick" aria-hidden="true"></span><span data-fb-kicker>{f["kicker"]}</span></p>
+<h1>{f["hook"]}</h1>
+<p class="lede">{f["sub"]}</p>
 </div></div>"""
 
 
@@ -1269,11 +1257,30 @@ def _funnel_rig(slug, f):
         <input type="range" id="f-down" data-var="down" data-fmt="pct" min="{dmin}" max="{dmax}" step="{dstep}" value="{dval}" aria-label="Down payment, percent of price">
       </div>"""
 
+    # Ryan 4: on refi pages the 36-month test lives INSIDE the estimator
+    # block, part of "your numbers" — not buried in a section further down.
+    meter = ""
+    if f.get("why") and f["mode"] == "refi":
+        va = f["why"].get("va")
+        meter = f"""
+  <div class="recoupcard rig-meter" data-recoup{" data-va" if va else ""}>
+    <h3>Part of your numbers: the 36-month test</h3>
+    <p class="rc-sub">Your dials, plus a sample cost allowance{" and the 0.5% VA funding fee" if va else ""}.
+    {"VA requires the costs to pay themselves back within 36 months — or the loan shouldn&rsquo;t be written."
+     if va else
+     "If the costs don&rsquo;t pay themselves back before you&rsquo;d move, the refinance loses you money."}
+    Real costs come from a real loan estimate.</p>
+    <div class="recoupbar"><div class="fill"></div><span class="cap36" aria-hidden="true"></span></div>
+    <p class="recoupread">About <b data-recoup-months>&mdash;</b> months to break even
+    &mdash; {"the rule allows" if va else "against a"} 36{"" if va else "-month yardstick"}.</p>
+    <p class="recoupverdict" data-recoup-verdict aria-live="polite"></p>
+    <p class="fnote">{FUNNEL_FOOTNOTE}</p>
+  </div>"""
+
     return f"""<section class="frig-wrap" id="estimator"><div class="wrap">
 <div class="frig" data-funnel data-mode="{f["mode"]}" data-slug="{slug}">
-  <p class="eyebrow"><span class="tick" aria-hidden="true"></span>The estimator</p>
-  <h2>{f["rig_h2"]}</h2>
-  <p class="sub">{f["rig_sub"]}</p>
+  <h2 class="sr-only">{f["rig_h2"]}</h2>
+  <p class="riglead">{f["rig_sub"]}</p>
   <div class="frig-live">
     <div class="fresult">
       <p class="fcap">{cap}</p>
@@ -1283,14 +1290,14 @@ def _funnel_rig(slug, f):
       <p class="fsample" data-sample-label></p>
       <span class="sr-only" role="status" aria-live="polite" data-out-live></span>
       <div class="yesrow">
-        <p class="yesq">{"Do you want this saving?" if f["mode"] == "refi" else "Want to see your real number?"}</p>
-        <button type="button" class="btn-yes" data-yes-btn>{"YES &mdash; I want <span data-yes-amount>this</span>/mo back" if f["mode"] == "refi" else "YES &mdash; run my real numbers"} <span class="arrow">&rarr;</span></button>
-        <p class="yessmall">30 seconds. No credit inquiry at this step. One call from a licensed loan officer.</p>
+        <p class="yesq">{"Do you want <span data-yes-amount>this</span>/mo back?" if f["mode"] == "refi" else "Like these numbers?"}</p>
+        <button type="button" class="btn-yes" data-yes-btn>I like these numbers &mdash; let&rsquo;s make them real <span class="arrow">&rarr;</span></button>
+        <p class="yessmall">Your dials come with you &mdash; nobody re-types anything. No credit inquiry at this step.</p>
       </div>
     </div>
     <div class="fsliders">{sliders}
     </div>
-  </div>
+  </div>{meter}
   <div class="frig-fallback">
     <p>The interactive estimator needs JavaScript &mdash; but the people don't.
     A licensed loan officer can run your real numbers on one call.</p>
@@ -1449,14 +1456,12 @@ def funnel_yes(slug, mode, *, goal=None, facts=True, h2=None, sub=None):
         default_sub = ("Thirty seconds. Your dials ride along with it, a licensed loan "
                        "officer checks them against your actual loan, and you get one "
                        "call &mdash; not a call center.")
-        btn = ('YES &mdash; I want <span data-yes-amount>this</span>/mo back <span class="arrow">&rarr;</span>'
-               if refi else
-               'YES &mdash; run my real numbers <span class="arrow">&rarr;</span>')
+        btn = 'I like these numbers &mdash; let&rsquo;s make them real <span class="arrow">&rarr;</span>'
         nxt = f"""<div class="yesnext">
   <h3>That&rsquo;s a YES. Here&rsquo;s how to make it fast.</h3>
   <p>A licensed loan officer picks this up and calls once &mdash; usually same day.
   Want to speed it up? Call <a href="tel:{PHONE_HREF}">{PHONE}</a> now, or jump
-  straight into <a href="{LOS_APPLY}" rel="noopener">the full secure application</a>
+  straight into <a href="{LOS_APPLY}" rel="noopener" data-carry>the full secure application</a>
   if you already know you're in.</p>
 </div>"""
     else:
@@ -1464,12 +1469,12 @@ def funnel_yes(slug, mode, *, goal=None, facts=True, h2=None, sub=None):
         default_sub = ("Thirty seconds. Your numbers ride along, and a licensed loan "
                        "officer runs your actual situation &mdash; credit, income, "
                        "program &mdash; and calls once with real answers.")
-        btn = 'YES &mdash; run my real numbers <span class="arrow">&rarr;</span>'
+        btn = 'I like these numbers &mdash; let&rsquo;s make them real <span class="arrow">&rarr;</span>'
         nxt = f"""<div class="yesnext">
   <h3>That&rsquo;s a YES. Here&rsquo;s what happens next.</h3>
   <p>A licensed loan officer calls within one business day &mdash; once, not six times
   in an hour. Want to move faster? Call <a href="tel:{PHONE_HREF}">{PHONE}</a> now, or
-  start <a href="{LOS_APPLY}" rel="noopener">the full secure application</a>.</p>
+  start <a href="{LOS_APPLY}" rel="noopener" data-carry>the full secure application</a>.</p>
 </div>"""
 
     facts_row = (f'<div class="yesfacts" aria-label="What you set on the estimator">{facts_html}</div>'
@@ -1519,31 +1524,21 @@ def _funnel_yes(slug, f):
 
 
 def _funnel_why(slug, f):
-    """Refi pages: why the swap makes sense — benefit cards plus the live
-    36-month recoupment meter, fed by the estimator's dials."""
+    """Refi pages: why the swap makes sense. Benefit points only — the live
+    36-month meter moved INTO the estimator block per Ryan's walkthrough."""
     w = f.get("why")
     if not w:
         return ""
-    ticks = "".join(f"<li><strong>{t}</strong> {b}</li>" for t, b in w["ticks"])
-    va_attr = " data-va" if w.get("va") else ""
+    half = (len(w["ticks"]) + 1) // 2
+    col1 = "".join(f"<li><strong>{t}</strong> {b}</li>" for t, b in w["ticks"][:half])
+    col2 = "".join(f"<li><strong>{t}</strong> {b}</li>" for t, b in w["ticks"][half:])
     return f"""<section id="why"><div class="wrap">
 <p class="eyebrow"><span class="tick" aria-hidden="true"></span>Why this works</p>
 <h2>{w["h2"]}</h2>
 <p class="sub">{w["sub"]}</p>
 <div class="whygrid">
-<div><ul class="ticks">{ticks}</ul></div>
-<div>
-  <div class="recoupcard" data-recoup{va_attr}>
-    <h3>The 36-month test, live</h3>
-    <p class="rc-sub">Your dials, plus a sample cost allowance{" and the 0.5% VA funding fee" if w.get("va") else ""}.
-    Real costs come from a real loan estimate.</p>
-    <div class="recoupbar"><div class="fill"></div><span class="cap36" aria-hidden="true"></span></div>
-    <p class="recoupread">About <b data-recoup-months>&mdash;</b> months to break even
-    &mdash; the rule allows 36.</p>
-    <p class="recoupverdict" data-recoup-verdict aria-live="polite"></p>
-    <p class="fnote">{FUNNEL_FOOTNOTE}</p>
-  </div>
-</div>
+<div><ul class="ticks">{col1}</ul></div>
+<div><ul class="ticks">{col2}</ul></div>
 </div>
 </div></section>"""
 
@@ -1572,19 +1567,63 @@ def _funnel_objections(f):
 
 
 def _funnel_proof():
-    """Two verified reviews + the trust marks. Verified only — a funnel page is
-    the last place to lean on wording we have not re-checked at its source."""
+    """Kenneth's video (moved down from the hero per Ryan — the opening
+    belongs to the sliders) plus two verified reviews and the trust marks.
+    Verified only — a funnel page is the last place to lean on wording we
+    have not re-checked at its source."""
     quotes = "".join(review_card(r, cls="reveal") for r in REVIEWS[:2])
     return f"""<section><div class="wrap">
 <p class="eyebrow"><span class="tick" aria-hidden="true"></span>East Texas talks</p>
 <h2>People we've already walked home.</h2>
-<div class="grid g2">{quotes}</div>
+<div class="grid g3 proofgrid">
+<div>
+  <div class="vidframe">
+    <video controls preload="none" playsinline
+           poster="/assets/from-old-site/kenneth-travis-headshot.png">
+      <source src="/assets/from-old-site/kt-video.mp4" type="video/mp4">
+      Your browser cannot play this video.
+    </video>
+  </div>
+  <p class="vidcap">Kenneth Travis &middot; President &amp; CEO &middot;
+  Loan Originator NMLS #{NMLS_KT}</p>
+</div>
+{quotes}</div>
 <div class="trustrow fproof-trust">
   <div class="trust">{MARK_EHO}<span><strong>Equal Housing Opportunity</strong></span></div>
   <div class="trust">{MARK_NMLS}<span><strong>NMLS #{NMLS_CO}</strong><small>Kenneth Travis, NMLS #{NMLS_KT}</small></span></div>
   <div class="trust">{MARK_LANTERN}<span><strong>{POWERED}</strong></span></div>
 </div>
 </div></section>"""
+
+
+def _talk_block(slug):
+    """Ryan's CTA wording, verbatim: "Talk to a real person" with the call-or-
+    text subtext and a have-us-reach-out mini-form behind one tap. Lives in
+    every funnel big-button band. funnel.js prefills the name from router
+    params when the visitor came through a /start quiz."""
+    return f"""<div class="talkrow">
+<p class="bandalt"><strong>Talk to a real person.</strong>
+Call or text <a href="tel:{PHONE_HREF}" data-funnel-cta="band_call">{PHONE}</a>
+&mdash; or have us reach out.</p>
+<details class="reachout">
+  <summary data-funnel-cta="reachout_open">Have us reach out</summary>
+  <form class="fcallback" data-glm-form="funnel_callback" novalidate>
+    <input type="hidden" name="loan_type" value="{slug}">
+    <div class="frow">
+      <div class="field"><label class="sr-only" for="cb-name">Your name</label>
+        <input id="cb-name" name="name" type="text" autocomplete="name" placeholder="Your name" required maxlength="120"></div>
+      <div class="field"><label class="sr-only" for="cb-phone">Phone number</label>
+        <input id="cb-phone" name="phone" type="tel" autocomplete="tel" placeholder="Phone number" required maxlength="32"></div>
+    </div>
+    <div class="consent">
+      <input type="checkbox" id="cb-tcpa" name="tcpa_consent" value="yes">
+      <label for="cb-tcpa">{TCPA_TEXT}</label>
+    </div>
+    <button class="btn onDark" type="submit" data-funnel-cta="callback_submit">Have us reach out</button>
+    <p class="formstatus" role="status" aria-live="polite"></p>
+  </form>
+</details>
+</div>"""
 
 
 def _funnel_bigband(slug, f):
@@ -1607,27 +1646,12 @@ def _funnel_bigband(slug, f):
 </div>
 <noscript><p class="bandalt">The upload needs JavaScript &mdash; call
 <a href="tel:{PHONE_HREF}">{PHONE}</a> or start at <a href="/apply">glmtg.com/apply</a> instead.</p></noscript>
-<p class="bandalt">Rather talk first? Call <a href="tel:{PHONE_HREF}" data-funnel-cta="band_call">{PHONE}</a>.</p>"""
+{_talk_block(slug)}"""
     else:
         action = f"""
 <a class="btn go xl" href="tel:{PHONE_HREF}" data-big-cta
    data-short-label="Let&rsquo;s run my real numbers" data-funnel-cta="call">{f["cta_label"]} &rarr;</a>
-<p class="bandalt">Or have us call you &mdash; one call, no spam:</p>
-<form class="fcallback" data-glm-form="funnel_callback" novalidate>
-  <input type="hidden" name="loan_type" value="{slug}">
-  <div class="frow">
-    <div class="field"><label class="sr-only" for="cb-name">Your name</label>
-      <input id="cb-name" name="name" type="text" autocomplete="name" placeholder="Your name" required maxlength="120"></div>
-    <div class="field"><label class="sr-only" for="cb-phone">Phone number</label>
-      <input id="cb-phone" name="phone" type="tel" autocomplete="tel" placeholder="Phone number" required maxlength="32"></div>
-  </div>
-  <div class="consent">
-    <input type="checkbox" id="cb-tcpa" name="tcpa_consent" value="yes">
-    <label for="cb-tcpa">{TCPA_TEXT}</label>
-  </div>
-  <button class="btn onDark" type="submit" data-funnel-cta="callback_submit">Request a callback</button>
-  <p class="formstatus" role="status" aria-live="polite"></p>
-</form>"""
+{_talk_block(slug)}"""
 
     return f"""<section class="band-wrap bigband" id="cta"><div class="wrap"><div class="ctaband">
 <span class="signal" aria-hidden="true"><i></i><i></i><i></i></span>

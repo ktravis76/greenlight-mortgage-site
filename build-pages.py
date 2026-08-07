@@ -796,7 +796,7 @@ particular outcome, loan approval, rate or term.</p>
 def contact():
     body = f"""{S.hero(
         eyebrow="Contact",
-        h1="Talk to a person",
+        h1="Talk to a real person",
         lede="Call, email, or send the form. Whichever you pick, a real person from the "
              "Longview office answers &mdash; and we tell you what happens next.",
         trail=[("/", "Home"), (None, "Contact")])}

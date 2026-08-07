@@ -66,6 +66,49 @@
     if (kicker) kicker.textContent = 'You’re in the right place — here’s what happens next.';
   }
 
+  /* ------------------------------------------ router answers ride along */
+  // The /start quizzes hand off with ?from=router&va=yes&goal=lower… (refi)
+  // or &mil=…&loc=…&profile=… (buy), plus any UTM tags. Ryan's rule: nobody
+  // re-types anything — so those answers are injected into the walk-through
+  // form as hidden fields (stored on the lead), the name param prefills the
+  // contact forms, and everything is packed into a carry string appended to
+  // the application links on success.
+  var URL_PARAMS = (function () {
+    var out = {};
+    location.search.replace(/^\?/, '').split('&').forEach(function (pair) {
+      if (!pair) return;
+      var i = pair.indexOf('=');
+      var k = decodeURIComponent(i < 0 ? pair : pair.slice(0, i));
+      var v = decodeURIComponent(i < 0 ? '' : pair.slice(i + 1).replace(/\+/g, ' '));
+      // Bounded, boring values only — this string ends up in a lead row.
+      if (/^[\w-]{1,32}$/.test(k) && v.length <= 80) out[k] = v;
+    });
+    return out;
+  })();
+  var ROUTER_KEYS = ['from', 'va', 'goal', 'age', 'mil', 'loc', 'profile',
+                     'src', 'utm_source', 'utm_medium', 'utm_campaign'];
+
+  function injectRouterFields(form) {
+    if (!form) return;
+    ROUTER_KEYS.forEach(function (k) {
+      if (!(k in URL_PARAMS)) return;
+      var name = (k === 'from' || k === 'src' || k.indexOf('utm_') === 0) ? k : 'router_' + k;
+      if (form.querySelector('input[name="' + name + '"]')) return;
+      var input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = name;
+      input.value = URL_PARAMS[k];
+      form.appendChild(input);
+    });
+  }
+
+  function prefillNames() {
+    if (!URL_PARAMS.name) return;
+    $all('input[name="name"]').forEach(function (el) {
+      if (!el.value) el.value = URL_PARAMS.name;
+    });
+  }
+
   if (rig || document.querySelector('form[data-yes-form]')) {
     pixel('track', 'ViewContent', { content_name: slug, content_category: 'loan-funnel' });
   }
@@ -275,6 +318,9 @@
             if (input) input.value = '';
           });
         }
+        // The money button's promise: dials + router answers travel into the
+        // application links too, so the handoff carries everything forward.
+        updateCarryLinks(map);
       }
       // The 36-month meter (refi only): sample costs vs monthly saving.
       if (recoup && mode() === 'refi') {
@@ -360,11 +406,37 @@
     render(false);
   }
 
+  /* ------------------------------------------------------- carry-forward */
+  // Append the estimator state + router answers to every [data-carry] link
+  // (the application handoffs), so nothing gets re-typed downstream.
+  function updateCarryLinks(estimatorMap) {
+    var parts = [];
+    Object.keys(estimatorMap || {}).forEach(function (k) {
+      parts.push(k + '=' + encodeURIComponent(estimatorMap[k]));
+    });
+    ROUTER_KEYS.forEach(function (k) {
+      if (k in URL_PARAMS) parts.push(k + '=' + encodeURIComponent(URL_PARAMS[k]));
+    });
+    if (!parts.length) return;
+    var q = parts.join('&');
+    $all('[data-carry]').forEach(function (a) {
+      var base = (a.getAttribute('href') || '').split('?')[0];
+      if (base) a.href = base + '?' + q;
+    });
+  }
+
   /* ------------------------------------------------------- the YES moment */
   // Standalone on purpose: tools and blog pages carry the walk-through form
   // without a slider rig, and the shiny button must still work there.
   function initYes() {
     var yesForm = document.querySelector('form[data-yes-form]');
+
+    // Router answers ride along: into the lead row via hidden fields, into
+    // the reach-out forms, and onto the carry links even before any drag.
+    injectRouterFields(yesForm);
+    $all('form[data-glm-form="funnel_callback"]').forEach(injectRouterFields);
+    prefillNames();
+    updateCarryLinks({});
 
     $all('[data-yes-btn]').forEach(function (btn) {
       btn.addEventListener('click', function () {

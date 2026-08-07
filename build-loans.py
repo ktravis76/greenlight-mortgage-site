@@ -172,7 +172,7 @@ def build():
              "the payment you have. There is usually a path &mdash; and we shop a network of "
              "lenders to find it instead of selling you one bank&rsquo;s menu.",
         ctas=[("/tools/estimate", "See what you could save", "go"),
-              ("/contact", "Talk to a person", "ghost")],
+              ("/contact", "Talk to a real person", "ghost")],
         trail=[("/", "Home"), (None, "Loan options")])}
 
 <section><div class="wrap">
