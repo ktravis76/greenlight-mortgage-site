@@ -172,7 +172,7 @@ def homepage():
         <p class="dnote">Veteran with a VA loan? Ask about the
         <a href="/loans/va-irrrl">VA IRRRL</a> &mdash; the streamline refinance
         built for you.</p>
-        <a class="btn shiny lg dbtn" href="/loans/refinance" data-funnel-cta="door_refi">
+        <a class="dgo dbtn" href="/start/refi" data-funnel-cta="door_refi">
           Click here &mdash; see refinancing options &rarr;</a>
       </div>
 
@@ -184,10 +184,10 @@ def homepage():
         and it starts with one question:</span>
         <p class="dvetq">Are you a veteran or service member?</p>
         <div class="dvet">
-          <a class="btn shiny lg dbtn" href="/loans/va" data-funnel-cta="door_va">
+          <a class="dgo dbtn" href="/loans/va?from=door&amp;mil=yes" data-funnel-cta="door_va">
             YES &mdash; use my VA benefit &rarr;</a>
-          <a class="btn onDark lg dbtn" href="/buy" data-funnel-cta="door_buy">
-            NO &mdash; show me my path &rarr;</a>
+          <a class="btn onDark lg dbtn" href="/start/buy" data-funnel-cta="door_buy">
+            NO &mdash; find my path (3 quick taps) &rarr;</a>
         </div>
       </div>
 

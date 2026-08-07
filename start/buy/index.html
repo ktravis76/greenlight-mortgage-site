@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,follow">
+<title>Let's find your loan lane | Greenlight Mortgage</title>
+<style>
+:root{--forest:#0b3a29;--forest2:#072418;--go:#22c55e;--gl:#4ade80;--cream:#f6f3ec}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
+ background:linear-gradient(170deg,var(--forest),var(--forest2));color:#fff;
+ min-height:100dvh;display:flex;flex-direction:column}
+a{color:inherit}
+.top{display:flex;align-items:center;justify-content:space-between;padding:20px clamp(18px,4vw,36px)}
+.logo{font-weight:800;font-size:17px;letter-spacing:-.02em;text-decoration:none}
+.logo b{color:var(--gl)}
+.exit{font-size:13.5px;color:rgba(233,244,237,.6);text-decoration:none}
+.exit:hover{color:#fff}
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{width:min(660px,94vw);text-align:center}
+.kick{font-size:11.5px;font-weight:800;letter-spacing:.16em;color:var(--gl);margin-bottom:14px}
+.dots{display:flex;gap:8px;justify-content:center;margin-bottom:30px}
+.dot{width:34px;height:5px;border-radius:99px;background:rgba(255,255,255,.16);transition:background .3s}
+.dot.on{background:var(--go);box-shadow:0 0 10px rgba(34,197,94,.6)}
+h1{font-family:ui-serif,Georgia,serif;font-weight:600;font-size:clamp(26px,4.6vw,40px);
+ letter-spacing:-.02em;line-height:1.15;margin-bottom:34px;min-height:2.3em}
+.opts{display:flex;flex-direction:column;gap:13px}
+.opt{display:block;width:100%;padding:19px 22px;border-radius:15px;cursor:pointer;
+ font-size:17px;font-weight:650;color:#fff;text-align:center;border:1px solid rgba(255,255,255,.18);
+ background:linear-gradient(165deg,rgba(255,255,255,.09),rgba(255,255,255,.03));
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.10);
+ transition:transform .18s,border-color .18s,background .18s,box-shadow .18s}
+.opt:hover{transform:translateY(-2px);border-color:rgba(74,222,128,.65);
+ background:linear-gradient(165deg,rgba(74,222,128,.16),rgba(255,255,255,.04));
+ box-shadow:0 10px 30px -14px rgba(0,0,0,.7),0 0 0 1px rgba(74,222,128,.25)}
+.back{margin-top:26px;background:none;border:none;color:rgba(233,244,237,.55);
+ font-size:14px;cursor:pointer;text-decoration:underline}
+.back:hover{color:#fff}
+.result h1{min-height:0}
+.result .lane{color:var(--gl)}
+.gobtn{display:inline-flex;align-items:center;gap:10px;margin-top:10px;padding:17px 34px;
+ border-radius:999px;font-size:17px;font-weight:800;color:#052e1b;text-decoration:none;
+ background:linear-gradient(135deg,#5eead4 -40%,#4ade80 35%,#22c55e);
+ box-shadow:0 8px 30px rgba(34,197,94,.5)}
+.gobtn:hover{filter:brightness(1.07)}
+.count{font-size:13px;color:rgba(233,244,237,.5);margin-top:16px}
+.fine{padding:22px clamp(18px,4vw,36px) 30px;text-align:center;font-size:11.5px;
+ line-height:1.7;color:rgba(233,244,237,.45);max-width:860px;margin:0 auto}
+.fade{animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.fade{animation:none}.opt,.dot{transition:none}}
+</style></head><body>
+<div class="top">
+ <a class="logo" href="/">Greenlight<b> Mortgage</b></a>
+ <a class="exit" href="/">Skip this — take me to the site</a>
+</div>
+<main><div class="card" id="card"></div></main>
+<p class="fine">This quiz just points you to the right starting place — it is not an application,
+an approval, or an eligibility decision. All loans subject to credit approval and underwriting.
+A licensed loan officer confirms what you actually qualify for. Greenlight Mortgage, LLC ·
+NMLS 2426021 · Kenneth Travis NMLS #233918 · Equal Housing Opportunity ·
+Not a commitment to lend.</p>
+<script>
+var FLOW='buy';
+var QS=[{"key": "mil", "q": "Have you \u2014 or your spouse \u2014 ever served in the military?", "opts": [["yes", "Yes"], ["no", "No"]]}, {"key": "loc", "q": "Where's the home you're picturing?", "opts": [["town", "City or suburb"], ["rural", "Small town or country living"]]}, {"key": "profile", "q": "Which sounds most like you?", "opts": [["first", "First home \u2014 keep the down payment small"], ["moveup", "Moving up \u2014 solid savings or equity"], ["big", "Going big \u2014 luxury home or acreage"]]}];
+function route(a){
+     if(a.mil==='yes') return ['/loans/va','a VA loan — the benefit you earned'];
+     if(a.loc==='rural') return ['/loans/usda','a USDA loan — zero down on eligible East Texas properties'];
+     if(a.profile==='big') return ['/loans/jumbo','a Jumbo loan'];
+     if(a.profile==='first') return ['/loans/fha','an FHA loan — built for first-time buyers'];
+     return ['/loans/conventional','a Conventional loan'];
+   }
+var SB='https://athovwknbwbbqworsbrm.supabase.co';
+var SBK='sb_publishable_2ajY5o6EJyVEiNpWD_HL0Q_3HLzxmXr';
+function track(ev,params){try{
+ fetch(SB+'/rest/v1/analytics_events',{method:'POST',
+  headers:{apikey:SBK,Authorization:'Bearer '+SBK,'Content-Type':'application/json',Prefer:'return=minimal'},
+  body:JSON.stringify({event:ev,params:params})}).catch(function(){});
+}catch(e){}}
+var answers={},step=0,card=document.getElementById('card');
+var utm=location.search.replace(/^\?/,'');
+function dots(){var h='';for(var i=0;i<QS.length;i++)h+='<span class="dot'+(i<=step?' on':'')+'"></span>';return '<div class="dots">'+h+'</div>';}
+function show(){
+ var q=QS[step],h='<div class="fade"><p class="kick">THREE QUICK TAPS — NO FORMS, NO CREDIT PULL</p>'+dots()+'<h1>'+q.q+'</h1><div class="opts">';
+ q.opts.forEach(function(o){h+='<button class="opt" data-v="'+o[0]+'">'+o[1]+'</button>';});
+ h+='</div>';
+ if(step>0)h+='<button class="back">&larr; Back</button>';
+ h+='<p class="count">Question '+(step+1)+' of '+QS.length+'</p></div>';
+ card.innerHTML=h;
+ card.querySelectorAll('.opt').forEach(function(b){b.onclick=function(){
+   answers[q.key]=b.dataset.v;
+   track('router_answer',{flow:FLOW,q:q.key,a:b.dataset.v,step:step+1,utm:utm});
+   step++; step<QS.length?show():finish();
+ };});
+ var bk=card.querySelector('.back'); if(bk)bk.onclick=function(){step--;show();};
+}
+function finish(){
+ var r=route(answers),dest=r[0],label=r[1];
+ var qs=Object.keys(answers).map(function(k){return k+'='+answers[k];}).join('&');
+ var url=dest+'?from=router&'+qs+(utm?'&'+utm:'');
+ track('router_route',{flow:FLOW,dest:dest,answers:answers,utm:utm});
+ card.innerHTML='<div class="fade result"><p class="kick">GREEN MEANS GO</p>'+
+  '<h1>Your best starting point:<br><span class="lane">'+label+'</span></h1>'+
+  '<a class="gobtn" href="'+url+'">Take me there &rarr;</a>'+
+  '<p class="count">Sending you over automatically&hellip;</p></div>';
+ setTimeout(function(){location.href=url;},2600);
+}
+track('router_start',{flow:FLOW,utm:utm});
+show();
+</script></body></html>

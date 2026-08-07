@@ -238,13 +238,16 @@ footer .brand img{height:54px}
 header{
   position:sticky;top:0;z-index:80;
   background:linear-gradient(178deg,var(--forest),var(--forest-2));
-  border-bottom:1px solid rgba(255,255,255,.09);
-  transition:box-shadow .25s,background .25s;
+  border-bottom:1px solid transparent;
+  transition:box-shadow .25s,background .25s,border-color .25s;
 }
+header.stuck{border-bottom-color:rgba(255,255,255,.09)}
 header::after{
-  content:"";position:absolute;inset:auto 0 0 0;height:2px;
+  content:"";position:absolute;inset:auto 0 0 0;height:2px;opacity:0;
   background:linear-gradient(90deg,var(--go),rgba(22,196,106,0) 42%);
+  transition:opacity .25s;
 }
+header.stuck::after{opacity:1}
 header.stuck{box-shadow:0 10px 34px -20px rgba(4,26,17,.85)}
 .nav{display:flex;align-items:center;gap:34px;height:84px;transition:height .25s var(--ease)}
 header.stuck .nav{height:70px}
@@ -279,7 +282,7 @@ nav.links{display:flex;align-items:center;gap:6px;margin-left:auto}
 
 .navcta{display:flex;align-items:center;gap:14px;flex:none}
 .navcta{display:flex;align-items:center;gap:18px;flex:none;margin-left:26px}
-  color:rgba(233,244,237,.9);white-space:nowrap}
+  color:#eafff3;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.35)}
 .phone:hover{color:var(--go)}
 .phone svg{opacity:.55}
 header .btn.sm{--bg:var(--go);--fg:#04241a;--bd:var(--go);font-weight:700}
@@ -919,10 +922,14 @@ table tr.total th,table tr.total td{border-top:2px solid var(--line-2);
    picks a lane. Facebook traffic arrives with exactly one of two
    intents, so the site asks the question instead of guessing.       */
 .doors{
-  background:linear-gradient(178deg,var(--forest),var(--forest-2));
-  border-bottom:1px solid rgba(255,255,255,.09);
-  padding:clamp(38px,5vw,62px) 0 clamp(42px,5.5vw,68px);
+  background:linear-gradient(178deg,var(--forest) -60%,var(--forest-2) 115%);
+  padding:clamp(30px,4vw,50px) 0 clamp(46px,5.5vw,72px);
   position:relative;overflow:hidden;
+}
+.doors::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:2px;
+  background:linear-gradient(90deg,rgba(34,197,94,0),var(--go) 30%,var(--go) 70%,rgba(34,197,94,0));
+  filter:drop-shadow(0 0 8px rgba(34,197,94,.65));
 }
 .doors::before{
   content:"";position:absolute;inset:-40% 55% auto -10%;height:520px;
@@ -949,8 +956,9 @@ table tr.total th,table tr.total td{border-top:2px solid var(--line-2);
 .door{
   position:relative;display:flex;flex-direction:column;align-items:flex-start;
   padding:clamp(26px,3.4vw,40px);border-radius:var(--r);
-  background:rgba(255,255,255,.045);
-  border:1px solid rgba(255,255,255,.12);
+  background:linear-gradient(165deg,rgba(255,255,255,.09),rgba(255,255,255,.03) 55%);
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 18px 44px -26px rgba(0,0,0,.75);
   overflow:hidden;isolation:isolate;
   transition:transform .28s var(--ease),border-color .28s var(--ease),background .28s var(--ease);
 }
@@ -992,7 +1000,21 @@ table tr.total th,table tr.total td{border-top:2px solid var(--line-2);
 }
 .dgo{
   margin-top:auto;display:inline-flex;align-items:center;gap:9px;
-  font-size:14.5px;font-weight:700;color:#fff;
+  padding:14px 24px;border-radius:999px;
+  font-size:15px;font-weight:800;letter-spacing:.01em;color:#052e1b;
+  background:linear-gradient(135deg,#5eead4 -40%,#4ade80 35%,#22c55e);
+  box-shadow:0 6px 24px rgba(34,197,94,.45),0 0 0 1px rgba(255,255,255,.14) inset;
+  transition:transform .2s var(--ease),box-shadow .2s var(--ease),filter .2s;
+  animation:goPulse 2.6s ease-in-out infinite;
+}
+.door:hover .dgo{
+  transform:translateY(-2px);filter:brightness(1.06);
+  box-shadow:0 10px 34px rgba(34,197,94,.62),0 0 0 1px rgba(255,255,255,.2) inset;
+  animation:none;
+}
+@keyframes goPulse{
+  0%,100%{box-shadow:0 6px 24px rgba(34,197,94,.40),0 0 0 1px rgba(255,255,255,.14) inset}
+  50%{box-shadow:0 6px 30px rgba(34,197,94,.62),0 0 0 1px rgba(255,255,255,.14) inset}
 }
 .dgo svg{width:19px;height:19px;transition:transform .26s var(--ease)}
 .door:hover .dgo svg{transform:translateX(5px)}
@@ -1006,6 +1028,7 @@ table tr.total th,table tr.total td{border-top:2px solid var(--line-2);
 
 @media(prefers-reduced-motion:reduce){
   .door,.door::before,.door::after,.dgo svg{transition:none}
+  .dgo{animation:none}
   .door:hover{transform:none}
 }
 
