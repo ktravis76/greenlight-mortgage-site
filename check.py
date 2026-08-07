@@ -259,7 +259,12 @@ def check_compliance():
 # because KT found a page that did not and reasonably concluded the site was
 # broken. Only the internal screener is exempt, and it is exempt on purpose.
 
-CHROME_EXEMPT = {"/tools/va-refi-screener"}
+# The /start router quizzes are deliberate full-screen interstitials — a
+# focused three-tap flow with a logo link home and an explicit "skip" exit.
+# They stay noindexed and carry the full compliance line in their fine print
+# (the REQUIRED disclosure scan still applies to them); only the site
+# header/footer chrome is waived.
+CHROME_EXEMPT = {"/tools/va-refi-screener", "/start/refi", "/start/buy"}
 
 
 def check_chrome():
