@@ -158,10 +158,10 @@ BRITISH = [
 
 # Disclosures required on every consumer page.
 REQUIRED = [
-    ("Powered by Co/LAB Lending", "Co/LAB attribution"),
+    ("Empowered by NEXA Lending", "NEXA attribution"),
     ("Equal Housing Opportunity", "EHO"),
     ("not a commitment to lend", "not-a-commitment-to-lend"),
-    ("2426021", "company NMLS"),
+    ("1660690", "company NMLS"),
     ("233918", "individual NMLS"),
 ]
 

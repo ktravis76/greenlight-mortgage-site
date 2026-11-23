@@ -524,7 +524,7 @@ function render(q){
     the screener, not quoted figures. Not a rate quote, rate lock, approval, or commitment to lend.
     Subject to credit approval and underwriting. Rates change daily. VA refinances require a net tangible
     benefit and 36-month fee recoupment under 38 U.S.C. §3709 — verified at full quote stage.
-    Greenlight Mortgage, LLC &middot; NMLS #2426021 &middot; Kenneth Travis NMLS #233918 &middot;
+    Greenlight Mortgage &middot; NMLS #1660690 &middot; Kenneth Travis NMLS #233918 &middot;
     Equal Housing Opportunity.
   </div>`;
 }
@@ -639,7 +639,7 @@ function numsText(q){
 }
 function smsText(q){
   if(q.save<=0) return `Ran your numbers — at today's rates there isn't a savings on your VA loan yet. I'll keep an eye on the market and reach out the moment that changes. — Greenlight Mortgage`;
-  return `Ran a quick estimate on your VA loan: about ${M(q.save)}/mo lower than your current principal & interest, roughly ${M(q.save*12)} a year. Estimate only — subject to credit approval and underwriting, not a commitment to lend. Want me to pull the exact numbers? — Greenlight Mortgage, NMLS #2426021. Equal Housing Opportunity.`;
+  return `Ran a quick estimate on your VA loan: about ${M(q.save)}/mo lower than your current principal & interest, roughly ${M(q.save*12)} a year. Estimate only — subject to credit approval and underwriting, not a commitment to lend. Want me to pull the exact numbers? — Greenlight Mortgage, NMLS #1660690. Equal Housing Opportunity.`;
 }
 async function copyOut(text,okMsg){
   try{ await navigator.clipboard.writeText(text);

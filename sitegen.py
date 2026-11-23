@@ -17,9 +17,9 @@ import re
 
 # ---------------------------------------------------------------- verified facts
 
-COMPANY   = "Greenlight Mortgage, LLC"
+COMPANY   = "Greenlight Mortgage"
 SHORT     = "Greenlight Mortgage"
-POWERED   = "Powered by Co/LAB Lending"
+POWERED   = "Empowered by NEXA Lending"
 TAGLINE   = "Green means GO! Drive home with Greenlight Mortgage."
 FOUNDED   = "2008"
 
@@ -30,7 +30,11 @@ ZIP       = "75605"
 PHONE     = "903-331-0892"
 PHONE_HREF = "9033310892"
 
-NMLS_CO   = "2426021"
+# Rebranded 2026-11-23 per KT: Greenlight Mortgage, empowered by NEXA Lending.
+# Company NMLS is NEXA's (1660690). The old Greenlight Mortgage, LLC number
+# (2426021) and its state license list below are no longer advertised; the footer
+# points to NMLS Consumer Access for licensed states instead of listing them.
+NMLS_CO   = "1660690"
 NMLS_KT   = "233918"
 
 # Licensed states, corrected by KT on 2026-08-01.
@@ -134,7 +138,13 @@ TOOL_NAV = [("/tools/estimate", "Estimated Savings"),
             ("/tools/rent-vs-buy", "Rent vs Buy"),
             ("/tools/home-value", "Home Value Report")]
 
-LEARN_NAV = [("/learn", "Learning Center"), ("/why-a-broker", "Why a Broker"),
+# 2026-11-23: /faq and three loan pages (/loans/first-time-buyers, /loans/self-employed,
+# /loans/investment-property) were hand-built from the Learn template, not generated.
+# Their menu links were inserted into the built HTML. If you rebuild, add
+# ("first-time-buyers", "First-Time Buyers"), ("self-employed", "Self-Employed") and
+# ("investment-property", "Investment Property") to the loan menus without letting
+# build-loans.py overwrite those three pages.
+LEARN_NAV = [("/learn", "Learning Center"), ("/faq", "Mortgage FAQ"), ("/why-a-broker", "Why a Broker"),
              ("/resources", "Resources"),
              ("/archive", "Longview Archive"), ("/blog", "Blog"),
              ("/survey", "Client Survey")]
@@ -231,7 +241,7 @@ REVIEW_PROFILES = [
     dict(platform="Experience.com", rating="4.85", count="398",
          url="https://www.experience.com/reviews/kenneth-12682826",
          checked="1 August 2026", verified=True,
-         note="Kenneth Travis, Greenlight Mortgage, NMLS #2426021, Longview TX."),
+         note="Kenneth Travis, Greenlight Mortgage, NMLS #233918, Longview TX."),
     dict(platform="Birdeye", rating="4.8", count="197",
          url="https://birdeye.com/greenlight-mortgage-168122712651937",
          checked="1 August 2026", verified=True,
@@ -292,7 +302,7 @@ def jstr(s):
 # whatever it says. Change it here and it changes everywhere.
 
 TCPA_TEXT = (
-    "I agree that Greenlight Mortgage, LLC (NMLS #2426021) and its loan officers may contact "
+    "I agree that Greenlight Mortgage, empowered by NEXA Lending (NMLS #1660690), and its loan officers may contact "
     "me at the phone number I provided, including by autodialed or pre-recorded calls and by "
     "text message, about my mortgage inquiry. Message and data rates may apply. "
     "<strong>Consent is not a condition of obtaining a loan or any other service.</strong> "
@@ -418,10 +428,12 @@ def lic_num(num):
     return '<em class="todo">number pending &mdash; KT to confirm</em>'
 
 
+NMLS_LOOKUP = '<a href="https://www.nmlsconsumeraccess.org">nmlsconsumeraccess.org</a>'
+
 LICENSE_SENTENCE = (
-    f"{COMPANY} is a licensed Mortgage Broker in the state of Texas. "
-    + "NMLS " + NMLS_CO + ". "
-    + " ".join(f"{name} &mdash; {lic_num(num)}." for name, num in LICENSES)
+    f"<strong>{COMPANY}</strong>, empowered by NEXA Lending. Company NMLS #{NMLS_CO}. "
+    f"Kenneth Travis, loan originator, NMLS #{NMLS_KT}. To see the states where we are "
+    f"licensed, look up either number at {NMLS_LOOKUP}."
 )
 
 # Why there are two NMLS numbers on this site. Consumers notice, and an
@@ -429,7 +441,7 @@ LICENSE_SENTENCE = (
 # and each individual loan originator are licensed separately.
 NMLS_EXPLAINER = (
     f"You will see two NMLS numbers on this site, and both are correct. "
-    f"<strong>#{NMLS_CO}</strong> licenses the company, {COMPANY}. "
+    f"<strong>#{NMLS_CO}</strong> is the company license for NEXA Lending, the brokerage behind {COMPANY}. "
     f"<strong>#{NMLS_KT}</strong> licenses Kenneth Travis personally as a loan originator. "
     f"Federal law licenses the business and the individual separately, so a broker will "
     f"always have both. You can look either of them up at "
@@ -486,8 +498,7 @@ religion, sex, handicap, familial status or national origin.</small></span></div
 separately licensed as NMLS #{NMLS_KT}. Both are real &mdash; look either up at
 nmlsconsumeraccess.org.</small></span></div>
 <div class="trust">{MARK_LANTERN}
-<span><strong>{POWERED}</strong><small>Licensed in {STATE_COUNT_WORD} states:
-{STATE_NAMES}.</small></span></div>
+<span><strong>{POWERED}</strong><small>A mortgage brokerage that shops a network of lenders for you, right here in Longview.</small></span></div>
 </div></div></div>"""
 
 
@@ -522,7 +533,7 @@ def header():
     return f"""<a class="skip" href="#main">Skip to content</a>
 <header id="siteheader"><div class="wrap nav">
 <a class="brand" href="/" aria-label="{SHORT} home">
-  <img src="/assets/from-old-site/logo-header.png" alt="{SHORT} — The Kenneth Travis Team"
+  <img src="/assets/from-old-site/logo-header.png" alt="{SHORT} , emempowered by NEXA Lending"
        width="217" height="76" fetchpriority="high">
 </a>
 <nav class="links" aria-label="Main">
@@ -575,7 +586,7 @@ def footer():
 <div class="fg">
 <div class="fbrand">
   <a class="brand" href="/">
-    <img src="/assets/from-old-site/logo-header.png" alt="{SHORT} — The Kenneth Travis Team"
+    <img src="/assets/from-old-site/logo-header.png" alt="{SHORT} , emempowered by NEXA Lending"
          width="217" height="76" loading="lazy">
   </a>
   <p>A mortgage brokerage serving Longview and East Texas since {FOUNDED}. We shop a network
@@ -597,8 +608,7 @@ def footer():
 <p class="fareas"><strong>Serving East Texas:</strong> {towns} &middot; and the {", ".join(DISTRICTS)} communities.</p>
 
 <div class="legal">
-<p><strong>{COMPANY}</strong> is a licensed Mortgage Broker in the state of Texas.
-Licensed in {STATE_COUNT_WORD} states &mdash; {lic}.
+<p>{LICENSE_SENTENCE}
 {STREET}, {CITY}, {STATE} {ZIP} &middot; {PHONE}.</p>
 
 <p>{NMLS_EXPLAINER}</p>

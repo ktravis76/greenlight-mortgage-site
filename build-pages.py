@@ -338,7 +338,7 @@ the payment you have.</p>
         title="Longview TX Mortgage Consultant | Greenlight Mortgage — Kenneth Travis",
         desc="Greenlight Mortgage in Longview, Texas — a mortgage broker, not a bank. We shop "
              "a network of lenders for purchase, refinance, VA, FHA, USDA and jumbo loans "
-             "across East Texas. Powered by Co/LAB Lending. Equal Housing Opportunity.",
+             "across East Texas. Empowered by NEXA Lending. Equal Housing Opportunity.",
         body=body,
         org=True,
         trail=[("/", "Home")],
@@ -402,7 +402,7 @@ def about():
 <div class="reveal">
   <p class="eyebrow"><span class="tick" aria-hidden="true"></span>The company</p>
   <h2>A brokerage, on purpose.</h2>
-  <p class="sub">Greenlight is a mortgage brokerage, powered by Co/LAB Lending. That is a
+  <p class="sub">Greenlight is a mortgage brokerage, empowered by NEXA Lending. That is a
   deliberate structure, not a technicality. A bank employs loan officers to sell that bank's
   products. A brokerage takes your file to a network of lenders and is free to recommend
   whichever one serves you best.</p>
@@ -485,7 +485,7 @@ rather than guessed at.</p>
         path="/about",
         title="About Greenlight Mortgage | Meet the Team — Longview, TX",
         desc="Greenlight Mortgage was founded in Longview, Texas in 2008 by Kenneth Travis, "
-             "USMC veteran and mortgage broker. Powered by Co/LAB Lending. Equal Housing "
+             "USMC veteran and mortgage broker. Empowered by NEXA Lending. Equal Housing "
              "Opportunity.",
         body=body,
         trail=[("/", "Home"), ("/about", "About")],
@@ -552,7 +552,7 @@ read it later.</p>
         path="/testimonials",
         title="Client Testimonials | Greenlight Mortgage — Longview, TX",
         desc="What Greenlight Mortgage clients across Longview, Gilmer and Jefferson say "
-             "about working with Kenneth Travis and the team. Powered by Co/LAB Lending. "
+             "about working with Kenneth Travis and the team. Empowered by NEXA Lending. "
              "Equal Housing Opportunity.",
         body=body,
         trail=[("/", "Home"), ("/testimonials", "Testimonials")],
@@ -645,7 +645,7 @@ particular outcome, loan approval, rate or term.</p>
         title="Reviews | Greenlight Mortgage — Longview, TX",
         desc="Independent reviews of Greenlight Mortgage in Longview, Texas on "
              "Experience.com and Birdeye, plus client testimonials with their sources shown. "
-             "Powered by Co/LAB Lending. Equal Housing Opportunity.",
+             "Empowered by NEXA Lending. Equal Housing Opportunity.",
         body=body,
         trail=[("/", "Home"), ("/reviews", "Reviews")],
     )
@@ -741,8 +741,8 @@ def contact():
         path="/contact",
         title="Contact Greenlight Mortgage | Longview, TX — 903-331-0892",
         desc="Contact Greenlight Mortgage at 4523 Judson Rd, Longview, TX 75605 or call "
-             "903-331-0892. A licensed loan officer replies within one business day. Powered "
-             "by Co/LAB Lending. Equal Housing Opportunity.",
+             "903-331-0892. A licensed loan officer replies within one business day. Empowered "
+             "by NEXA Lending. Equal Housing Opportunity.",
         body=body,
         trail=[("/", "Home"), ("/contact", "Contact")],
         scripts='<script src="/forms.js" defer></script>',
@@ -820,8 +820,8 @@ def learn():
         path="/learn",
         title="Learning Center | Greenlight Mortgage — Longview, TX",
         desc="Plain-English mortgage explanations from Greenlight Mortgage in Longview, Texas "
-             "— underwriting, down payments, closing costs, VA benefits and credit. Powered "
-             "by Co/LAB Lending. Equal Housing Opportunity.",
+             "— underwriting, down payments, closing costs, VA benefits and credit. Empowered "
+             "by NEXA Lending. Equal Housing Opportunity.",
         body=body,
         trail=[("/", "Home"), ("/learn", "Learning Center")],
     )
@@ -901,7 +901,7 @@ def resources():
         path="/resources",
         title="Home Buying Resources | Greenlight Mortgage — Longview, TX",
         desc="Free mortgage tools, checklists and trusted outside links for buyers and "
-             "homeowners in Longview and East Texas. Powered by Co/LAB Lending. Equal Housing "
+             "homeowners in Longview and East Texas. Empowered by NEXA Lending. Equal Housing "
              "Opportunity.",
         body=body,
         trail=[("/", "Home"), ("/resources", "Resources")],
@@ -1025,8 +1025,8 @@ def blog_index():
     return S.page(
         path="/blog",
         title="Blog | Greenlight Mortgage — Longview, TX",
-        desc="Mortgage and housing notes from Greenlight Mortgage in Longview, Texas. Powered "
-             "by Co/LAB Lending. Equal Housing Opportunity.",
+        desc="Mortgage and housing notes from Greenlight Mortgage in Longview, Texas. Empowered "
+             "by NEXA Lending. Equal Housing Opportunity.",
         body=body,
         trail=[("/", "Home"), ("/blog", "Blog")],
     )
@@ -1135,7 +1135,7 @@ def survey():
         path="/survey",
         title="Client Survey | Greenlight Mortgage — Longview, TX",
         desc="Tell Greenlight Mortgage how your loan went. Two minutes, straight to Kenneth "
-             "Travis. Powered by Co/LAB Lending. Equal Housing Opportunity.",
+             "Travis. Empowered by NEXA Lending. Equal Housing Opportunity.",
         body=body,
         trail=[("/", "Home"), ("/survey", "Survey")],
         scripts='<script src="/forms.js" defer></script>',
@@ -1333,7 +1333,7 @@ def apply_page():
         title="Start Your Mortgage Application | Greenlight Mortgage — Longview, TX",
         desc="Begin your mortgage application with Greenlight Mortgage in Longview, Texas. "
              "About three minutes, no credit inquiry, and no Social Security number needed "
-             "to start. Powered by Co/LAB Lending. Equal Housing Opportunity.",
+             "to start. Empowered by NEXA Lending. Equal Housing Opportunity.",
         body=body,
         trail=[("/", "Home"), ("/apply", "Apply")],
         scripts='<script src="/forms.js" defer></script>',

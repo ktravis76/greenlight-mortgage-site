@@ -190,7 +190,7 @@ name at the top, and anything that comes back to us is tagged to you.</p>
         title="Tools for Realtors & Real Estate Professionals | Greenlight Mortgage — Longview, TX",
         desc="Free, shareable mortgage tools for Longview and East Texas realtors, title "
              "companies and inspectors — buyer affordability, seller net proceeds, rent vs "
-             "buy. Co-brand them with your name. Powered by Co/LAB Lending. Equal Housing "
+             "buy. Co-brand them with your name. Empowered by NEXA Lending. Equal Housing "
              "Opportunity.",
         body=body,
         trail=[("/", "Home"), ("/pros", "For professionals")],

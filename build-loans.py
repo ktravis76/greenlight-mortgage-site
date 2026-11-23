@@ -12,7 +12,7 @@ APPLY = S.APPLY   # /apply — our intake. S.LOS_APPLY is the licensed 1003 syst
 LOANS = [
   dict(slug="va", nav="VA",
     title="VA Loans in Longview, TX | Greenlight Mortgage",
-    desc="VA home loans for veterans and service members in Longview and East Texas. No down payment in many cases and no monthly mortgage insurance. Powered by Co/LAB Lending.",
+    desc="VA home loans for veterans and service members in Longview and East Texas. No down payment in many cases and no monthly mortgage insurance. Empowered by NEXA Lending.",
     h1="VA loans for East Texas veterans",
     lede="You earned this one. A VA loan is usually the strongest option on the table for an eligible veteran — and a lot of people who qualify never find out they do.",
     who=["Veterans, active duty, National Guard and Reserve members",
@@ -30,7 +30,7 @@ LOANS = [
 
   dict(slug="conventional", nav="Conventional",
     title="Conventional Loans in Longview, TX | Greenlight Mortgage",
-    desc="Conventional home loans in Longview and East Texas for buyers with steady income and solid credit. Powered by Co/LAB Lending. Equal Housing Opportunity.",
+    desc="Conventional home loans in Longview and East Texas for buyers with steady income and solid credit. Empowered by NEXA Lending. Equal Housing Opportunity.",
     h1="Conventional loans",
     lede="The standard route, and often the cheapest over the life of the loan if you qualify for it. Less flexible than FHA, but fewer strings attached once you're in.",
     who=["Buyers with steady, documentable income","Credit in reasonable shape","Anyone who can put down enough to avoid or quickly drop mortgage insurance","Buyers of second homes and investment property"],
@@ -45,7 +45,7 @@ LOANS = [
 
   dict(slug="fha", nav="FHA",
     title="FHA Loans in Longview, TX | Greenlight Mortgage",
-    desc="FHA home loans in Longview and East Texas. Lower down payment and more flexible credit requirements. Powered by Co/LAB Lending. Equal Housing Opportunity.",
+    desc="FHA home loans in Longview and East Texas. Lower down payment and more flexible credit requirements. Empowered by NEXA Lending. Equal Housing Opportunity.",
     h1="FHA loans",
     lede="Built for people the conventional box doesn't fit. Lower down payment, more forgiving credit requirements, and the most common first step into a first house.",
     who=["First-time buyers","Anyone rebuilding credit after a rough stretch","Buyers with a smaller down payment saved","People who've been turned down for a conventional loan"],
@@ -60,7 +60,7 @@ LOANS = [
 
   dict(slug="usda", nav="USDA",
     title="USDA Loans in Longview & East Texas | Greenlight Mortgage",
-    desc="USDA rural home loans across East Texas. More of Gregg, Harrison and Upshur County qualifies than most people expect. Powered by Co/LAB Lending.",
+    desc="USDA rural home loans across East Texas. More of Gregg, Harrison and Upshur County qualifies than most people expect. Empowered by NEXA Lending.",
     h1="USDA loans",
     lede="The most overlooked program in East Texas. Zero down payment on eligible properties — and far more of the area around Longview qualifies than people assume.",
     who=["Buyers looking just outside Longview city limits","Anyone buying in Gilmer, Hallsville, White Oak, Diana, Ore City and similar","Households within the income limits for the area","Buyers with nothing saved for a down payment"],
@@ -75,7 +75,7 @@ LOANS = [
 
   dict(slug="jumbo", nav="Jumbo",
     title="Jumbo Loans in Longview, TX | Greenlight Mortgage",
-    desc="Jumbo home loans in Longview and East Texas for purchases above conforming limits. Powered by Co/LAB Lending. Equal Housing Opportunity.",
+    desc="Jumbo home loans in Longview and East Texas for purchases above conforming limits. Empowered by NEXA Lending. Equal Housing Opportunity.",
     h1="Jumbo loans",
     lede="For a purchase above the conforming loan limit. Different underwriting, a different set of lenders, and the place where being a broker rather than a bank matters most.",
     who=["Buyers above the conforming limit for the county","Higher-income borrowers with more complex finances","Self-employed buyers with strong but non-standard income","Anyone a single bank has already declined"],
@@ -90,7 +90,7 @@ LOANS = [
 
   dict(slug="refinance", nav="Refinance",
     title="Refinancing in Longview, TX | Greenlight Mortgage",
-    desc="Mortgage refinancing in Longview and East Texas. Lower the payment, shorten the term, or use equity. Powered by Co/LAB Lending. Equal Housing Opportunity.",
+    desc="Mortgage refinancing in Longview and East Texas. Lower the payment, shorten the term, or use equity. Empowered by NEXA Lending. Equal Housing Opportunity.",
     h1="Refinancing",
     lede="Three reasons people refinance: a lower payment, a shorter term, or getting at equity. The honest answer is that it isn't always worth doing — and we'll tell you when it isn't.",
     who=["Anyone whose rate is meaningfully above today's market","Homeowners wanting to drop mortgage insurance","People consolidating higher-interest debt","Veterans in a VA loan — see the IRRRL below"],
@@ -272,7 +272,7 @@ look at your file.</p>
         path="/loans",
         title="Loan Options in Longview, TX | Greenlight Mortgage",
         desc="Conventional, FHA, VA, USDA, jumbo and refinance options in Longview and East "
-             "Texas. A mortgage broker that shops a network of lenders. Powered by Co/LAB "
+             "Texas. A mortgage broker that shops a network of lenders. Empowered by NEXA "
              "Lending. Equal Housing Opportunity.",
         body=body,
         trail=[("/", "Home"), ("/loans", "Loan options")],

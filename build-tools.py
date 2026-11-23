@@ -95,8 +95,8 @@ yet; on the list.</p>
         path="/tools",
         title="Mortgage Tools & Calculators | Greenlight Mortgage — Longview, TX",
         desc="Free mortgage tools from Greenlight Mortgage in Longview, Texas — Estimated "
-             "Savings, a full mortgage calculator, and a local home value report. Powered by "
-             "Co/LAB Lending. Equal Housing Opportunity.",
+             "Savings, a full mortgage calculator, and a local home value report. Empowered by "
+             "NEXA Lending. Equal Housing Opportunity.",
         body=body,
         trail=[("/", "Home"), ("/tools", "Tools")],
     )
@@ -167,7 +167,7 @@ def estimate():
 </div></section>
 
 <section><div class="wrap"><div class="narrow">
-<p class="disclose">Greenlight Mortgage, LLC &mdash; Company NMLS #{S.NMLS_CO}, Kenneth Travis
+<p class="disclose">Greenlight Mortgage &mdash; Company NMLS #{S.NMLS_CO}, Kenneth Travis
 individual NMLS #{S.NMLS_KT}. {S.POWERED}. Equal Housing Opportunity. Estimates produced by
 this tool are illustrative only, are not an offer or guarantee of any interest rate, APR,
 monthly payment or loan term, and are <strong>not a commitment to lend</strong>. All loans are
@@ -192,7 +192,7 @@ subject to credit approval and underwriting.</p>
         title="Estimated Savings Calculator | Greenlight Mortgage — Longview, TX",
         desc="See what refinancing could save you in about two minutes. No hard credit pull "
              "and no phone call required to see your estimate. Greenlight Mortgage, Longview "
-             "TX. Powered by Co/LAB Lending. Equal Housing Opportunity.",
+             "TX. Empowered by NEXA Lending. Equal Housing Opportunity.",
         body=body,
         trail=[("/", "Home"), ("/tools", "Tools"), ("/tools/estimate", "Estimated Savings")],
         faqs=faqs,
@@ -385,7 +385,7 @@ def home_value():
         path="/tools/home-value",
         title="Home Value Report | Greenlight Mortgage — Longview, TX",
         desc="Request a local home value estimate for your Longview or East Texas property "
-             "from Greenlight Mortgage. Powered by Co/LAB Lending. Equal Housing Opportunity.",
+             "from Greenlight Mortgage. Empowered by NEXA Lending. Equal Housing Opportunity.",
         body=body,
         trail=[("/", "Home"), ("/tools", "Tools"), ("/tools/home-value", "Home value")],
         scripts='<script src="/forms.js" defer></script>',
