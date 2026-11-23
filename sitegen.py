@@ -707,6 +707,7 @@ src="https://www.facebook.com/tr?id=828760880613908&ev=PageView&noscript=1"/></n
 <!-- End Meta Pixel -->
 <link rel="stylesheet" href="/style.css">
 {{schema}}
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6P7760YK6K"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-6P7760YK6K");</script>
 </head>
 <body{{bodyattr}}>
 {{header}}
